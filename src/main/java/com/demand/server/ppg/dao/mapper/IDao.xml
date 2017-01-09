@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.demand.server.ppg.dao.IDao">
+	<select id="login_check" resultType="com.demand.server.ppg.dto.User">
+		SELECT id,name FROM users
+		where email = #{param1} and password = #{param2}
+	</select>
+
+	<insert id="insert_result">
+		insert into
+		results(user_id,aa,sns,psns,ans,hrv,stress)
+		values(#{param1},#{param2},#{param3},#{param4},#{param5},#{param6},#{param7})
+	</insert>
+
+</mapper>
