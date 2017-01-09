@@ -19,7 +19,7 @@ public class TestController {
 	private SqlSession sqlSession2;
 
 	@RequestMapping(value = "/test", method = { RequestMethod.GET, RequestMethod.POST })
-	public @ResponseBody ArrayList<User> test() {
+	public  ArrayList<User> test() {
 		IDao dao = sqlSession2.getMapper(IDao.class);
 		return dao.listDao();
 	}
