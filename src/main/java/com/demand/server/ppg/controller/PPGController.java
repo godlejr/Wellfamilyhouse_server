@@ -1,5 +1,7 @@
 package com.demand.server.ppg.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
@@ -18,14 +20,13 @@ public class PPGController {
 	private SqlSession ppg_sqlSession;
 
 	@RequestMapping(value = "/ppg/login", method = { RequestMethod.GET, RequestMethod.POST })
-	public User test(HttpServletRequest request) {
+	public ArrayList<User> test(HttpServletRequest request) {
 		IDao dao = ppg_sqlSession.getMapper(IDao.class);
 		return dao.login_check(request.getParameter("email"), request.getParameter("password"));
 	}
 
 	@RequestMapping(value = "/ppg/{id}/insert_result", method = { RequestMethod.GET, RequestMethod.POST })
 	public void test(@PathVariable String id, HttpServletRequest request) {
-
 		IDao dao = ppg_sqlSession.getMapper(IDao.class);
 		dao.insert_result(Integer.parseInt(id), request.getParameter("aa"), request.getParameter("sns"),
 				request.getParameter("psns"), request.getParameter("ans"), request.getParameter("hrv"),
