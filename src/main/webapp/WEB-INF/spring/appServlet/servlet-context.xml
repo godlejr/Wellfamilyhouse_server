@@ -27,8 +27,8 @@
 	<context:component-scan base-package="com.demand.server" />
 
 
-<!-- ppg  -->
-	<beans:bean name="dataSource"
+	<!-- ppg -->
+	<beans:bean name="ppg_dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver"></beans:property>
 		<beans:property name="url"
@@ -38,17 +38,40 @@
 	</beans:bean>
 
 	<beans:bean id="ppg_sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<beans:property name="dataSource" ref="dataSource"></beans:property>
+		<beans:property name="dataSource" ref="ppg_dataSource"></beans:property>
 		<beans:property name="mapperLocations"
 			value="classpath:com/demand/server/ppg/dao/mapper/*.xml"></beans:property>
 	</beans:bean>
 
 	<beans:bean id="ppg_sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-		<beans:constructor-arg index="0" ref="ppg_sqlSessionFactory"></beans:constructor-arg>
+		<beans:constructor-arg index="0"
+			ref="ppg_sqlSessionFactory"></beans:constructor-arg>
 	</beans:bean>
 
 
-	
+
+	<!-- h2o -->
+	<beans:bean name="h2o_dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver"></beans:property>
+		<beans:property name="url"
+			value="jdbc:mysql://demand.chf1ewq1wbza.ap-northeast-2.rds.amazonaws.com:3306/h2o"></beans:property>
+		<beans:property name="username" value="demand"></beans:property>
+		<beans:property name="password" value="demand8312"></beans:property>
+	</beans:bean>
+
+	<beans:bean id="h2o_sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<beans:property name="dataSource" ref="h2o_dataSource"></beans:property>
+		<beans:property name="mapperLocations"
+			value="classpath:com/demand/server/h2o/dao/mapper/*.xml"></beans:property>
+	</beans:bean>
+
+	<beans:bean id="h2o_sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<beans:constructor-arg index="0"
+			ref="h2o_sqlSessionFactory"></beans:constructor-arg>
+	</beans:bean>
+
+
 
 
 

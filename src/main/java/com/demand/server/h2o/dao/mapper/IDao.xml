@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.demand.server.h2o.dao.IDao">
+	<select id="login_check" resultType="com.demand.server.h2o.dto.User">
+		select id, name, avatar from users where email = #{param1} and password = #{param2}
+	</select>
+	
+	<select id="show_list" resultType="com.demand.server.h2o.dto.Test">
+		SELECT s.id as id, sp.photo as photo,sp.photo_ext as photo_ext, s.name as music, f.name as music_secret, f.ext as music_ext, sc.name as category 
+		FROM 	h2o.songs s, song_categories sc, files f,
+				(select  sp.song_id as song_id, f.name as photo, f.ext as photo_ext 
+					from	song_photos sp, files f
+					where	sp.file_id = f.id) sp
+		where 	s.song_category_id = sc.id
+		and		f.id = s.file_id
+        and		sp.song_id = s.id;
+	</select>
+	
+</mapper>
