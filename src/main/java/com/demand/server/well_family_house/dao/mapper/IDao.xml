@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.demand.server.well_family_house.dao.IDao">
+	<select id="login" resultType="com.demand.server.well_family_house.dto.User">
+		select id, family_id from
+		users
+		where email = #{param1} and password = #{param2}
+	</select>
+
+	<select id="email_check" resultType="com.demand.server.well_family_house.dto.Email">
+		select email from
+		users where
+		email = #{param1}
+	</select>
+
+	<insert id="join">
+		insert into users(email,password,name,birth,phone)
+		values(#{param1},#{param2},#{param3},#{param4},#{param5})
+	</insert>
+
+
+</mapper>

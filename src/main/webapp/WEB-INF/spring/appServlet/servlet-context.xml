@@ -22,6 +22,7 @@
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="contentType" value="text/html; charset=UTF-8"></beans:property>
 	</beans:bean>
 
 	<context:component-scan base-package="com.demand.server" />
@@ -69,6 +70,28 @@
 	<beans:bean id="h2o_sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<beans:constructor-arg index="0"
 			ref="h2o_sqlSessionFactory"></beans:constructor-arg>
+	</beans:bean>
+	
+	
+	<!-- well_family_house -->
+	<beans:bean name="well_family_house_dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver"></beans:property>
+		<beans:property name="url"
+			value="jdbc:mysql://demand.chf1ewq1wbza.ap-northeast-2.rds.amazonaws.com:3306/wellfamily"></beans:property>
+		<beans:property name="username" value="demand"></beans:property>
+		<beans:property name="password" value="demand8312"></beans:property>
+	</beans:bean>
+
+	<beans:bean id="well_family_house_sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<beans:property name="dataSource" ref="well_family_house_dataSource"></beans:property>
+		<beans:property name="mapperLocations"
+			value="classpath:com/demand/server/well_family_house/dao/mapper/*.xml"></beans:property>
+	</beans:bean>
+
+	<beans:bean id="well_family_house_sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<beans:constructor-arg index="0"
+			ref="well_family_house_sqlSessionFactory"></beans:constructor-arg>
 	</beans:bean>
 
 

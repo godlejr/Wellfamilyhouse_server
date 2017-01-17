@@ -19,7 +19,6 @@ import com.demand.server.h2o.dto.User;
 public class H2OController {
 
 	@Autowired
-	
 	SqlSession h2o_sqlSession;
 	
 	@RequestMapping(value = "/h2o/login", method = { RequestMethod.GET, RequestMethod.POST })
