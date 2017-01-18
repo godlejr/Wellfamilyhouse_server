@@ -2,15 +2,15 @@ package com.demand.server.well_family_house.dto;
 
 public class User {
 	private int id;
-	private int family_id;
+	private String name;
 	
 	public User() {
 		super();
 	}
-	public User(int id, int family_id) {
+	public User(int id, String name) {
 		super();
 		this.id = id;
-		this.family_id = family_id;
+		this.name = name;
 	}
 	public int getId() {
 		return id;
@@ -18,11 +18,11 @@ public class User {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getFamily_id() {
-		return family_id;
+	public String getName() {
+		return name;
 	}
-	public void setFamily_id(int family_id) {
-		this.family_id = family_id;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	

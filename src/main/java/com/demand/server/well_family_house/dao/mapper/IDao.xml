@@ -4,10 +4,12 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.demand.server.well_family_house.dao.IDao">
+	<!-- intro -->
 	<select id="login" resultType="com.demand.server.well_family_house.dto.User">
-		select id, family_id from
+		select id, name from
 		users
-		where email = #{param1} and password = #{param2}
+		where
+		email = #{param1} and password = #{param2}
 	</select>
 
 	<select id="email_check" resultType="com.demand.server.well_family_house.dto.Email">
@@ -21,5 +23,13 @@
 		values(#{param1},#{param2},#{param3},#{param4},#{param5})
 	</insert>
 
+
+	<!-- main -->
+	<select id="getFamilyInfo" resultType="com.demand.server.well_family_house.dto.Family">
+		select f.id as id, f.name as name, f.content as
+		content, f.avatar as avatar from familys f ,
+		(SELECT family_id as f_id FROM family_joiners where user_id = #{param1}) u
+		where f.id = u.f_id
+	</select>
 
 </mapper>

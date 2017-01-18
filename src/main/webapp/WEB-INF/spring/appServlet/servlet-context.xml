@@ -33,7 +33,7 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver"></beans:property>
 		<beans:property name="url"
-			value="jdbc:mysql://demand.chf1ewq1wbza.ap-northeast-2.rds.amazonaws.com:3306/ppg"></beans:property>
+			value="jdbc:mysql://demand.chf1ewq1wbza.ap-northeast-2.rds.amazonaws.com:3306/ppg?characterEncoding=utf8"></beans:property>
 		<beans:property name="username" value="demand"></beans:property>
 		<beans:property name="password" value="demand8312"></beans:property>
 	</beans:bean>
@@ -56,7 +56,7 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver"></beans:property>
 		<beans:property name="url"
-			value="jdbc:mysql://demand.chf1ewq1wbza.ap-northeast-2.rds.amazonaws.com:3306/h2o"></beans:property>
+			value="jdbc:mysql://demand.chf1ewq1wbza.ap-northeast-2.rds.amazonaws.com:3306/h2o?characterEncoding=utf8"></beans:property>
 		<beans:property name="username" value="demand"></beans:property>
 		<beans:property name="password" value="demand8312"></beans:property>
 	</beans:bean>
@@ -71,14 +71,15 @@
 		<beans:constructor-arg index="0"
 			ref="h2o_sqlSessionFactory"></beans:constructor-arg>
 	</beans:bean>
-	
-	
+
+
 	<!-- well_family_house -->
 	<beans:bean name="well_family_house_dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver"></beans:property>
 		<beans:property name="url"
-			value="jdbc:mysql://demand.chf1ewq1wbza.ap-northeast-2.rds.amazonaws.com:3306/wellfamily"></beans:property>
+			value="jdbc:mysql://demand.chf1ewq1wbza.ap-northeast-2.rds.amazonaws.com:3306/wellfamily?characterEncoding=utf8"></beans:property>
+		
 		<beans:property name="username" value="demand"></beans:property>
 		<beans:property name="password" value="demand8312"></beans:property>
 	</beans:bean>
