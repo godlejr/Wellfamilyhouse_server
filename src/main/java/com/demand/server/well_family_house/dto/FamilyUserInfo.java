@@ -1,20 +1,23 @@
 package com.demand.server.well_family_house.dto;
 
-public class User {
+public class FamilyUserInfo {
 	private int id;
 	private String name;
+	private String avatar;
+	private String birth;
 	private int level;
 	
-	public User() {
+	public FamilyUserInfo() {
 		super();
 	}
-	public User(int id, String name ,int level) {
+	public FamilyUserInfo(int id, String name, String avatar, String birth,int level) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.level =  level;
+		this.avatar = avatar;
+		this.birth = birth;
+		this.level = level;
 	}
-	
 	
 	
 	public int getLevel() {
@@ -34,6 +37,18 @@ public class User {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+	public String getBirth() {
+		return birth;
+	}
+	public void setBirth(String birth) {
+		this.birth = birth;
 	}
 	
 	

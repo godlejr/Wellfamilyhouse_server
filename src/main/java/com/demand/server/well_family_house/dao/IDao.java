@@ -9,4 +9,5 @@ public interface IDao {
 	ArrayList<User> login(String email, String password);
 	void join(String email,String password, String name, String birth, String phone);
 	ArrayList<Family> getFamilyInfo(int user_id);
+	ArrayList<FamilyUserInfo> getFamilyUserInfo(int family_id);
 }
