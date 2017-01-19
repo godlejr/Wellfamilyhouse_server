@@ -6,10 +6,12 @@
 <mapper namespace="com.demand.server.well_family_house.dao.IDao">
 	<!-- intro -->
 	<select id="login" resultType="com.demand.server.well_family_house.dto.User">
-		select id, name,level from
+		select
+		id,email,name,birth,phone,avatar,level from
 		users
 		where
-		email = #{param1} and password = #{param2}
+		email = #{param1}
+		and password = #{param2}
 	</select>
 
 	<select id="email_check" resultType="com.demand.server.well_family_house.dto.Email">
@@ -35,13 +37,13 @@
 	</select>
 
 	<!-- family main -->
-	<select id="getFamilyUserInfo"
-		resultType="com.demand.server.well_family_house.dto.FamilyUserInfo">
-		select u.id as id ,u.name as name, u.avatar as avatar,
-		u.birth as birth,u.level as level from users u, (SELECT * FROM
+	<select id="getFamilyUserInfo" resultType="com.demand.server.well_family_house.dto.User">
+		select u.id as id
+		,u.email as email,u.name as name,u.birth as birth,u.phone as phone,
+		u.avatar as avatar,u.level as level from users u, (SELECT * FROM
 		family_joiners where
-		family_id = #{param1}) f
-		where u.id = f.user_id
+		family_id = #{param1} and user_id != #{param2}) f
+		where u.id = f.user_id order by name;
 	</select>
 
 </mapper>

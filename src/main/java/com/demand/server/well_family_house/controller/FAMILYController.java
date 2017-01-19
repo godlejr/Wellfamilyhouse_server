@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.demand.server.well_family_house.dao.IDao;
 import com.demand.server.well_family_house.dto.Family;
-import com.demand.server.well_family_house.dto.FamilyUserInfo;
 import com.demand.server.well_family_house.dto.User;
 
 @RestController
@@ -54,9 +53,9 @@ public class FAMILYController {
 	
 	
 	//family_main
-	@RequestMapping(value = "/family/{id}/family_user_Info", method = {RequestMethod.GET,RequestMethod.POST})
-	public ArrayList<FamilyUserInfo> family_user_Info(@PathVariable String id ) {
+	@RequestMapping(value = "/family/{family_id}/family_user_Info", method = {RequestMethod.GET,RequestMethod.POST})
+	public ArrayList<User> family_user_Info(HttpServletRequest request,@PathVariable String family_id ) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-		return dao.getFamilyUserInfo(Integer.parseInt(id));
+		return dao.getFamilyUserInfo(Integer.parseInt(family_id),Integer.parseInt(request.getParameter("user_id")));
 	}
 }
