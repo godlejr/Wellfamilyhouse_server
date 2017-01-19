@@ -20,6 +20,7 @@
 		email = #{param1}
 	</select>
 
+
 	<insert id="join">
 		insert into users(email,password,name,birth,phone)
 		values(#{param1},#{param2},#{param3},#{param4},#{param5})
