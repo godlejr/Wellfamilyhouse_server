@@ -52,6 +52,7 @@ public class FAMILYController {
 		return dao.getFamilyInfo(Integer.parseInt(id));
 	}
 	
+	
 	//family_main
 	@RequestMapping(value = "/family/{id}/family_user_Info", method = {RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<FamilyUserInfo> family_user_Info(@PathVariable String id ) {
