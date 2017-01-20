@@ -12,5 +12,6 @@ public interface IDao {
 	ArrayList<User> getFamilyUserInfo(int family_id,int user_id);
 	ArrayList<StoryInfo> getContentList(int family_id);
 	ArrayList<ContentCount> getContentCount(int story_id);
-	ArrayList<Photo> getPhotoList(int story_id);
+	ArrayList<Photo> getContentPhotoList(int story_id);
+	ArrayList<Photo> getPhotoList(int family_id);
 }

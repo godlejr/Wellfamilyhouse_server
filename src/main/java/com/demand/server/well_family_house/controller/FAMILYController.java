@@ -68,6 +68,12 @@ public class FAMILYController {
 		return dao.getContentList(Integer.parseInt(family_id));
 	}
 	
+	@RequestMapping(value = "/family/{family_id}/family_photo_List", method = {RequestMethod.GET,RequestMethod.POST})
+	public ArrayList<Photo> family_photo_List(@PathVariable String family_id ) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.getPhotoList(Integer.parseInt(family_id));
+	}
+	
 	
 	//content_info (family_main)
 	@RequestMapping(value = "/family/{story_id}/family_content_Count", method = {RequestMethod.GET,RequestMethod.POST})
@@ -76,9 +82,10 @@ public class FAMILYController {
 		return dao.getContentCount(Integer.parseInt(story_id));
 	}
 	
-	@RequestMapping(value = "/family/{story_id}/family_photo_List", method = {RequestMethod.GET,RequestMethod.POST})
-	public ArrayList<Photo> family_photo_List(@PathVariable String story_id ) {
+	@RequestMapping(value = "/family/{story_id}/family_content_photo_List", method = {RequestMethod.GET,RequestMethod.POST})
+	public ArrayList<Photo> family_content_photo_List(@PathVariable String story_id ) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-		return dao.getPhotoList(Integer.parseInt(story_id));
+		return dao.getContentPhotoList(Integer.parseInt(story_id));
 	}
+	
 }
