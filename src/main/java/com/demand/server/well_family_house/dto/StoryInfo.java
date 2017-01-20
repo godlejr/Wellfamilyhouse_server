@@ -3,6 +3,7 @@ package com.demand.server.well_family_house.dto;
 public class StoryInfo {
 	private int user_id;
 	private String name;
+	private String avatar;
 	private int story_id;
 	private String created_at;
 	private String content;
@@ -10,13 +11,22 @@ public class StoryInfo {
 	public StoryInfo() {
 		super();
 	}
-	public StoryInfo(int user_id, String name, int story_id, String created_at, String content) {
+	public StoryInfo(int user_id, String name,String avatar, int story_id, String created_at, String content) {
 		super();
 		this.user_id = user_id;
 		this.name = name;
+		this.avatar =avatar;
 		this.story_id = story_id;
 		this.created_at = created_at;
 		this.content = content;
+	}
+	
+	
+	public String getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 	public int getUser_id() {
 		return user_id;

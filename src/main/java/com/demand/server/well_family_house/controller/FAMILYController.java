@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demand.server.well_family_house.dao.IDao;
-import com.demand.server.well_family_house.dto.ContentCount;
+import com.demand.server.well_family_house.dto.CommentCount;
 import com.demand.server.well_family_house.dto.Family;
+import com.demand.server.well_family_house.dto.LikeCount;
 import com.demand.server.well_family_house.dto.Photo;
 import com.demand.server.well_family_house.dto.StoryInfo;
 import com.demand.server.well_family_house.dto.User;
@@ -76,10 +77,16 @@ public class FAMILYController {
 	
 	
 	//content_info (family_main)
-	@RequestMapping(value = "/family/{story_id}/family_content_Count", method = {RequestMethod.GET,RequestMethod.POST})
-	public ArrayList<ContentCount> family_content_Count(@PathVariable String story_id ) {
+	@RequestMapping(value = "/family/{story_id}/family_comment_Count", method = {RequestMethod.GET,RequestMethod.POST})
+	public ArrayList<CommentCount> family_comment_Count(@PathVariable String story_id ) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-		return dao.getContentCount(Integer.parseInt(story_id));
+		return dao.getCommentCount(Integer.parseInt(story_id));
+	}
+	
+	@RequestMapping(value = "/family/{story_id}/family_like_Count", method = {RequestMethod.GET,RequestMethod.POST})
+	public ArrayList<LikeCount> family_like_Count(@PathVariable String story_id ) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.getLikeCount(Integer.parseInt(story_id));
 	}
 	
 	@RequestMapping(value = "/family/{story_id}/family_content_photo_List", method = {RequestMethod.GET,RequestMethod.POST})
