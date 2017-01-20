@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demand.server.well_family_house.dao.IDao;
+import com.demand.server.well_family_house.dto.ContentCount;
 import com.demand.server.well_family_house.dto.Family;
+import com.demand.server.well_family_house.dto.Photo;
+import com.demand.server.well_family_house.dto.StoryInfo;
 import com.demand.server.well_family_house.dto.User;
 
 @RestController
@@ -57,5 +60,25 @@ public class FAMILYController {
 	public ArrayList<User> family_user_Info(HttpServletRequest request,@PathVariable String family_id ) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getFamilyUserInfo(Integer.parseInt(family_id),Integer.parseInt(request.getParameter("user_id")));
+	}
+	
+	@RequestMapping(value = "/family/{family_id}/family_content_List", method = {RequestMethod.GET,RequestMethod.POST})
+	public ArrayList<StoryInfo> family_content_List(@PathVariable String family_id ) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.getContentList(Integer.parseInt(family_id));
+	}
+	
+	
+	//content_info (family_main)
+	@RequestMapping(value = "/family/{story_id}/family_content_Count", method = {RequestMethod.GET,RequestMethod.POST})
+	public ArrayList<ContentCount> family_content_Count(@PathVariable String story_id ) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.getContentCount(Integer.parseInt(story_id));
+	}
+	
+	@RequestMapping(value = "/family/{story_id}/family_photo_List", method = {RequestMethod.GET,RequestMethod.POST})
+	public ArrayList<Photo> family_photo_List(@PathVariable String story_id ) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.getPhotoList(Integer.parseInt(story_id));
 	}
 }
