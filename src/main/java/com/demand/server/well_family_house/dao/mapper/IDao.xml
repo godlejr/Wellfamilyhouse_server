@@ -4,6 +4,15 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.demand.server.well_family_house.dao.IDao">
+	<!-- user info -->
+	<select id="getUserInfo" resultType="com.demand.server.well_family_house.dto.User">
+		select
+		id,email,name,birth,phone,avatar,level from
+		users
+		where
+		id = #{param1}
+	</select>
+
 	<!-- intro -->
 	<select id="login" resultType="com.demand.server.well_family_house.dto.User">
 		select
@@ -91,13 +100,15 @@
 		insert into story_likes(user_id,story_id)
 		values(#{param1},#{param2})
 	</insert>
-	
+
 	<delete id="updateLikeDown">
-		delete from story_likes where user_id = #{param1} and story_id =#{param2}
+		delete from story_likes where user_id = #{param1} and
+		story_id =#{param2}
 	</delete>
-	
+
 	<select id="checkLike" resultType="com.demand.server.well_family_house.dto.CheckBox">
-		SELECT count(id) as checked FROM wellfamily.story_likes where user_id = #{param1} and story_id = #{param2};
+		SELECT count(id) as checked
+		FROM story_likes where user_id = #{param1} and story_id = #{param2};
 	</select>
 
 

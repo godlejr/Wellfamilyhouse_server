@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demand.server.well_family_house.dao.IDao;
+import com.demand.server.well_family_house.dto.CheckBox;
 import com.demand.server.well_family_house.dto.CommentCount;
 import com.demand.server.well_family_house.dto.Family;
 import com.demand.server.well_family_house.dto.LikeCount;
@@ -107,10 +108,17 @@ public class FAMILYController {
 	}
 	
 	@RequestMapping(value = "/family/{story_id}/family_content_like_check", method = {RequestMethod.GET,RequestMethod.POST})
-	public void family_content_like_check(HttpServletRequest request,@PathVariable String story_id ) {
+	public ArrayList<CheckBox> family_content_like_check(HttpServletRequest request,@PathVariable String story_id ) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-		dao.checkLike(Integer.parseInt(request.getParameter("user_id")),Integer.parseInt(story_id));
+		return dao.checkLike(Integer.parseInt(request.getParameter("user_id")),Integer.parseInt(story_id));
 	}
 	
+	
+	//user_info (user_id)
+	@RequestMapping(value = "/family/user_Info", method = {RequestMethod.GET,RequestMethod.POST})
+	public ArrayList<User> user_Info(HttpServletRequest request ) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.getUserInfo(Integer.parseInt(request.getParameter("user_id")));
+	}
 	
 }
