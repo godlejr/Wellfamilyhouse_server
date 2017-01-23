@@ -75,7 +75,6 @@ public class FAMILYController {
 		return dao.getPhotoList(Integer.parseInt(family_id));
 	}
 	
-	
 	//content_info (family_main)
 	@RequestMapping(value = "/family/{story_id}/family_comment_Count", method = {RequestMethod.GET,RequestMethod.POST})
 	public ArrayList<CommentCount> family_comment_Count(@PathVariable String story_id ) {
@@ -93,6 +92,18 @@ public class FAMILYController {
 	public ArrayList<Photo> family_content_photo_List(@PathVariable String story_id ) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getContentPhotoList(Integer.parseInt(story_id));
+	}
+	
+	@RequestMapping(value = "/family/{story_id}/family_content_like_up", method = {RequestMethod.GET,RequestMethod.POST})
+	public void family_content_like_up(HttpServletRequest request,@PathVariable String story_id ) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		dao.updateLikeUp(Integer.parseInt(request.getParameter("user_id")),Integer.parseInt(story_id));
+	}
+	
+	@RequestMapping(value = "/family/{story_id}/family_content_like_down", method = {RequestMethod.GET,RequestMethod.POST})
+	public void family_content_like_down(HttpServletRequest request,@PathVariable String story_id ) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		dao.updateLikeDown(Integer.parseInt(request.getParameter("user_id")),Integer.parseInt(story_id));
 	}
 	
 }

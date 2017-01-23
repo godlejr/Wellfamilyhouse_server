@@ -87,5 +87,14 @@
 		where story_id= #{param1};
 	</select>
 
+	<insert id="updateLikeUp">
+		insert into story_likes(user_id,story_id)
+		values(#{param1},#{param2})
+	</insert>
+	
+	<delete id="updateLikeDown">
+		delete from story_likes where user_id = #{param1} and story_id =#{param2}
+	</delete>
+
 
 </mapper>

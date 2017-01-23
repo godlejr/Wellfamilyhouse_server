@@ -15,4 +15,6 @@ public interface IDao {
 	ArrayList<Photo> getPhotoList(int family_id);
 	ArrayList<CommentCount> getCommentCount(int story_id);
 	ArrayList<LikeCount> getLikeCount(int story_id);
+	void updateLikeUp(int user_id, int story_id);
+	void updateLikeDown(int user_id, int story_id);
 }
