@@ -106,4 +106,11 @@ public class FAMILYController {
 		dao.updateLikeDown(Integer.parseInt(request.getParameter("user_id")),Integer.parseInt(story_id));
 	}
 	
+	@RequestMapping(value = "/family/{story_id}/family_content_like_check", method = {RequestMethod.GET,RequestMethod.POST})
+	public void family_content_like_check(HttpServletRequest request,@PathVariable String story_id ) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		dao.checkLike(Integer.parseInt(request.getParameter("user_id")),Integer.parseInt(story_id));
+	}
+	
+	
 }

@@ -95,6 +95,10 @@
 	<delete id="updateLikeDown">
 		delete from story_likes where user_id = #{param1} and story_id =#{param2}
 	</delete>
+	
+	<select id="checkLike" resultType="com.demand.server.well_family_house.dto.CheckBox">
+		SELECT count(id) as checked FROM wellfamily.story_likes where user_id = #{param1} and story_id = #{param2};
+	</select>
 
 
 </mapper>

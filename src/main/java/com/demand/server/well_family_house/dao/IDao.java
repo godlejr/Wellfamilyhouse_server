@@ -17,4 +17,5 @@ public interface IDao {
 	ArrayList<LikeCount> getLikeCount(int story_id);
 	void updateLikeUp(int user_id, int story_id);
 	void updateLikeDown(int user_id, int story_id);
+	void checkLike(int parseInt, int parseInt2);
 }
