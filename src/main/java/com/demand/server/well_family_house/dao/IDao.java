@@ -19,4 +19,5 @@ public interface IDao {
 	void updateLikeDown(int user_id, int story_id);
 	ArrayList<CheckBox> checkLike(int user_id, int story_id);
 	ArrayList<User> getUserInfo(int user_id);
+	ArrayList<Comment> getCommentList(int story_id);
 }

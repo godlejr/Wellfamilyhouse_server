@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.demand.server.well_family_house.dao.IDao;
 import com.demand.server.well_family_house.dto.CheckBox;
+import com.demand.server.well_family_house.dto.Comment;
 import com.demand.server.well_family_house.dto.CommentCount;
 import com.demand.server.well_family_house.dto.Family;
 import com.demand.server.well_family_house.dto.LikeCount;
@@ -55,7 +56,6 @@ public class FAMILYController {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getFamilyInfo(Integer.parseInt(id));
 	}
-	
 	
 	//family_main
 	@RequestMapping(value = "/family/{family_id}/family_user_Info", method = {RequestMethod.GET,RequestMethod.POST})
@@ -120,5 +120,15 @@ public class FAMILYController {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getUserInfo(Integer.parseInt(request.getParameter("user_id")));
 	}
+	
+	
+	//comment
+	@RequestMapping(value = "/family/{story_id}/family_detail_comment_List", method = {RequestMethod.GET,RequestMethod.POST})
+	public ArrayList<Comment> family_detail_comment_List(@PathVariable String story_id ) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.getCommentList(Integer.parseInt(story_id));
+	}
+	
+	
 	
 }
