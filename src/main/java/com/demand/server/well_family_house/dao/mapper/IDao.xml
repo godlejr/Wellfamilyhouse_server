@@ -120,4 +120,8 @@
 		deleted FROM comments c,users u where c.user_id = u.id and c.story_id
 		=#{param1} order by c.updated_at
 	</select>
+	
+	<insert id="insertComment">
+		insert into comments(user_id,story_id,content) values(#{param1},#{param2},#{param3})
+	</insert>
 </mapper>

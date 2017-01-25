@@ -20,4 +20,5 @@ public interface IDao {
 	ArrayList<CheckBox> checkLike(int user_id, int story_id);
 	ArrayList<User> getUserInfo(int user_id);
 	ArrayList<Comment> getCommentList(int story_id);
+	void insertComment(int user_id, int story_id, String content);
 }
