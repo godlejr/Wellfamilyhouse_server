@@ -21,4 +21,7 @@ public interface IDao {
 	ArrayList<User> getUserInfo(int user_id);
 	ArrayList<Comment> getCommentList(int story_id);
 	void insertComment(int user_id, int story_id, String content);
+	void insertStory(Story identifier);
+	void insertPhoto(Photo photo);
+	
 }

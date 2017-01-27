@@ -1,11 +1,13 @@
 package com.demand.server.well_family_house.controller;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +33,7 @@ import com.demand.server.well_family_house.dto.CheckBox;
 import com.demand.server.well_family_house.dto.Comment;
 import com.demand.server.well_family_house.dto.CommentCount;
 import com.demand.server.well_family_house.dto.Family;
+import com.demand.server.well_family_house.dto.Story;
 import com.demand.server.well_family_house.dto.LikeCount;
 import com.demand.server.well_family_house.dto.Photo;
 import com.demand.server.well_family_house.dto.Result;
@@ -40,16 +43,6 @@ import com.demand.server.well_family_house.util.ImageS3;
 
 @RestController
 public class FAMILYController {
-
-	private static final String ACCESS_KEY = "AKIAIUGMLWN3S757JDVA";
-	private static final String SECRET_KEY = "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";
-
-	private static final String END_POINT_URL = "http://s3.ap-northeast-2.amazonaws.com";// e.g
-	// http://s3.amazonaws.com
-	private static final String BUCKET = "demand.files";
-	// private static final String IMAGE_LOCATION = "xxx";
-	// private static final String S3_CACHE = "xxx"; // e.g 60
-	private static AmazonS3 s3;
 
 	@Autowired
 	SqlSession well_family_house_sqlSession;
@@ -166,64 +159,93 @@ public class FAMILYController {
 				request.getParameter("content"));
 	}
 
-	@RequestMapping(value = "/family/insert_photos", method = { RequestMethod.GET, RequestMethod.POST })
-	public void insert_photos(HttpServletRequest request) {
-		// ImageS3 imageS3 = new ImageS3();
-	
-			try {
-				uploadImageToAWSS3(request.getParameter("base"), "apps/well_family_house/images/stories");
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	// insert story
+	@RequestMapping(value = "/family/{user_id}/insert_story", method = { RequestMethod.GET, RequestMethod.POST })
+	public ArrayList<Story> insert_story(HttpServletRequest request, @PathVariable String user_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		ArrayList<Story> result = new ArrayList<Story>();
 
-		
-		// ArrayList<Result> result = new ArrayList<Result>();
-		// result.add(new Result(request.getParameter("s")));
-		// return request.getParameter("base64_image0");
+		Story story = new Story();
+		story.setUser_id(Integer.parseInt(user_id));
+		story.setFamily_id(Integer.parseInt(request.getParameter("family_id")));
+		story.setContent(request.getParameter("content"));
+
+		dao.insertStory(story);
+
+		result.add(story);
+		return result;
 	}
 
-	public static void uploadImageToAWSS3(String base64Data, String location)
-			throws IllegalStateException, IOException {
-		String fileName = null;
+	@RequestMapping(value = "/family/{story_id}/insert_photos", method = { RequestMethod.GET, RequestMethod.POST })
+	public void insert_photos(HttpServletRequest request, @PathVariable String story_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		String file_name = null;
+
+		InputStream base64InputStream;
+		StringBuilder stringBuilder = null;
 		try {
+			base64InputStream = request.getInputStream();
+			if (base64InputStream != null) {
+				stringBuilder = new StringBuilder();
+				String line;
+				try {
+					BufferedReader reader = new BufferedReader(new InputStreamReader(base64InputStream, "UTF-8"));
+					while ((line = reader.readLine()) != null) {
+						stringBuilder.append(line).append("\n");
+					}
+				} finally {
+					base64InputStream.close();
+				}
+			}
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 
-			byte[] base64Image = Base64.decodeBase64(base64Data);
+		try {
+			file_name = uploadImageToAWSS3(stringBuilder.toString(), "apps/well_family_house/images/stories");
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		Photo photo = new Photo();
+		photo.setStory_id(Integer.parseInt(story_id));
+		photo.setType(0);
+		photo.setName(file_name);
+		photo.setExt("jpg");
+		
+		dao.insertPhoto(photo);
 
-			// String
-			// directory=ImageS3.class.getResource("").getPath()+"/sample.jpg";
-			//
-			//
-			// new FileOutputStream(directory).write(imageByte);
+	}
 
-//			 byte[] base64Image = org.apache.commons.codec.binary.Base64
-//			 .decodeBase64((base64Data).getBytes());
+	public static String uploadImageToAWSS3(String base64Data, String location)
+			throws IllegalStateException, IOException {
+		String ACCESS_KEY = "AKIAIUGMLWN3S757JDVA";
+		String SECRET_KEY = "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";
+		String END_POINT_URL = "http://s3.ap-northeast-2.amazonaws.com";
+		String BUCKET = "demand.files";
+		AmazonS3 s3;
+		String fileName = null;
+
+		try {
+			byte[] base64Image = org.apache.commons.codec.binary.Base64.decodeBase64(base64Data);
 			InputStream imagefile = new ByteArrayInputStream(base64Image);
-
 			AWSCredentials credentials = new BasicAWSCredentials(ACCESS_KEY, SECRET_KEY);
-			// java.security.Security.setProperty("networkaddress.cache.ttl",
-			// S3_CACHE);
 			s3 = new AmazonS3Client(credentials);
 			s3.setEndpoint(END_POINT_URL);
-
-			// InputStream stream = multipartFile.getInputStream();
-			fileName = System.currentTimeMillis() + ".jpg";
+			fileName = System.currentTimeMillis() + "";
 			ObjectMetadata objectMetadata = new ObjectMetadata();
-		
-			PutObjectRequest putObjectRequest = new PutObjectRequest(BUCKET, location + "/" + fileName, imagefile,
-					objectMetadata);
-			// skip if do not want to access the image directly from S3
+			PutObjectRequest putObjectRequest = new PutObjectRequest(BUCKET, location + "/" + fileName + ".jpg",
+					imagefile, objectMetadata);
 			putObjectRequest.setCannedAcl(CannedAccessControlList.PublicRead);
-			// skip if do not want to access the image directly from S3
 			s3.putObject(putObjectRequest);
-			
-			
+
 		} catch (AmazonServiceException e) {
 			e.printStackTrace();
 		}
+
+		return fileName;
 	}
 
 }

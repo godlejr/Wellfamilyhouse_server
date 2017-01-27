@@ -120,8 +120,23 @@
 		deleted FROM comments c,users u where c.user_id = u.id and c.story_id
 		=#{param1} order by c.updated_at
 	</select>
-	
+
 	<insert id="insertComment">
-		insert into comments(user_id,story_id,content) values(#{param1},#{param2},#{param3})
+		insert into comments(user_id,story_id,content)
+		values(#{param1},#{param2},#{param3})
+	</insert>
+
+	<!-- story insert -->
+	<insert id="insertStory" parameterType="com.demand.server.well_family_house.dto.Story"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		stories(user_id,family_id,content)
+		values(#{user_id},#{family_id},#{content})
+	</insert>
+	
+	<insert id="insertPhoto" parameterType="com.demand.server.well_family_house.dto.Photo">
+		insert into
+		photos(story_id,type,name,ext)
+		values(#{story_id},#{type},#{name},#{ext})
 	</insert>
 </mapper>
