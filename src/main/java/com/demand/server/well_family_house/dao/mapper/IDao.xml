@@ -65,8 +65,8 @@
 		FROM users u, stories s
 		where u.id =
 		s.user_id and
-		s.family_id=#{param1};
-		
+		s.family_id=#{param1} order by s.created_at desc;
+
 	</select>
 
 	<select id="getPhotoList" resultType="com.demand.server.well_family_house.dto.Photo">
@@ -134,10 +134,15 @@
 		stories(user_id,family_id,content)
 		values(#{user_id},#{family_id},#{content})
 	</insert>
-	
+
 	<insert id="insertPhoto" parameterType="com.demand.server.well_family_house.dto.Photo">
 		insert into
 		photos(story_id,type,name,ext)
 		values(#{story_id},#{type},#{name},#{ext})
 	</insert>
+
+	<select id="getStory" resultType="com.demand.server.well_family_house.dto.Story">
+		select id,
+		user_id,family_id,content,created_at from stories where id = #{param1}
+	</select>
 </mapper>

@@ -171,8 +171,8 @@ public class FAMILYController {
 		story.setContent(request.getParameter("content"));
 
 		dao.insertStory(story);
-		result.add(story);
-		return result;
+		
+		return dao.getStory(story.getId());
 	}
 
 	@RequestMapping(value = "/family/{story_id}/insert_photos", method = { RequestMethod.GET, RequestMethod.POST })

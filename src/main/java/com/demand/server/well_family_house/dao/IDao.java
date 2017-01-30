@@ -23,5 +23,6 @@ public interface IDao {
 	void insertComment(int user_id, int story_id, String content);
 	void insertStory(Story identifier);
 	void insertPhoto(Photo photo);
+	ArrayList<Story> getStory(int story_id);
 	
 }
