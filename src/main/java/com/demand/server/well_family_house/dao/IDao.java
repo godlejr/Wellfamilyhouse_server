@@ -19,10 +19,11 @@ public interface IDao {
 	void updateLikeDown(int user_id, int story_id);
 	ArrayList<CheckBox> checkLike(int user_id, int story_id);
 	ArrayList<User> getUserInfo(int user_id);
-	ArrayList<Comment> getCommentList(int story_id);
-	void insertComment(int user_id, int story_id, String content);
+	ArrayList<CommentInfo> getCommentList(int story_id);
+	void insertComment(Comment comment);
 	void insertStory(Story identifier);
 	void insertPhoto(Photo photo);
 	ArrayList<Story> getStory(int story_id);
+	ArrayList<Comment> getComment(int comment_id);
 	
 }

@@ -1,33 +1,36 @@
 package com.demand.server.well_family_house.dto;
 
 public class Comment {
-	private int comment_id;
+	private int id;
 	private int user_id;
-	private String user_name;
-	private String avatar;
+	private int story_id;
 	private String content;
+	private int deleted;
 	private String created_at;
+	private String Updated_at;
 
 	public Comment() {
 		super();
 	}
 
-	public Comment(int comment_id, int user_id, String user_name, String avatar, String content, String created_at) {
+	public Comment(int id, int user_id, int story_id, String content, int deleted, String created_at,
+			String updated_at) {
 		super();
-		this.comment_id = comment_id;
+		this.id = id;
 		this.user_id = user_id;
-		this.user_name = user_name;
-		this.avatar = avatar;
+		this.story_id = story_id;
 		this.content = content;
+		this.deleted = deleted;
 		this.created_at = created_at;
+		Updated_at = updated_at;
 	}
 
-	public int getComment_id() {
-		return comment_id;
+	public int getId() {
+		return id;
 	}
 
-	public void setComment_id(int comment_id) {
-		this.comment_id = comment_id;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getUser_id() {
@@ -38,20 +41,12 @@ public class Comment {
 		this.user_id = user_id;
 	}
 
-	public String getUser_name() {
-		return user_name;
+	public int getStory_id() {
+		return story_id;
 	}
 
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
-	}
-
-	public String getAvatar() {
-		return avatar;
-	}
-
-	public void setAvatar(String avatar) {
-		this.avatar = avatar;
+	public void setStory_id(int story_id) {
+		this.story_id = story_id;
 	}
 
 	public String getContent() {
@@ -62,12 +57,28 @@ public class Comment {
 		this.content = content;
 	}
 
+	public int getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(int deleted) {
+		this.deleted = deleted;
+	}
+
 	public String getCreated_at() {
 		return created_at;
 	}
 
 	public void setCreated_at(String created_at) {
 		this.created_at = created_at;
+	}
+
+	public String getUpdated_at() {
+		return Updated_at;
+	}
+
+	public void setUpdated_at(String updated_at) {
+		Updated_at = updated_at;
 	}
 
 }

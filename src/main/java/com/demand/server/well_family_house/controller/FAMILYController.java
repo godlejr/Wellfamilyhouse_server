@@ -31,6 +31,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.demand.server.well_family_house.dao.IDao;
 import com.demand.server.well_family_house.dto.CheckBox;
 import com.demand.server.well_family_house.dto.Comment;
+import com.demand.server.well_family_house.dto.CommentInfo;
 import com.demand.server.well_family_house.dto.CommentCount;
 import com.demand.server.well_family_house.dto.Family;
 import com.demand.server.well_family_house.dto.Story;
@@ -147,16 +148,22 @@ public class FAMILYController {
 	// comment
 	@RequestMapping(value = "/family/{story_id}/family_detail_comment_List", method = { RequestMethod.GET,
 			RequestMethod.POST })
-	public ArrayList<Comment> family_detail_comment_List(@PathVariable String story_id) {
+	public ArrayList<CommentInfo> family_detail_comment_List(@PathVariable String story_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getCommentList(Integer.parseInt(story_id));
 	}
 
 	@RequestMapping(value = "/family/{story_id}/insert_comment", method = { RequestMethod.GET, RequestMethod.POST })
-	public void insert_comment(HttpServletRequest request, @PathVariable String story_id) {
+	public ArrayList<Comment> insert_comment(HttpServletRequest request, @PathVariable String story_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-		dao.insertComment(Integer.parseInt(request.getParameter("user_id")), Integer.parseInt(story_id),
-				request.getParameter("content"));
+		
+		Comment comment = new Comment();
+		comment.setUser_id(Integer.parseInt(request.getParameter("user_id")));
+		comment.setStory_id(Integer.parseInt(story_id));
+		comment.setContent(request.getParameter("content"));
+		
+		dao.insertComment(comment);
+		return dao.getComment(comment.getId());
 	}
 
 	// insert story

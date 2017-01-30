@@ -114,7 +114,7 @@
 
 	<!-- comment list -->
 
-	<select id="getCommentList" resultType="com.demand.server.well_family_house.dto.Comment">
+	<select id="getCommentList" resultType="com.demand.server.well_family_house.dto.CommentInfo">
 		select c.id as
 		comment_id, c.user_id as user_id, u.name as user_name ,u.avatar as
 		avatar,c.content as content, c.created_at as created_at, c.deleted as
@@ -122,10 +122,15 @@
 		=#{param1} order by c.updated_at
 	</select>
 
-	<insert id="insertComment">
+	<insert id="insertComment" parameterType="com.demand.server.well_family_house.dto.Comment"
+		useGeneratedKeys="true" keyProperty="id">
 		insert into comments(user_id,story_id,content)
-		values(#{param1},#{param2},#{param3})
+		values(#{user_id},#{story_id},#{content})
 	</insert>
+	
+	<select id="getComment" resultType="com.demand.server.well_family_house.dto.Comment">
+		select * from comments where id = #{param1}
+	</select>
 
 	<!-- story insert -->
 	<insert id="insertStory" parameterType="com.demand.server.well_family_house.dto.Story"
