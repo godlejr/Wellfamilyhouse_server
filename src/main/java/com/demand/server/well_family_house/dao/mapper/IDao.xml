@@ -66,6 +66,7 @@
 		where u.id =
 		s.user_id and
 		s.family_id=#{param1};
+		
 	</select>
 
 	<select id="getPhotoList" resultType="com.demand.server.well_family_house.dto.Photo">

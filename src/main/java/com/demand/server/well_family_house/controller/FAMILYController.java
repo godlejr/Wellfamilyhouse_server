@@ -171,7 +171,6 @@ public class FAMILYController {
 		story.setContent(request.getParameter("content"));
 
 		dao.insertStory(story);
-
 		result.add(story);
 		return result;
 	}
@@ -216,7 +215,6 @@ public class FAMILYController {
 		photo.setExt("jpg");
 		
 		dao.insertPhoto(photo);
-
 	}
 
 	public static String uploadImageToAWSS3(String base64Data, String location)
