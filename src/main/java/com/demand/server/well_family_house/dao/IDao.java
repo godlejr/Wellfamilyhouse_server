@@ -25,5 +25,10 @@ public interface IDao {
 	void insertPhoto(Photo photo);
 	ArrayList<Story> getStory(int story_id);
 	ArrayList<Comment> getComment(int comment_id);
+	ArrayList<SongCommentCount> getSongCommentCount(int song_id);
+	ArrayList<SongLikeCount> getSongLikeCount(int song_id);
+	ArrayList<SongCategory> getSongCategoryList();
+	ArrayList<Song> getSongListByHits();
+	ArrayList<Song> getRandomSong(int song_id);
 	
 }

@@ -38,6 +38,10 @@ import com.demand.server.well_family_house.dto.Story;
 import com.demand.server.well_family_house.dto.LikeCount;
 import com.demand.server.well_family_house.dto.Photo;
 import com.demand.server.well_family_house.dto.Result;
+import com.demand.server.well_family_house.dto.Song;
+import com.demand.server.well_family_house.dto.SongCategory;
+import com.demand.server.well_family_house.dto.SongCommentCount;
+import com.demand.server.well_family_house.dto.SongLikeCount;
 import com.demand.server.well_family_house.dto.StoryInfo;
 import com.demand.server.well_family_house.dto.User;
 import com.demand.server.well_family_house.util.ImageS3;
@@ -156,12 +160,12 @@ public class FAMILYController {
 	@RequestMapping(value = "/family/{story_id}/insert_comment", method = { RequestMethod.GET, RequestMethod.POST })
 	public ArrayList<Comment> insert_comment(HttpServletRequest request, @PathVariable String story_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-		
+
 		Comment comment = new Comment();
 		comment.setUser_id(Integer.parseInt(request.getParameter("user_id")));
 		comment.setStory_id(Integer.parseInt(story_id));
 		comment.setContent(request.getParameter("content"));
-		
+
 		dao.insertComment(comment);
 		return dao.getComment(comment.getId());
 	}
@@ -171,14 +175,13 @@ public class FAMILYController {
 	public ArrayList<Story> insert_story(HttpServletRequest request, @PathVariable String user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		ArrayList<Story> result = new ArrayList<Story>();
-
 		Story story = new Story();
 		story.setUser_id(Integer.parseInt(user_id));
 		story.setFamily_id(Integer.parseInt(request.getParameter("family_id")));
 		story.setContent(request.getParameter("content"));
 
 		dao.insertStory(story);
-		
+
 		return dao.getStory(story.getId());
 	}
 
@@ -214,13 +217,13 @@ public class FAMILYController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		Photo photo = new Photo();
 		photo.setStory_id(Integer.parseInt(story_id));
 		photo.setType(0);
 		photo.setName(file_name);
 		photo.setExt("jpg");
-		
+
 		dao.insertPhoto(photo);
 	}
 
@@ -252,5 +255,42 @@ public class FAMILYController {
 
 		return fileName;
 	}
+
+	// memory_sound main
+	@RequestMapping(value = "/family/song_category_List", method = { RequestMethod.GET,
+			RequestMethod.POST })
+	public ArrayList<SongCategory> song_category_List() {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.getSongCategoryList();
+	}
+	
+	// count (memory_sound main)
+	@RequestMapping(value = "/family/{song_id}/song_comment_Count", method = { RequestMethod.GET, RequestMethod.POST })
+	public ArrayList<SongCommentCount> song_comment_Count(@PathVariable String song_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.getSongCommentCount(Integer.parseInt(song_id));
+	}
+
+	@RequestMapping(value = "/family/{song_id}/song_like_Count", method = { RequestMethod.GET, RequestMethod.POST })
+	public ArrayList<SongLikeCount> song_like_Count(@PathVariable String song_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.getSongLikeCount(Integer.parseInt(song_id));
+	}
+	
+	@RequestMapping(value = "/family/song_list_by_Hits", method = { RequestMethod.GET, RequestMethod.POST })
+	public ArrayList<Song> song_list_by_Hits() {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.getSongListByHits();
+	}
+	
+	@RequestMapping(value = "/family/song_random", method = { RequestMethod.GET, RequestMethod.POST })
+	public ArrayList<Song> song_random() {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.getRandomSong(randomRange(3, 12));
+	}
+	
+	public static int randomRange(int n1, int n2) {
+	    return (int) (Math.random() * (n2 - n1 + 1)) + n1;
+	  }
 
 }
