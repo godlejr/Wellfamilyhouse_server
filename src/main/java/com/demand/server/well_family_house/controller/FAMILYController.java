@@ -286,7 +286,7 @@ public class FAMILYController {
 	@RequestMapping(value = "/family/song_random", method = { RequestMethod.GET, RequestMethod.POST })
 	public ArrayList<Song> song_random() {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-		return dao.getRandomSong(randomRange(3, 12));
+		return dao.getRandomSong(randomRange(149,295));
 	}
 	
 	public static int randomRange(int n1, int n2) {
