@@ -192,4 +192,8 @@
 		id,name,ext,title,singer,avatar,category_id,created_at FROM
 		wellfamily.songs where category_id = #{param1};
 	</select>
+	
+	<update id="insertSongHit">
+		update songs set hits = hits+1 where id = #{param1}
+	</update>
 </mapper>

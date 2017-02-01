@@ -292,10 +292,16 @@ public class FAMILYController {
 		return (int) (Math.random() * (n2 - n1 + 1)) + n1;
 	}
 	
-	@RequestMapping(value = "/family/{category_id}/song_random", method = { RequestMethod.GET, RequestMethod.POST })
-	public ArrayList<Song> song_random(@PathVariable String category_id) {
+	@RequestMapping(value = "/family/{category_id}/song_list_by_Category", method = { RequestMethod.GET, RequestMethod.POST })
+	public ArrayList<Song> song_list_by_Category(@PathVariable String category_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getSongListByCategory(Integer.parseInt(category_id));
+	}
+	
+	@RequestMapping(value = "/family/{song_id}/Insert_Song_hit", method = { RequestMethod.GET, RequestMethod.POST })
+	public ArrayList<Song> Insert_Song_hit(@PathVariable String song_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.insertSongHit(Integer.parseInt(song_id));
 	}
 	
 }
