@@ -1,10 +1,7 @@
 package com.demand.server.well_family_house.controller;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -12,7 +9,6 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,20 +27,18 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.demand.server.well_family_house.dao.IDao;
 import com.demand.server.well_family_house.dto.CheckBox;
 import com.demand.server.well_family_house.dto.Comment;
-import com.demand.server.well_family_house.dto.CommentInfo;
 import com.demand.server.well_family_house.dto.CommentCount;
+import com.demand.server.well_family_house.dto.CommentInfo;
 import com.demand.server.well_family_house.dto.Family;
-import com.demand.server.well_family_house.dto.Story;
 import com.demand.server.well_family_house.dto.LikeCount;
 import com.demand.server.well_family_house.dto.Photo;
-import com.demand.server.well_family_house.dto.Result;
 import com.demand.server.well_family_house.dto.Song;
 import com.demand.server.well_family_house.dto.SongCategory;
 import com.demand.server.well_family_house.dto.SongCommentCount;
 import com.demand.server.well_family_house.dto.SongLikeCount;
+import com.demand.server.well_family_house.dto.Story;
 import com.demand.server.well_family_house.dto.StoryInfo;
 import com.demand.server.well_family_house.dto.User;
-import com.demand.server.well_family_house.util.ImageS3;
 
 @RestController
 public class FAMILYController {
@@ -291,17 +285,46 @@ public class FAMILYController {
 	public static int randomRange(int n1, int n2) {
 		return (int) (Math.random() * (n2 - n1 + 1)) + n1;
 	}
-	
-	@RequestMapping(value = "/family/{category_id}/song_list_by_Category", method = { RequestMethod.GET, RequestMethod.POST })
+
+	@RequestMapping(value = "/family/{category_id}/song_list_by_Category", method = { RequestMethod.GET,
+			RequestMethod.POST })
 	public ArrayList<Song> song_list_by_Category(@PathVariable String category_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getSongListByCategory(Integer.parseInt(category_id));
 	}
-	
+
 	@RequestMapping(value = "/family/{song_id}/Insert_Song_hit", method = { RequestMethod.GET, RequestMethod.POST })
 	public ArrayList<Song> Insert_Song_hit(@PathVariable String song_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.insertSongHit(Integer.parseInt(song_id));
+	}
+
+	// memory sound comment
+	@RequestMapping(value = "/family/{song_id}/song_comment_List", method = { RequestMethod.GET, RequestMethod.POST })
+	public ArrayList<CommentInfo> song_comment_List(@PathVariable String song_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.getSongCommentList(Integer.parseInt(song_id));
+	}
+	
+	@RequestMapping(value = "/family/{story_id}/song_like_up", method = { RequestMethod.GET,
+			RequestMethod.POST })
+	public void song_like_up(HttpServletRequest request, @PathVariable String song_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		dao.updateSongLikeUp(Integer.parseInt(request.getParameter("user_id")), Integer.parseInt(song_id));
+	}
+
+	@RequestMapping(value = "/family/{story_id}/song_like_down", method = { RequestMethod.GET,
+			RequestMethod.POST })
+	public void song_like_down(HttpServletRequest request, @PathVariable String song_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		dao.updateSongLikeDown(Integer.parseInt(request.getParameter("user_id")), Integer.parseInt(song_id));
+	}
+
+	@RequestMapping(value = "/family/{story_id}/song_like_check", method = { RequestMethod.GET,
+			RequestMethod.POST })
+	public ArrayList<CheckBox> song_like_check(HttpServletRequest request, @PathVariable String song_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.checkSongLike(Integer.parseInt(request.getParameter("user_id")), Integer.parseInt(song_id));
 	}
 	
 }

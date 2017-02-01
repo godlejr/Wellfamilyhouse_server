@@ -33,4 +33,10 @@ public interface IDao {
 	ArrayList<Song> getSongListByCategory(int category_id);
 	ArrayList<Song> insertSongHit(int song_id);
 	
+	
+	ArrayList<CommentInfo> getSongCommentList(int song_id);
+	void updateSongLikeUp(int user_id, int song_id);
+	void updateSongLikeDown(int user_id, int song_id);
+	ArrayList<CheckBox> checkSongLike(int user_id, int song_id);
+	
 }

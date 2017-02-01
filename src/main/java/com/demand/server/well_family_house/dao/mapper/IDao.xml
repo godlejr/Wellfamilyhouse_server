@@ -196,4 +196,28 @@
 	<update id="insertSongHit">
 		update songs set hits = hits+1 where id = #{param1}
 	</update>
+	
+	<select id="getSongCommentList" resultType="com.demand.server.well_family_house.dto.CommentInfo">
+		select c.id as
+		comment_id, c.user_id as user_id, u.name as user_name ,u.avatar as
+		avatar,c.content as content, c.created_at as created_at, c.deleted as
+		deleted FROM song_comments c,users u where c.user_id = u.id and c.song_id
+		=#{param1} order by c.updated_at
+	</select>
+	
+	<insert id="updateSongLikeUp">
+		insert into song_likes(user_id,story_id)
+		values(#{param1},#{param2})
+	</insert>
+
+	<delete id="updateSongLikeDown">
+		delete from song_likes where user_id = #{param1} and
+		song_id =#{param2}
+	</delete>
+
+	<select id="checkSongLike" resultType="com.demand.server.well_family_house.dto.CheckBox">
+		SELECT count(id) as checked
+		FROM song_likes where user_id = #{param1} and song_id = #{param2};
+	</select>
+	
 </mapper>
