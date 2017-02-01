@@ -30,5 +30,6 @@ public interface IDao {
 	ArrayList<SongCategory> getSongCategoryList();
 	ArrayList<Song> getSongListByHits();
 	ArrayList<Song> getRandomSong(int song_id);
+	ArrayList<Song> getSongListByCategory(int category_id);
 	
 }

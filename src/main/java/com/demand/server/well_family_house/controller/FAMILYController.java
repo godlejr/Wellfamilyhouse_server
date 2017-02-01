@@ -257,13 +257,12 @@ public class FAMILYController {
 	}
 
 	// memory_sound main
-	@RequestMapping(value = "/family/song_category_List", method = { RequestMethod.GET,
-			RequestMethod.POST })
+	@RequestMapping(value = "/family/song_category_List", method = { RequestMethod.GET, RequestMethod.POST })
 	public ArrayList<SongCategory> song_category_List() {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getSongCategoryList();
 	}
-	
+
 	// count (memory_sound main)
 	@RequestMapping(value = "/family/{song_id}/song_comment_Count", method = { RequestMethod.GET, RequestMethod.POST })
 	public ArrayList<SongCommentCount> song_comment_Count(@PathVariable String song_id) {
@@ -276,21 +275,27 @@ public class FAMILYController {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getSongLikeCount(Integer.parseInt(song_id));
 	}
-	
+
 	@RequestMapping(value = "/family/song_list_by_Hits", method = { RequestMethod.GET, RequestMethod.POST })
 	public ArrayList<Song> song_list_by_Hits() {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getSongListByHits();
 	}
-	
+
 	@RequestMapping(value = "/family/song_random", method = { RequestMethod.GET, RequestMethod.POST })
 	public ArrayList<Song> song_random() {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-		return dao.getRandomSong(randomRange(149,295));
+		return dao.getRandomSong(randomRange(149, 295));
+	}
+
+	public static int randomRange(int n1, int n2) {
+		return (int) (Math.random() * (n2 - n1 + 1)) + n1;
 	}
 	
-	public static int randomRange(int n1, int n2) {
-	    return (int) (Math.random() * (n2 - n1 + 1)) + n1;
-	  }
-
+	@RequestMapping(value = "/family/{category_id}/song_random", method = { RequestMethod.GET, RequestMethod.POST })
+	public ArrayList<Song> song_random(@PathVariable String category_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.getSongListByCategory(Integer.parseInt(category_id));
+	}
+	
 }

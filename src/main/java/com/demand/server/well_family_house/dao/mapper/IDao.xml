@@ -124,12 +124,14 @@
 
 	<insert id="insertComment" parameterType="com.demand.server.well_family_house.dto.Comment"
 		useGeneratedKeys="true" keyProperty="id">
-		insert into comments(user_id,story_id,content)
+		insert into
+		comments(user_id,story_id,content)
 		values(#{user_id},#{story_id},#{content})
 	</insert>
-	
+
 	<select id="getComment" resultType="com.demand.server.well_family_house.dto.Comment">
-		select * from comments where id = #{param1}
+		select * from comments where
+		id = #{param1}
 	</select>
 
 	<!-- story insert -->
@@ -150,10 +152,11 @@
 		select id,
 		user_id,family_id,content,created_at from stories where id = #{param1}
 	</select>
-	
-	
+
+
 	<!-- memory song -->
-	<select id="getSongLikeCount" resultType="com.demand.server.well_family_house.dto.SongLikeCount">
+	<select id="getSongLikeCount"
+		resultType="com.demand.server.well_family_house.dto.SongLikeCount">
 		select count(user_id) as
 		like_count from song_likes where
 		song_id = #{param1}
@@ -162,19 +165,31 @@
 	<select id="getSongCommentCount"
 		resultType="com.demand.server.well_family_house.dto.SongCommentCount">
 		SELECT count(user_id) as comment_count
-		FROM song_comments where
+		FROM song_comments
+		where
 		song_id = #{param1}
 	</select>
-	
-	<select id="getSongCategoryList" resultType="com.demand.server.well_family_house.dto.SongCategory">
+
+	<select id="getSongCategoryList"
+		resultType="com.demand.server.well_family_house.dto.SongCategory">
 		SELECT id,name,created_at FROM song_categories;
 	</select>
-	
+
 	<select id="getSongListByHits" resultType="com.demand.server.well_family_house.dto.Song">
-		SELECT id,name,ext,title,singer,avatar,category_id,created_at FROM wellfamily.songs order by hits desc limit 10;
+		SELECT
+		id,name,ext,title,singer,avatar,category_id,created_at FROM
+		wellfamily.songs order by hits desc limit 10;
 	</select>
-	
+
 	<select id="getRandomSong" resultType="com.demand.server.well_family_house.dto.Song">
-		SELECT id,name,ext,title,singer,avatar,category_id,created_at FROM wellfamily.songs where id = #{param1};
+		SELECT
+		id,name,ext,title,singer,avatar,category_id,created_at FROM
+		wellfamily.songs where id = #{param1};
+	</select>
+
+	<select id="getSongListByCategory" resultType="com.demand.server.well_family_house.dto.Song">
+		SELECT
+		id,name,ext,title,singer,avatar,category_id,created_at FROM
+		wellfamily.songs where category_id = #{param1};
 	</select>
 </mapper>
