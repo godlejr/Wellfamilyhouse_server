@@ -206,7 +206,7 @@
 	</select>
 	
 	<insert id="updateSongLikeUp">
-		insert into song_likes(user_id,story_id)
+		insert into song_likes(user_id,song_id)
 		values(#{param1},#{param2})
 	</insert>
 
@@ -223,12 +223,16 @@
 	<insert id="insertSongComment" parameterType="com.demand.server.well_family_house.dto.SongComment"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into
-		song_comments(user_id,story_id,content)
-		values(#{user_id},#{story_id},#{content})
+		song_comments(user_id,song_id,content)
+		values(#{user_id},#{song_id},#{content})
 	</insert>
 
 	<select id="getSongComment" resultType="com.demand.server.well_family_house.dto.SongComment">
 		select * from song_comments where
 		id = #{param1}
+	</select>
+	
+	<select id="getSongRangeList" resultType="com.demand.server.well_family_house.dto.Range">
+		select id, name from ranges
 	</select>
 </mapper>

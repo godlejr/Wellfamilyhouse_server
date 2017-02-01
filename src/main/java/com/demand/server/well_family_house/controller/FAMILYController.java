@@ -32,6 +32,7 @@ import com.demand.server.well_family_house.dto.CommentInfo;
 import com.demand.server.well_family_house.dto.Family;
 import com.demand.server.well_family_house.dto.LikeCount;
 import com.demand.server.well_family_house.dto.Photo;
+import com.demand.server.well_family_house.dto.Range;
 import com.demand.server.well_family_house.dto.Song;
 import com.demand.server.well_family_house.dto.SongCategory;
 import com.demand.server.well_family_house.dto.SongComment;
@@ -331,7 +332,6 @@ public class FAMILYController {
 	@RequestMapping(value = "/family/{song_id}/insert_song_comment", method = { RequestMethod.GET, RequestMethod.POST })
 	public ArrayList<SongComment> insert_song_comment(HttpServletRequest request, @PathVariable String song_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-
 		SongComment songComment = new SongComment();
 		songComment.setUser_id(Integer.parseInt(request.getParameter("user_id")));
 		songComment.setSong_id(Integer.parseInt(song_id));
@@ -339,6 +339,13 @@ public class FAMILYController {
 
 		dao.insertSongComment(songComment);
 		return dao.getSongComment(songComment.getId());
+	}
+	
+	@RequestMapping(value = "/family/song_range_List", method = { RequestMethod.GET,
+			RequestMethod.POST })
+	public ArrayList<Range> song_range_List() {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.getSongRangeList();
 	}
 	
 }

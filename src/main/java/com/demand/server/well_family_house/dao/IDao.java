@@ -32,13 +32,12 @@ public interface IDao {
 	ArrayList<Song> getRandomSong(int song_id);
 	ArrayList<Song> getSongListByCategory(int category_id);
 	ArrayList<Song> insertSongHit(int song_id);
-	
-	
 	ArrayList<CommentInfo> getSongCommentList(int song_id);
 	void updateSongLikeUp(int user_id, int song_id);
 	void updateSongLikeDown(int user_id, int song_id);
 	ArrayList<CheckBox> checkSongLike(int user_id, int song_id);
 	void insertSongComment(SongComment songComment);
 	ArrayList<SongComment> getSongComment(int song_id);
+	ArrayList<Range> getSongRangeList();
 	
 }
