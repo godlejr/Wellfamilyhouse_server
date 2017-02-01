@@ -1,24 +1,24 @@
 package com.demand.server.well_family_house.dto;
 
-public class Comment {
+public class SongComment {
 	private int id;
 	private int user_id;
-	private int story_id;
+	private int song_id;
 	private String content;
 	private int deleted;
 	private String created_at;
 	private String updated_at;
 
-	public Comment() {
+	public SongComment() {
 		super();
 	}
 
-	public Comment(int id, int user_id, int story_id, String content, int deleted, String created_at,
+	public SongComment(int id, int user_id, int song_id, String content, int deleted, String created_at,
 			String updated_at) {
 		super();
 		this.id = id;
 		this.user_id = user_id;
-		this.story_id = story_id;
+		this.song_id = song_id;
 		this.content = content;
 		this.deleted = deleted;
 		this.created_at = created_at;
@@ -41,12 +41,12 @@ public class Comment {
 		this.user_id = user_id;
 	}
 
-	public int getStory_id() {
-		return story_id;
+	public int getSong_id() {
+		return song_id;
 	}
 
-	public void setStory_id(int story_id) {
-		this.story_id = story_id;
+	public void setSong_id(int song_id) {
+		this.song_id = song_id;
 	}
 
 	public String getContent() {
@@ -78,7 +78,7 @@ public class Comment {
 	}
 
 	public void setUpdated_at(String updated_at) {
-		updated_at = updated_at;
+		this.updated_at = updated_at;
 	}
 
 }

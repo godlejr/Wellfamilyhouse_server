@@ -220,4 +220,15 @@
 		FROM song_likes where user_id = #{param1} and song_id = #{param2};
 	</select>
 	
+	<insert id="insertSongComment" parameterType="com.demand.server.well_family_house.dto.SongComment"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		song_comments(user_id,story_id,content)
+		values(#{user_id},#{story_id},#{content})
+	</insert>
+
+	<select id="getSongComment" resultType="com.demand.server.well_family_house.dto.SongComment">
+		select * from song_comments where
+		id = #{param1}
+	</select>
 </mapper>

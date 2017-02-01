@@ -34,6 +34,7 @@ import com.demand.server.well_family_house.dto.LikeCount;
 import com.demand.server.well_family_house.dto.Photo;
 import com.demand.server.well_family_house.dto.Song;
 import com.demand.server.well_family_house.dto.SongCategory;
+import com.demand.server.well_family_house.dto.SongComment;
 import com.demand.server.well_family_house.dto.SongCommentCount;
 import com.demand.server.well_family_house.dto.SongLikeCount;
 import com.demand.server.well_family_house.dto.Story;
@@ -306,25 +307,38 @@ public class FAMILYController {
 		return dao.getSongCommentList(Integer.parseInt(song_id));
 	}
 	
-	@RequestMapping(value = "/family/{story_id}/song_like_up", method = { RequestMethod.GET,
+	@RequestMapping(value = "/family/{song_id}/song_like_up", method = { RequestMethod.GET,
 			RequestMethod.POST })
 	public void song_like_up(HttpServletRequest request, @PathVariable String song_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		dao.updateSongLikeUp(Integer.parseInt(request.getParameter("user_id")), Integer.parseInt(song_id));
 	}
 
-	@RequestMapping(value = "/family/{story_id}/song_like_down", method = { RequestMethod.GET,
+	@RequestMapping(value = "/family/{song_id}/song_like_down", method = { RequestMethod.GET,
 			RequestMethod.POST })
 	public void song_like_down(HttpServletRequest request, @PathVariable String song_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		dao.updateSongLikeDown(Integer.parseInt(request.getParameter("user_id")), Integer.parseInt(song_id));
 	}
 
-	@RequestMapping(value = "/family/{story_id}/song_like_check", method = { RequestMethod.GET,
+	@RequestMapping(value = "/family/{song_id}/song_like_check", method = { RequestMethod.GET,
 			RequestMethod.POST })
 	public ArrayList<CheckBox> song_like_check(HttpServletRequest request, @PathVariable String song_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.checkSongLike(Integer.parseInt(request.getParameter("user_id")), Integer.parseInt(song_id));
+	}
+	
+	@RequestMapping(value = "/family/{song_id}/insert_song_comment", method = { RequestMethod.GET, RequestMethod.POST })
+	public ArrayList<SongComment> insert_song_comment(HttpServletRequest request, @PathVariable String song_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+
+		SongComment songComment = new SongComment();
+		songComment.setUser_id(Integer.parseInt(request.getParameter("user_id")));
+		songComment.setSong_id(Integer.parseInt(song_id));
+		songComment.setContent(request.getParameter("content"));
+
+		dao.insertSongComment(songComment);
+		return dao.getSongComment(songComment.getId());
 	}
 	
 }

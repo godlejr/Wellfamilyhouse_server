@@ -38,5 +38,7 @@ public interface IDao {
 	void updateSongLikeUp(int user_id, int song_id);
 	void updateSongLikeDown(int user_id, int song_id);
 	ArrayList<CheckBox> checkSongLike(int user_id, int song_id);
+	void insertSongComment(SongComment songComment);
+	ArrayList<SongComment> getSongComment(int song_id);
 	
 }
