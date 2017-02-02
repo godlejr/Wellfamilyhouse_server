@@ -39,5 +39,10 @@ public interface IDao {
 	void insertSongComment(SongComment songComment);
 	ArrayList<SongComment> getSongComment(int song_id);
 	ArrayList<Range> getSongRangeList();
+	void insertSongStory(SongStory songStory);
+	ArrayList<SongStory> getSongStory(int id);
+	void insertSongPhoto(SongPhoto songPhoto);
+	void insertAudio(int parseInt, String file_name);
+	
 	
 }

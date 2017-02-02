@@ -38,6 +38,8 @@ import com.demand.server.well_family_house.dto.SongCategory;
 import com.demand.server.well_family_house.dto.SongComment;
 import com.demand.server.well_family_house.dto.SongCommentCount;
 import com.demand.server.well_family_house.dto.SongLikeCount;
+import com.demand.server.well_family_house.dto.SongPhoto;
+import com.demand.server.well_family_house.dto.SongStory;
 import com.demand.server.well_family_house.dto.Story;
 import com.demand.server.well_family_house.dto.StoryInfo;
 import com.demand.server.well_family_house.dto.User;
@@ -170,7 +172,6 @@ public class FAMILYController {
 	@RequestMapping(value = "/family/{user_id}/insert_story", method = { RequestMethod.GET, RequestMethod.POST })
 	public ArrayList<Story> insert_story(HttpServletRequest request, @PathVariable String user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-		ArrayList<Story> result = new ArrayList<Story>();
 		Story story = new Story();
 		story.setUser_id(Integer.parseInt(user_id));
 		story.setFamily_id(Integer.parseInt(request.getParameter("family_id")));
@@ -207,7 +208,7 @@ public class FAMILYController {
 		}
 
 		try {
-			file_name = uploadImageToAWSS3(stringBuilder.toString(), "apps/well_family_house/images/stories");
+			file_name = uploadFileToAWSS3(stringBuilder.toString(), "apps/well_family_house/images/stories",".jpg");
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -223,7 +224,7 @@ public class FAMILYController {
 		dao.insertPhoto(photo);
 	}
 
-	public static String uploadImageToAWSS3(String base64Data, String location)
+	public static String uploadFileToAWSS3(String base64Data, String location,String ext)
 			throws IllegalStateException, IOException {
 		String ACCESS_KEY = "AKIAIUGMLWN3S757JDVA";
 		String SECRET_KEY = "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";
@@ -240,7 +241,7 @@ public class FAMILYController {
 			s3.setEndpoint(END_POINT_URL);
 			fileName = System.currentTimeMillis() + "";
 			ObjectMetadata objectMetadata = new ObjectMetadata();
-			PutObjectRequest putObjectRequest = new PutObjectRequest(BUCKET, location + "/" + fileName + ".jpg",
+			PutObjectRequest putObjectRequest = new PutObjectRequest(BUCKET, location + "/" + fileName + ext,
 					imagefile, objectMetadata);
 			putObjectRequest.setCannedAcl(CannedAccessControlList.PublicRead);
 			s3.putObject(putObjectRequest);
@@ -348,4 +349,99 @@ public class FAMILYController {
 		return dao.getSongRangeList();
 	}
 	
+	// insert story
+		@RequestMapping(value = "/family/{user_id}/insert_song_story", method = { RequestMethod.GET, RequestMethod.POST })
+		public ArrayList<SongStory> insert_song_story(HttpServletRequest request, @PathVariable String user_id) {
+			IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+			SongStory songStory = new SongStory();
+			songStory.setUser_id(Integer.parseInt(user_id));
+			songStory.setRange_id(Integer.parseInt(request.getParameter("range_id")));
+			songStory.setSong_id(Integer.parseInt(request.getParameter("song_id")));
+			songStory.setSong_title(request.getParameter("song_title"));
+			songStory.setSong_singer(request.getParameter("song_singer"));
+			songStory.setContent(request.getParameter("content"));
+			songStory.setLocation(request.getParameter("location"));
+			dao.insertSongStory(songStory);
+
+			return dao.getSongStory(songStory.getId());
+		}
+
+		@RequestMapping(value = "/family/{song_story_id}/insert_song_photos", method = { RequestMethod.GET, RequestMethod.POST })
+		public void insert_song_photos(HttpServletRequest request, @PathVariable String song_story_id) {
+			IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+			String file_name = null;
+
+			InputStream base64InputStream;
+			StringBuilder stringBuilder = null;
+			try {
+				base64InputStream = request.getInputStream();
+				if (base64InputStream != null) {
+					stringBuilder = new StringBuilder();
+					String line;
+					try {
+						BufferedReader reader = new BufferedReader(new InputStreamReader(base64InputStream, "UTF-8"));
+						while ((line = reader.readLine()) != null) {
+							stringBuilder.append(line).append("\n");
+						}
+					} finally {
+						base64InputStream.close();
+					}
+				}
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+
+			try {
+				file_name = uploadFileToAWSS3(stringBuilder.toString(), "apps/well_family_house/images/songstories",".jpg");
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			SongPhoto songPhoto = new SongPhoto();
+			songPhoto.setSong_story_id(Integer.parseInt(song_story_id));
+			songPhoto.setType(0);
+			songPhoto.setName(file_name);
+			songPhoto.setExt("jpg");
+
+			dao.insertSongPhoto(songPhoto);
+		}
+		
+		@RequestMapping(value = "/family/{song_story_id}/insert_song_audio", method = { RequestMethod.GET, RequestMethod.POST })
+		public void insert_song_audio(HttpServletRequest request, @PathVariable String song_story_id) {
+			IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+			String file_name = null;
+
+			InputStream base64InputStream;
+			StringBuilder stringBuilder = null;
+			try {
+				base64InputStream = request.getInputStream();
+				if (base64InputStream != null) {
+					stringBuilder = new StringBuilder();
+					String line;
+					try {
+						BufferedReader reader = new BufferedReader(new InputStreamReader(base64InputStream, "UTF-8"));
+						while ((line = reader.readLine()) != null) {
+							stringBuilder.append(line).append("\n");
+						}
+					} finally {
+						base64InputStream.close();
+					}
+				}
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+
+			try {
+				file_name = uploadFileToAWSS3(stringBuilder.toString(), "apps/well_family_house/images/songstories",".mp3");
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			dao.insertAudio(Integer.parseInt(song_story_id),file_name);
+		}
+	
+		
 }

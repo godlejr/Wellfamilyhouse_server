@@ -235,4 +235,28 @@
 	<select id="getSongRangeList" resultType="com.demand.server.well_family_house.dto.Range">
 		select id, name from ranges
 	</select>
+	
+	
+	<!-- song story insert -->
+	<insert id="insertSongStory" parameterType="com.demand.server.well_family_house.dto.SongStory"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		song_stories(user_id,range_id,song_id,song_title,song_singer,content,location)
+		values(#{user_id},#{range_id},#{song_id},#{song_title},#{song_singer},#{content},#{location})
+	</insert>
+
+	<insert id="insertSongPhoto" parameterType="com.demand.server.well_family_house.dto.SongPhoto">
+		insert into
+		song_photos(song_story_id,type,name,ext)
+		values(#{song_story_id},#{type},#{name},#{ext})
+	</insert>
+
+	<select id="getSongStory" resultType="com.demand.server.well_family_house.dto.SongStory">
+		select id,
+		user_id,range_id,song_id,song_title,song_singer,content,location,created_at from song_stories where id = #{param1}
+	</select>
+	
+	<update id="insertAudio">
+		update song_stories set record_file = #{param2} where id = #{param1}
+	</update>
 </mapper>

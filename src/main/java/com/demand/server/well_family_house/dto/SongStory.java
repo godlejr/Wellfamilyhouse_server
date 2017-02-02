@@ -4,6 +4,10 @@ public class SongStory {
 	private int id;
 	private int user_id;
 	private int range_id;
+	private int song_id;
+	private String song_title;
+	private String song_singer;
+	private String record_file;
 	private String content;
 	private String location;
 	private String hits;
@@ -13,18 +17,57 @@ public class SongStory {
 	public SongStory() {
 		super();
 	}
+	
 
-	public SongStory(int id, int user_id, int range_id, String content, String location, String hits, String created_at,
-			String updated_at) {
+	public SongStory(int id, int user_id, int range_id, int song_id, String song_title, String song_singer,
+			String record_file, String content, String location, String hits, String created_at, String updated_at) {
 		super();
 		this.id = id;
 		this.user_id = user_id;
 		this.range_id = range_id;
+		this.song_id = song_id;
+		this.song_title = song_title;
+		this.song_singer = song_singer;
+		this.record_file = record_file;
 		this.content = content;
 		this.location = location;
 		this.hits = hits;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
+	}
+
+
+
+	public int getSong_id() {
+		return song_id;
+	}
+
+	public void setSong_id(int song_id) {
+		this.song_id = song_id;
+	}
+
+	public String getSong_title() {
+		return song_title;
+	}
+
+	public void setSong_title(String song_title) {
+		this.song_title = song_title;
+	}
+
+	public String getSong_singer() {
+		return song_singer;
+	}
+
+	public void setSong_singer(String song_singer) {
+		this.song_singer = song_singer;
+	}
+
+	public String getRecord_file() {
+		return record_file;
+	}
+
+	public void setRecord_file(String record_file) {
+		this.record_file = record_file;
 	}
 
 	public int getId() {
