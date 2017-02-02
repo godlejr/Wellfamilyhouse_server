@@ -434,12 +434,12 @@ public class FAMILYController {
 			}
 
 			try {
-				file_name = uploadFileToAWSS3(stringBuilder.toString(), "apps/well_family_house/songs/files",".mp3");
+				file_name = uploadFileToAWSS3(stringBuilder.toString(), "apps/well_family_house/songs/records",".mp3");
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			dao.insertAudio(Integer.parseInt(song_story_id),file_name);
+			dao.insertAudio(Integer.parseInt(song_story_id),file_name+".mp3");
 		}
 }
