@@ -434,7 +434,7 @@ public class FAMILYController {
 			}
 
 			try {
-				file_name = uploadFileToAWSS3(stringBuilder.toString(), "apps/well_family_house/images/songstories",".mp3");
+				file_name = uploadFileToAWSS3(stringBuilder.toString(), "apps/well_family_house/songs/files",".mp3");
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -442,6 +442,4 @@ public class FAMILYController {
 			}
 			dao.insertAudio(Integer.parseInt(song_story_id),file_name);
 		}
-	
-		
 }
