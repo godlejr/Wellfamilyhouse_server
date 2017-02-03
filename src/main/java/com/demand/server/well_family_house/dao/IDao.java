@@ -17,7 +17,7 @@ public interface IDao {
 	ArrayList<LikeCount> getLikeCount(int story_id);
 	void updateLikeUp(int user_id, int story_id);
 	void updateLikeDown(int user_id, int story_id);
-	ArrayList<CheckBox> checkLike(int user_id, int story_id);
+	ArrayList<Check> checkLike(int user_id, int story_id);
 	ArrayList<User> getUserInfo(int user_id);
 	ArrayList<CommentInfo> getCommentList(int story_id);
 	void insertComment(Comment comment);
@@ -25,8 +25,8 @@ public interface IDao {
 	void insertPhoto(Photo photo);
 	ArrayList<Story> getStory(int story_id);
 	ArrayList<Comment> getComment(int comment_id);
-	ArrayList<SongCommentCount> getSongCommentCount(int song_id);
-	ArrayList<SongLikeCount> getSongLikeCount(int song_id);
+	ArrayList<CommentCount> getSongCommentCount(int song_id);
+	ArrayList<LikeCount> getSongLikeCount(int song_id);
 	ArrayList<SongCategory> getSongCategoryList();
 	ArrayList<Song> getSongListByHits();
 	ArrayList<Song> getRandomSong(int song_id);
@@ -35,7 +35,7 @@ public interface IDao {
 	ArrayList<CommentInfo> getSongCommentList(int song_id);
 	void updateSongLikeUp(int user_id, int song_id);
 	void updateSongLikeDown(int user_id, int song_id);
-	ArrayList<CheckBox> checkSongLike(int user_id, int song_id);
+	ArrayList<Check> checkSongLike(int user_id, int song_id);
 	void insertSongComment(SongComment songComment);
 	ArrayList<SongComment> getSongComment(int song_id);
 	ArrayList<Range> getSongRangeList();
@@ -43,6 +43,15 @@ public interface IDao {
 	ArrayList<SongStory> getSongStory(int id);
 	void insertSongPhoto(SongPhoto songPhoto);
 	void insertAudio(int parseInt, String file_name);
+	ArrayList<CommentCount> getSongStoryCommentCount(int song_story_id);
+	ArrayList<LikeCount> getSongStoryLikeCount(int song_story_id);
+	void updateSongStoryLikeUp(int user_id, int song_story_id);
+	void updateSongStoryLikeDown(int user_id, int song_story_id);
+	ArrayList<Check> checkSongStoryLike(int user_id, int song_story_id);
+	ArrayList<Check> checkFamily(int user_id, int story_user_id);
+	ArrayList<SongStory> getSongStoryPublicList(int story_user_id);
+	ArrayList<SongStory> getSongStoryFamilyList(int story_user_id);
+	ArrayList<SongStory> getSongStoryMeList(int story_user_id);
 	
 	
 }

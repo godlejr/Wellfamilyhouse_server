@@ -25,7 +25,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.demand.server.well_family_house.dao.IDao;
-import com.demand.server.well_family_house.dto.CheckBox;
+import com.demand.server.well_family_house.dto.Check;
 import com.demand.server.well_family_house.dto.Comment;
 import com.demand.server.well_family_house.dto.CommentCount;
 import com.demand.server.well_family_house.dto.CommentInfo;
@@ -36,8 +36,6 @@ import com.demand.server.well_family_house.dto.Range;
 import com.demand.server.well_family_house.dto.Song;
 import com.demand.server.well_family_house.dto.SongCategory;
 import com.demand.server.well_family_house.dto.SongComment;
-import com.demand.server.well_family_house.dto.SongCommentCount;
-import com.demand.server.well_family_house.dto.SongLikeCount;
 import com.demand.server.well_family_house.dto.SongPhoto;
 import com.demand.server.well_family_house.dto.SongStory;
 import com.demand.server.well_family_house.dto.Story;
@@ -135,7 +133,7 @@ public class FAMILYController {
 
 	@RequestMapping(value = "/family/{story_id}/family_content_like_check", method = { RequestMethod.GET,
 			RequestMethod.POST })
-	public ArrayList<CheckBox> family_content_like_check(HttpServletRequest request, @PathVariable String story_id) {
+	public ArrayList<Check> family_content_like_check(HttpServletRequest request, @PathVariable String story_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.checkLike(Integer.parseInt(request.getParameter("user_id")), Integer.parseInt(story_id));
 	}
@@ -262,13 +260,13 @@ public class FAMILYController {
 
 	// count (memory_sound main)
 	@RequestMapping(value = "/family/{song_id}/song_comment_Count", method = { RequestMethod.GET, RequestMethod.POST })
-	public ArrayList<SongCommentCount> song_comment_Count(@PathVariable String song_id) {
+	public ArrayList<CommentCount> song_comment_Count(@PathVariable String song_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getSongCommentCount(Integer.parseInt(song_id));
 	}
 
 	@RequestMapping(value = "/family/{song_id}/song_like_Count", method = { RequestMethod.GET, RequestMethod.POST })
-	public ArrayList<SongLikeCount> song_like_Count(@PathVariable String song_id) {
+	public ArrayList<LikeCount> song_like_Count(@PathVariable String song_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getSongLikeCount(Integer.parseInt(song_id));
 	}
@@ -325,7 +323,7 @@ public class FAMILYController {
 
 	@RequestMapping(value = "/family/{song_id}/song_like_check", method = { RequestMethod.GET,
 			RequestMethod.POST })
-	public ArrayList<CheckBox> song_like_check(HttpServletRequest request, @PathVariable String song_id) {
+	public ArrayList<Check> song_like_check(HttpServletRequest request, @PathVariable String song_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.checkSongLike(Integer.parseInt(request.getParameter("user_id")), Integer.parseInt(song_id));
 	}
@@ -441,5 +439,67 @@ public class FAMILYController {
 				e.printStackTrace();
 			}
 			dao.insertAudio(Integer.parseInt(song_story_id),file_name+".mp3");
+		}
+		
+		// count (memory_sound my page)
+		@RequestMapping(value = "/family/{song_story_id}/song_story_comment_Count", method = { RequestMethod.GET, RequestMethod.POST })
+		public ArrayList<CommentCount> song_story_comment_Count(@PathVariable String song_story_id) {
+			IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+			return dao.getSongStoryCommentCount(Integer.parseInt(song_story_id));
+		}
+
+		@RequestMapping(value = "/family/{song_story_id}/song_story_like_Count", method = { RequestMethod.GET, RequestMethod.POST })
+		public ArrayList<LikeCount> song_story_like_Count(@PathVariable String song_story_id) {
+			IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+			return dao.getSongStoryLikeCount(Integer.parseInt(song_story_id));
+		}
+		
+		@RequestMapping(value = "/family/{song_story_id}/song_story_like_up", method = { RequestMethod.GET,
+				RequestMethod.POST })
+		public void song_story_like_up(HttpServletRequest request, @PathVariable String song_story_id) {
+			IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+			dao.updateSongStoryLikeUp(Integer.parseInt(request.getParameter("user_id")), Integer.parseInt(song_story_id));
+		}
+
+		@RequestMapping(value = "/family/{song_story_id}/song_story_like_down", method = { RequestMethod.GET,
+				RequestMethod.POST })
+		public void song_story_like_down(HttpServletRequest request, @PathVariable String song_story_id) {
+			IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+			dao.updateSongStoryLikeDown(Integer.parseInt(request.getParameter("user_id")), Integer.parseInt(song_story_id));
+		}
+
+		@RequestMapping(value = "/family/{song_story_id}/song_story_like_check", method = { RequestMethod.GET,
+				RequestMethod.POST })
+		public ArrayList<Check> song_story_like_check(HttpServletRequest request, @PathVariable String song_story_id) {
+			IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+			return dao.checkSongStoryLike(Integer.parseInt(request.getParameter("user_id")), Integer.parseInt(song_story_id));
+		}
+		
+		@RequestMapping(value = "/family/{story_user_id}/family_check", method = { RequestMethod.GET,
+				RequestMethod.POST })
+		public ArrayList<Check> family_check(HttpServletRequest request,@PathVariable String story_user_id) {
+			IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+			return dao.checkFamily(Integer.parseInt(request.getParameter("user_id")),Integer.parseInt(story_user_id));
+		}
+		
+		@RequestMapping(value = "/family/{story_user_id}/song_story_List_Public", method = { RequestMethod.GET,
+				RequestMethod.POST })
+		public ArrayList<SongStory> song_story_List_Public(@PathVariable String story_user_id) {
+			IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+			return dao.getSongStoryPublicList(Integer.parseInt(story_user_id));
+		}
+		
+		@RequestMapping(value = "/family/{story_user_id}/song_story_List_Family", method = { RequestMethod.GET,
+				RequestMethod.POST })
+		public ArrayList<SongStory> song_story_List_Family(@PathVariable String story_user_id) {
+			IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+			return dao.getSongStoryFamilyList(Integer.parseInt(story_user_id));
+		}
+		
+		@RequestMapping(value = "/family/{story_user_id}/song_story_List_Me", method = { RequestMethod.GET,
+				RequestMethod.POST })
+		public ArrayList<SongStory> song_story_List_Me(@PathVariable String story_user_id) {
+			IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+			return dao.getSongStoryMeList(Integer.parseInt(story_user_id));
 		}
 }

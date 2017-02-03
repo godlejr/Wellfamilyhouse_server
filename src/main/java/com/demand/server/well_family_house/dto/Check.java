@@ -1,13 +1,13 @@
 package com.demand.server.well_family_house.dto;
 
-public class CheckBox {
+public class Check {
 	private int checked;
 	
-	public CheckBox() {
+	public Check() {
 		super();
 	}
 
-	public CheckBox(int checked) {
+	public Check(int checked) {
 		super();
 		this.checked = checked;
 	}
