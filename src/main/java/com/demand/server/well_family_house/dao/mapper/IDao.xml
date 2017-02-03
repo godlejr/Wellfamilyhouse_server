@@ -298,7 +298,8 @@
 	<select id="checkSongStoryLike" resultType="com.demand.server.well_family_house.dto.Check">
 		SELECT count(id) as
 		checked
-		FROM song_story_likes where user_id = #{param1} and song_story
+		FROM song_story_likes where user_id = #{param1} and
+		song_story_id
 		= #{param2};
 	</select>
 
@@ -312,19 +313,24 @@
 	</select>
 
 	<select id="getSongStoryPublicList" resultType="com.demand.server.well_family_house.dto.SongStory">
-		SELECT * FROM wellfamily.song_stories where user_id =#{param1} and range_id!=2 and range_id!=3;
+		SELECT * FROM
+		wellfamily.song_stories where user_id =#{param1} and range_id!=2 and
+		range_id!=3;
 	</select>
-	
+
 	<select id="getSongStoryFamilyList" resultType="com.demand.server.well_family_house.dto.SongStory">
-		SELECT * FROM wellfamily.song_stories where user_id =#{param1} and range_id!=3;
+		SELECT * FROM
+		wellfamily.song_stories where user_id =#{param1} and range_id!=3;
 	</select>
-	
+
 	<select id="getSongStoryMeList" resultType="com.demand.server.well_family_house.dto.SongStory">
-		SELECT * FROM wellfamily.song_stories where user_id =#{param1};
+		SELECT * FROM
+		wellfamily.song_stories where user_id =#{param1};
 	</select>
-	
+
 	<select id="getSongStoryPhotoList" resultType="com.demand.server.well_family_house.dto.SongPhoto">
-		SELECT * FROM wellfamily.song_photos
+		SELECT * FROM
+		wellfamily.song_photos
 		where song_story_id= #{param1};
 	</select>
 </mapper>
