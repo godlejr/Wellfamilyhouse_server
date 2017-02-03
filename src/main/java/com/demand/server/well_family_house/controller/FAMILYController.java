@@ -502,4 +502,12 @@ public class FAMILYController {
 			IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 			return dao.getSongStoryMeList(Integer.parseInt(story_user_id));
 		}
+		
+		@RequestMapping(value = "/family/{song_story_id}/song_story_photo_List", method = { RequestMethod.GET,
+				RequestMethod.POST })
+		public ArrayList<SongPhoto> song_story_photo_List(@PathVariable String song_story_id) {
+			IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+			return dao.getSongStoryPhotoList(Integer.parseInt(song_story_id));
+		}
+		
 }

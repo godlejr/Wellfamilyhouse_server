@@ -52,6 +52,7 @@ public interface IDao {
 	ArrayList<SongStory> getSongStoryPublicList(int story_user_id);
 	ArrayList<SongStory> getSongStoryFamilyList(int story_user_id);
 	ArrayList<SongStory> getSongStoryMeList(int story_user_id);
+	ArrayList<SongPhoto> getSongStoryPhotoList(int song_story_id);
 	
 	
 }

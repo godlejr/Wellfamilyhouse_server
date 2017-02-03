@@ -322,4 +322,9 @@
 	<select id="getSongStoryMeList" resultType="com.demand.server.well_family_house.dto.SongStory">
 		SELECT * FROM wellfamily.song_stories where user_id =#{param1};
 	</select>
+	
+	<select id="getSongStoryPhotoList" resultType="com.demand.server.well_family_house.dto.SongPhoto">
+		SELECT * FROM wellfamily.song_photos
+		where song_story_id= #{param1};
+	</select>
 </mapper>
