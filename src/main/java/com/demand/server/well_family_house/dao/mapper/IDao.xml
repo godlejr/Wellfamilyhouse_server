@@ -333,4 +333,25 @@
 		wellfamily.song_photos
 		where song_story_id= #{param1};
 	</select>
+	
+	<select id="getSongStoryCommentList" resultType="com.demand.server.well_family_house.dto.CommentInfo">
+		select c.id as
+		comment_id, c.user_id as user_id, u.name as user_name ,u.avatar as
+		avatar,c.content as content, c.created_at as created_at, c.deleted as
+		deleted FROM song_story_comments c,users u where c.user_id = u.id and c.song_story_id
+		=#{param1} order by c.updated_at
+	</select>
+	
+	<insert id="insertSongStoryComment" parameterType="com.demand.server.well_family_house.dto.SongStoryComment"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		song_story_comments(user_id,song_story_id,content)
+		values(#{user_id},#{song_story_id},#{content})
+	</insert>
+	
+	<select id="getSongStoryComment" resultType="com.demand.server.well_family_house.dto.SongStoryComment">
+		select * from
+		song_story_comments where
+		id = #{param1}
+	</select>
 </mapper>
