@@ -315,17 +315,17 @@
 	<select id="getSongStoryPublicList" resultType="com.demand.server.well_family_house.dto.SongStory">
 		SELECT * FROM
 		wellfamily.song_stories where user_id =#{param1} and range_id!=2 and
-		range_id!=3;
+		range_id!=3 order by created_at desc;
 	</select>
 
 	<select id="getSongStoryFamilyList" resultType="com.demand.server.well_family_house.dto.SongStory">
 		SELECT * FROM
-		wellfamily.song_stories where user_id =#{param1} and range_id!=3;
+		wellfamily.song_stories where user_id =#{param1} and range_id!=3 order by created_at desc;
 	</select>
 
 	<select id="getSongStoryMeList" resultType="com.demand.server.well_family_house.dto.SongStory">
 		SELECT * FROM
-		wellfamily.song_stories where user_id =#{param1};
+		wellfamily.song_stories where user_id =#{param1} order by created_at desc;
 	</select>
 
 	<select id="getSongStoryPhotoList" resultType="com.demand.server.well_family_house.dto.SongPhoto">
