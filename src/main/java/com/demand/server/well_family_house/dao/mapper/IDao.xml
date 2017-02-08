@@ -171,7 +171,7 @@
 
 	<select id="getSongCategoryList"
 		resultType="com.demand.server.well_family_house.dto.SongCategory">
-		SELECT id,name,created_at FROM song_categories;
+		SELECT id,name,avatar,created_at FROM song_categories;
 	</select>
 
 	<select id="getSongListByHits" resultType="com.demand.server.well_family_house.dto.Song">
@@ -320,12 +320,14 @@
 
 	<select id="getSongStoryFamilyList" resultType="com.demand.server.well_family_house.dto.SongStory">
 		SELECT * FROM
-		wellfamily.song_stories where user_id =#{param1} and range_id!=3 order by created_at desc;
+		wellfamily.song_stories where user_id =#{param1} and range_id!=3 order
+		by created_at desc;
 	</select>
 
 	<select id="getSongStoryMeList" resultType="com.demand.server.well_family_house.dto.SongStory">
 		SELECT * FROM
-		wellfamily.song_stories where user_id =#{param1} order by created_at desc;
+		wellfamily.song_stories where user_id =#{param1} order by created_at
+		desc;
 	</select>
 
 	<select id="getSongStoryPhotoList" resultType="com.demand.server.well_family_house.dto.SongPhoto">
@@ -333,25 +335,32 @@
 		wellfamily.song_photos
 		where song_story_id= #{param1};
 	</select>
-	
+
 	<select id="getSongStoryCommentList" resultType="com.demand.server.well_family_house.dto.CommentInfo">
 		select c.id as
 		comment_id, c.user_id as user_id, u.name as user_name ,u.avatar as
 		avatar,c.content as content, c.created_at as created_at, c.deleted as
-		deleted FROM song_story_comments c,users u where c.user_id = u.id and c.song_story_id
+		deleted FROM song_story_comments c,users u where c.user_id = u.id and
+		c.song_story_id
 		=#{param1} order by c.updated_at
 	</select>
-	
-	<insert id="insertSongStoryComment" parameterType="com.demand.server.well_family_house.dto.SongStoryComment"
+
+	<insert id="insertSongStoryComment"
+		parameterType="com.demand.server.well_family_house.dto.SongStoryComment"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into
 		song_story_comments(user_id,song_story_id,content)
 		values(#{user_id},#{song_story_id},#{content})
 	</insert>
-	
-	<select id="getSongStoryComment" resultType="com.demand.server.well_family_house.dto.SongStoryComment">
+
+	<select id="getSongStoryComment"
+		resultType="com.demand.server.well_family_house.dto.SongStoryComment">
 		select * from
 		song_story_comments where
 		id = #{param1}
+	</select>
+	
+	<select id="getSongStoryAvatar" resultType="com.demand.server.well_family_house.dto.SongStoryAvatar">
+		SELECT avatar FROM wellfamily.songs where id = #{param1};
 	</select>
 </mapper>

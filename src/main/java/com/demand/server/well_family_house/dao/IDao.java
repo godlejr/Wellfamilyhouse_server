@@ -56,6 +56,7 @@ public interface IDao {
 	ArrayList<CommentInfo> getSongStoryCommentList(int song_story_id);
 	void insertSongStoryComment(SongStoryComment songStoryComment);
 	ArrayList<SongStoryComment> getSongStoryComment(int song_story_id);
+	ArrayList<SongStoryAvatar> getSongStoryAvatar(int song_id);
 	
 	
 }

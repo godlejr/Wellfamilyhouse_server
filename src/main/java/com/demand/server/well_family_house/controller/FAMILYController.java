@@ -38,6 +38,7 @@ import com.demand.server.well_family_house.dto.SongCategory;
 import com.demand.server.well_family_house.dto.SongComment;
 import com.demand.server.well_family_house.dto.SongPhoto;
 import com.demand.server.well_family_house.dto.SongStory;
+import com.demand.server.well_family_house.dto.SongStoryAvatar;
 import com.demand.server.well_family_house.dto.SongStoryComment;
 import com.demand.server.well_family_house.dto.Story;
 import com.demand.server.well_family_house.dto.StoryInfo;
@@ -529,5 +530,11 @@ public class FAMILYController {
 
 			dao.insertSongStoryComment(songStoryComment);
 			return dao.getSongStoryComment(songStoryComment.getId());
+		}
+		
+		@RequestMapping(value = "/family/{song_story_id}/song_story_avatar", method = { RequestMethod.GET, RequestMethod.POST })
+		public ArrayList<SongStoryAvatar> song_story_avatar(HttpServletRequest request,@PathVariable String song_story_id) {
+			IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+			return dao.getSongStoryAvatar(Integer.parseInt(request.getParameter("song_id")));
 		}
 }
