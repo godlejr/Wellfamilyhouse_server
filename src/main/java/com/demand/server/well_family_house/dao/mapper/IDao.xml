@@ -10,7 +10,7 @@
 		id,email,name,birth,phone,avatar,level from
 		users
 		where
-		id = #{param1}
+		id = #{param1};
 	</select>
 
 	<!-- intro -->
@@ -20,19 +20,19 @@
 		users
 		where
 		email = #{param1}
-		and password = #{param2}
+		and password = #{param2};
 	</select>
 
 	<select id="email_check" resultType="com.demand.server.well_family_house.dto.Email">
 		select email from
 		users where
-		email = #{param1}
+		email = #{param1};
 	</select>
 
 
 	<insert id="join">
 		insert into users(email,password,name,birth,phone)
-		values(#{param1},#{param2},#{param3},#{param4},#{param5})
+		values(#{param1},#{param2},#{param3},#{param4},#{param5});
 	</insert>
 
 
@@ -43,7 +43,7 @@
 		content, f.avatar as avatar from familys f ,
 		(SELECT family_id as f_id FROM family_joiners where user_id =
 		#{param1}) u
-		where f.id = u.f_id
+		where f.id = u.f_id;
 	</select>
 
 	<!-- family main -->
@@ -72,21 +72,21 @@
 		select p.id as id,
 		p.story_id as story_id, p.type as type, p.name as name, p.ext as ext
 		from photos p, (SELECT id FROM stories where family_id =#{param1}) s
-		where p.story_id = s.id order by p.updated_at desc
+		where p.story_id = s.id order by p.updated_at desc;
 	</select>
 
 	<!-- content count (family main) -->
 	<select id="getLikeCount" resultType="com.demand.server.well_family_house.dto.LikeCount">
 		select count(user_id) as
 		like_count from story_likes where
-		story_id = #{param1}
+		story_id = #{param1};
 	</select>
 
 	<select id="getCommentCount"
 		resultType="com.demand.server.well_family_house.dto.CommentCount">
 		SELECT count(user_id) as comment_count
 		FROM comments where
-		story_id = #{param1}
+		story_id = #{param1};
 	</select>
 
 	<select id="getContentPhotoList" resultType="com.demand.server.well_family_house.dto.Photo">
@@ -98,12 +98,12 @@
 
 	<insert id="updateLikeUp">
 		insert into story_likes(user_id,story_id)
-		values(#{param1},#{param2})
+		values(#{param1},#{param2});
 	</insert>
 
 	<delete id="updateLikeDown">
 		delete from story_likes where user_id = #{param1} and
-		story_id =#{param2}
+		story_id =#{param2};
 	</delete>
 
 	<select id="checkLike" resultType="com.demand.server.well_family_house.dto.Check">
@@ -118,19 +118,19 @@
 		comment_id, c.user_id as user_id, u.name as user_name ,u.avatar as
 		avatar,c.content as content, c.created_at as created_at, c.deleted as
 		deleted FROM comments c,users u where c.user_id = u.id and c.story_id
-		=#{param1} order by c.updated_at
+		=#{param1} order by c.updated_at;
 	</select>
 
 	<insert id="insertComment" parameterType="com.demand.server.well_family_house.dto.Comment"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into
 		comments(user_id,story_id,content)
-		values(#{user_id},#{story_id},#{content})
+		values(#{user_id},#{story_id},#{content});
 	</insert>
 
 	<select id="getComment" resultType="com.demand.server.well_family_house.dto.Comment">
 		select * from comments where
-		id = #{param1}
+		id = #{param1};
 	</select>
 
 	<!-- story insert -->
@@ -138,18 +138,18 @@
 		useGeneratedKeys="true" keyProperty="id">
 		insert into
 		stories(user_id,family_id,content)
-		values(#{user_id},#{family_id},#{content})
+		values(#{user_id},#{family_id},#{content});
 	</insert>
 
 	<insert id="insertPhoto" parameterType="com.demand.server.well_family_house.dto.Photo">
 		insert into
 		photos(story_id,type,name,ext)
-		values(#{story_id},#{type},#{name},#{ext})
+		values(#{story_id},#{type},#{name},#{ext});
 	</insert>
 
 	<select id="getStory" resultType="com.demand.server.well_family_house.dto.Story">
 		select id,
-		user_id,family_id,content,created_at from stories where id = #{param1}
+		user_id,family_id,content,created_at from stories where id = #{param1};
 	</select>
 
 
@@ -158,7 +158,7 @@
 		select count(user_id)
 		as
 		like_count from song_likes where
-		song_id = #{param1}
+		song_id = #{param1};
 	</select>
 
 	<select id="getSongCommentCount"
@@ -166,7 +166,7 @@
 		SELECT count(user_id) as comment_count
 		FROM song_comments
 		where
-		song_id = #{param1}
+		song_id = #{param1};
 	</select>
 
 	<select id="getSongCategoryList"
@@ -193,7 +193,7 @@
 	</select>
 
 	<update id="insertSongHit">
-		update songs set hits = hits+1 where id = #{param1}
+		update songs set hits = hits+1 where id = #{param1};
 	</update>
 
 	<select id="getSongCommentList" resultType="com.demand.server.well_family_house.dto.CommentInfo">
@@ -202,17 +202,17 @@
 		avatar,c.content as content, c.created_at as created_at, c.deleted as
 		deleted FROM song_comments c,users u where c.user_id = u.id and
 		c.song_id
-		=#{param1} order by c.updated_at
+		=#{param1} order by c.updated_at;
 	</select>
 
 	<insert id="updateSongLikeUp">
 		insert into song_likes(user_id,song_id)
-		values(#{param1},#{param2})
+		values(#{param1},#{param2});
 	</insert>
 
 	<delete id="updateSongLikeDown">
 		delete from song_likes where user_id = #{param1} and
-		song_id =#{param2}
+		song_id =#{param2};
 	</delete>
 
 	<select id="checkSongLike" resultType="com.demand.server.well_family_house.dto.Check">
@@ -232,12 +232,12 @@
 	<select id="getSongComment" resultType="com.demand.server.well_family_house.dto.SongComment">
 		select * from
 		song_comments where
-		id = #{param1}
+		id = #{param1};
 	</select>
 
 	<select id="getSongRangeList" resultType="com.demand.server.well_family_house.dto.Range">
 		select id, name from
-		ranges
+		ranges;
 	</select>
 
 
@@ -246,24 +246,24 @@
 		useGeneratedKeys="true" keyProperty="id">
 		insert into
 		song_stories(user_id,range_id,song_id,song_title,song_singer,content,location)
-		values(#{user_id},#{range_id},#{song_id},#{song_title},#{song_singer},#{content},#{location})
+		values(#{user_id},#{range_id},#{song_id},#{song_title},#{song_singer},#{content},#{location});
 	</insert>
 
 	<insert id="insertSongPhoto" parameterType="com.demand.server.well_family_house.dto.SongPhoto">
 		insert into
 		song_photos(song_story_id,type,name,ext)
-		values(#{song_story_id},#{type},#{name},#{ext})
+		values(#{song_story_id},#{type},#{name},#{ext});
 	</insert>
 
 	<select id="getSongStory" resultType="com.demand.server.well_family_house.dto.SongStory">
 		select id,
 		user_id,range_id,song_id,song_title,song_singer,content,location,created_at
-		from song_stories where id = #{param1}
+		from song_stories where id = #{param1};
 	</select>
 
 	<update id="insertAudio">
 		update song_stories set record_file = #{param2} where
-		id = #{param1}
+		id = #{param1};
 	</update>
 
 	<!-- memory song -->
@@ -272,7 +272,7 @@
 		count(user_id) as
 		like_count from song_story_likes where
 		song_story_id =
-		#{param1}
+		#{param1};
 	</select>
 
 	<select id="getSongStoryCommentCount"
@@ -281,18 +281,18 @@
 		FROM
 		song_story_comments
 		where
-		song_story_id = #{param1}
+		song_story_id = #{param1};
 	</select>
 
 	<insert id="updateSongStoryLikeUp">
 		insert into song_story_likes(user_id,song_story_id)
-		values(#{param1},#{param2})
+		values(#{param1},#{param2});
 	</insert>
 
 	<delete id="updateSongStoryLikeDown">
 		delete from song_story_likes where user_id =
 		#{param1} and
-		song_story_id =#{param2}
+		song_story_id =#{param2};
 	</delete>
 
 	<select id="checkSongStoryLike" resultType="com.demand.server.well_family_house.dto.Check">
@@ -309,7 +309,7 @@
 		user_id =#{param1}) a,
 		(SELECT family_id FROM wellfamily.family_joiners
 		where user_id = #{param2}) b where
-		a.family_id = b.family_id
+		a.family_id = b.family_id;
 	</select>
 
 	<select id="getSongStoryPublicList" resultType="com.demand.server.well_family_house.dto.SongStory">
@@ -342,7 +342,7 @@
 		avatar,c.content as content, c.created_at as created_at, c.deleted as
 		deleted FROM song_story_comments c,users u where c.user_id = u.id and
 		c.song_story_id
-		=#{param1} order by c.updated_at
+		=#{param1} order by c.updated_at;
 	</select>
 
 	<insert id="insertSongStoryComment"
@@ -350,14 +350,14 @@
 		useGeneratedKeys="true" keyProperty="id">
 		insert into
 		song_story_comments(user_id,song_story_id,content)
-		values(#{user_id},#{song_story_id},#{content})
+		values(#{user_id},#{song_story_id},#{content});
 	</insert>
 
 	<select id="getSongStoryComment"
 		resultType="com.demand.server.well_family_house.dto.SongStoryComment">
 		select * from
 		song_story_comments where
-		id = #{param1}
+		id = #{param1};
 	</select>
 	
 	<select id="getSongStoryAvatar" resultType="com.demand.server.well_family_house.dto.SongStoryAvatar">
