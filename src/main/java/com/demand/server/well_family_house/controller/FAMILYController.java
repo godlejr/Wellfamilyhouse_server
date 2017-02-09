@@ -537,4 +537,10 @@ public class FAMILYController {
 			IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 			return dao.getSongStoryAvatar(Integer.parseInt(request.getParameter("song_id")));
 		}
+		
+		@RequestMapping(value = "/family/{user_id}/find_family_name", method = { RequestMethod.GET, RequestMethod.POST })
+		public ArrayList<Family> find_family_name(HttpServletRequest request,@PathVariable String user_id) {
+			IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+			return dao.getFamilySearchList(request.getParameter("family_name"));
+		}	
 }

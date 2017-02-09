@@ -149,7 +149,8 @@
 
 	<select id="getStory" resultType="com.demand.server.well_family_house.dto.Story">
 		select id,
-		user_id,family_id,content,created_at from stories where id = #{param1};
+		user_id,family_id,content,created_at from stories where id =
+		#{param1};
 	</select>
 
 
@@ -359,8 +360,15 @@
 		song_story_comments where
 		id = #{param1};
 	</select>
-	
-	<select id="getSongStoryAvatar" resultType="com.demand.server.well_family_house.dto.SongStoryAvatar">
+
+	<select id="getSongStoryAvatar"
+		resultType="com.demand.server.well_family_house.dto.SongStoryAvatar">
 		SELECT avatar FROM wellfamily.songs where id = #{param1};
+	</select>
+
+	<!-- find family name -->
+	<select id="getFamilySearchList" resultType="com.demand.server.well_family_house.dto.Family">
+		SELECT * FROM wellfamily.familys where name like CONCAT('%',#{param1},'%')
+
 	</select>
 </mapper>
