@@ -58,6 +58,10 @@ public interface IDao {
 	ArrayList<SongStoryComment> getSongStoryComment(int song_story_id);
 	ArrayList<SongStoryAvatar> getSongStoryAvatar(int song_id);
 	ArrayList<Family> getFamilySearchList(String family_name);
+	void insertFamily(Family family);
+	void insertFamilyJoiner(int family_id, int user_id);
+	void updateFamilyAvatar(int family_id, String file_name);
+	ArrayList<User> getUserSearchList(String search);
 	
 	
 }

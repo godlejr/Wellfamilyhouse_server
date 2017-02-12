@@ -40,7 +40,7 @@
 	<select id="getFamilyInfo" resultType="com.demand.server.well_family_house.dto.Family">
 		select f.id as id, f.name
 		as name, f.content as
-		content, f.avatar as avatar from familys f ,
+		content, f.avatar as avatar, f.user_id as user_id from familys f ,
 		(SELECT family_id as f_id FROM family_joiners where user_id =
 		#{param1}) u
 		where f.id = u.f_id;
@@ -369,6 +369,27 @@
 	<!-- find family name -->
 	<select id="getFamilySearchList" resultType="com.demand.server.well_family_house.dto.Family">
 		SELECT * FROM wellfamily.familys where name like CONCAT('%',#{param1},'%')
-
 	</select>
+	
+	<!-- find user name -->
+	<select id="getFamilySearchList" resultType="com.demand.server.well_family_house.dto.User">
+		SELECT id,email,name,birth,phone,avatar,level FROM wellfamily.users where name like CONCAT('%',#{param1},'%') or email like  CONCAT('%',#{param1},'%')
+	</select>
+	
+	<insert id="insertFamily" parameterType="com.demand.server.well_family_house.dto.Family"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		familys(name,content,user_id)
+		values(#{name},#{content},#{user_id})
+	</insert>
+	
+	<insert id="insertFamilyJoiner">
+		insert into
+		family_joiners(famiy_id,user_id)
+		values(#{param1},#{param2})
+	</insert>
+	
+	<update id="updateFamilyAvatar">
+		update familys set avatar = #{param2} where id = #{param1};
+	</update>
 </mapper>
