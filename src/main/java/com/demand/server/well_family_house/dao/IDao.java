@@ -31,7 +31,7 @@ public interface IDao {
 	ArrayList<Song> getSongListByHits();
 	ArrayList<Song> getRandomSong(int song_id);
 	ArrayList<Song> getSongListByCategory(int category_id);
-	ArrayList<Song> insertSongHit(int song_id);
+	void insertSongHit(int song_id);
 	ArrayList<CommentInfo> getSongCommentList(int song_id);
 	void updateSongLikeUp(int user_id, int song_id);
 	void updateSongLikeDown(int user_id, int song_id);
@@ -62,6 +62,12 @@ public interface IDao {
 	void insertFamilyJoiner(int family_id, int user_id);
 	void updateFamilyAvatar(int family_id, String file_name);
 	ArrayList<User> getUserSearchList(String search);
+	ArrayList<Family> getFamily(int family_id);
+	void insertUserIntoFamily(int family_id, int user_id);
+	void deleteUserFromFamily(int family_id, int user_id);
+	ArrayList<SongStoryEmotionInfo> getEmotionList();
+	void insertEmotionIntoSongStory(int song_story_id, int song_story_emotion_id);
+	ArrayList<SongStoryEmotionData> getSongStoryEmotionData(int song_story_id);
 	
 	
 }
