@@ -68,6 +68,7 @@ public interface IDao {
 	ArrayList<SongStoryEmotionInfo> getEmotionList();
 	void insertEmotionIntoSongStory(int song_story_id, int song_story_emotion_id);
 	ArrayList<SongStoryEmotionData> getSongStoryEmotionData(int song_story_id);
+	ArrayList<Check> getFamilyUserCheck(int family_id, int user_id, int other_user_id);
 	
 	
 }

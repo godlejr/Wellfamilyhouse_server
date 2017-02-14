@@ -361,7 +361,6 @@ public class FAMILYController {
 		songStory.setContent(request.getParameter("content"));
 		songStory.setLocation(request.getParameter("location"));
 		dao.insertSongStory(songStory);
-
 		return dao.getSongStory(songStory.getId());
 	}
 
@@ -643,6 +642,14 @@ public class FAMILYController {
 	public ArrayList<SongStoryEmotionData> song_story_emotion_data_List(@PathVariable String song_story_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getSongStoryEmotionData(Integer.parseInt(song_story_id));
+	}
+
+	// family_user_check
+	@RequestMapping(value = "/family/{other_user_id}/family_user_check", method = RequestMethod.POST)
+	public ArrayList<Check> family_user_check(HttpServletRequest request, @PathVariable String other_user_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.getFamilyUserCheck(Integer.parseInt(request.getParameter("family_id")),Integer.parseInt(request.getParameter("user_id")),
+				Integer.parseInt(other_user_id));
 	}
 
 }

@@ -453,4 +453,10 @@
 		,emotion_categories ec where e.emotion_category_id =ec.id order by
 		e.id;
 	</select>
+
+	<select id="getFamilyUserCheck" resultType="com.demand.server.well_family_house.dto.Check">
+		SELECT count(id) as
+		checked FROM wellfamily.family_joiners where family_id = #{param1} and user_id
+		!= #{param2} and user_id = #{param3};
+	</select>
 </mapper>
