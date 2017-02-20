@@ -101,7 +101,6 @@ public class FAMILYController {
 
 		return fileName;
 	}
-
 	// intro
 	@RequestMapping(value = "/family/email_check", method = RequestMethod.POST)
 	public ArrayList<User> email_check(HttpServletRequest request) {
