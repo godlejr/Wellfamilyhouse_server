@@ -41,7 +41,7 @@
 	<beans:bean id="ppg_sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<beans:property name="dataSource" ref="ppg_dataSource"></beans:property>
 		<beans:property name="mapperLocations"
-			value="classpath:com/demand/server/ppg/dao/mapper/*.xml"></beans:property>
+			value="classpath*:/com/demand/server/ppg/dao/mapper/*.xml"></beans:property>
 	</beans:bean>
 
 	<beans:bean id="ppg_sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
@@ -64,7 +64,7 @@
 	<beans:bean id="h2o_sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<beans:property name="dataSource" ref="h2o_dataSource"></beans:property>
 		<beans:property name="mapperLocations"
-			value="classpath:com/demand/server/h2o/dao/mapper/*.xml"></beans:property>
+			value="classpath*:/com/demand/server/h2o/dao/mapper/*.xml"></beans:property>
 	</beans:bean>
 
 	<beans:bean id="h2o_sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
@@ -87,7 +87,7 @@
 	<beans:bean id="well_family_house_sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<beans:property name="dataSource" ref="well_family_house_dataSource"></beans:property>
 		<beans:property name="mapperLocations"
-			value="classpath:com/demand/server/well_family_house/dao/mapper/*.xml"></beans:property>
+			value="classpath*:/com/demand/server/well_family_house/dao/mapper/*.xml"></beans:property>
 	</beans:bean>
 
 	<beans:bean id="well_family_house_sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
