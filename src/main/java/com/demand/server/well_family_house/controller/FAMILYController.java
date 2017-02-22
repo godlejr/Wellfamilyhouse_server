@@ -115,6 +115,12 @@ public class FAMILYController {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.login(request.getParameter("email"), request.getParameter("password"));
 	}
+	
+	@RequestMapping(value = "/{user_id}/update_device_id", method = RequestMethod.PUT)
+	public void update_device_id(HttpServletRequest request, @PathVariable int user_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		dao.updateDeviceId(user_id,request.getParameter("device_id"));
+	}
 
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public void join(HttpServletRequest request) {

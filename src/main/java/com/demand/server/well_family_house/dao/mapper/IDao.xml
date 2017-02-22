@@ -29,6 +29,9 @@
 		email = #{param1};
 	</select>
 
+	<update id="updateDeviceId">
+		update users set deviced_id = #{param2} where id = #{param1};
+	</update>
 
 	<insert id="join">
 		insert into users(email,password,name,birth,phone)
@@ -456,7 +459,8 @@
 
 	<select id="getFamilyUserCheck" resultType="com.demand.server.well_family_house.dto.Check">
 		SELECT count(id) as
-		checked FROM wellfamily.family_joiners where family_id = #{param1} and user_id
+		checked FROM wellfamily.family_joiners where family_id = #{param1} and
+		user_id
 		!= #{param2} and user_id = #{param3};
 	</select>
 </mapper>
