@@ -30,7 +30,7 @@
 	</select>
 
 	<update id="updateDeviceId">
-		update users set deviced_id = #{param2} where id = #{param1};
+		update users set device_id = #{param2} where id = #{param1};
 	</update>
 
 	<insert id="join">
