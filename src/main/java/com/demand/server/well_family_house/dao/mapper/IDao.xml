@@ -32,6 +32,10 @@
 	<update id="updateDeviceId">
 		update users set device_id = #{param2} where id = #{param1};
 	</update>
+	
+	<select id="checkDeviceId" resultType="com.demand.server.well_family_house.dto.Check">
+		SELECT count(device_id) as checked  FROM wellfamily.users where id=#{param1} and device_id = #{param2};
+	</select>
 
 	<insert id="join">
 		insert into users(email,password,name,birth,phone)

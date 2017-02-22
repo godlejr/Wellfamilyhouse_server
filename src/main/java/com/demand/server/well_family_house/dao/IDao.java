@@ -70,6 +70,7 @@ public interface IDao {
 	ArrayList<SongStoryEmotionData> getSongStoryEmotionData(int song_story_id);
 	ArrayList<Check> getFamilyUserCheck(int family_id, int user_id, int other_user_id);
 	void updateDeviceId(int user_id, String device_id);
+	ArrayList<Check> checkDeviceId(int user_id, String device_id);
 	
 	
 }
