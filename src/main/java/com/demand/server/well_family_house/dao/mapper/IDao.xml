@@ -29,8 +29,8 @@
 		email = #{param1};
 	</select>
 
-	<update id="updateDeviceId">
-		update users set device_id = #{param2} where id =
+	<update id="updateDeviceIdToken">
+		update users set device_id = #{param2}, token = #{param3} where id =
 		#{param1};
 	</update>
 

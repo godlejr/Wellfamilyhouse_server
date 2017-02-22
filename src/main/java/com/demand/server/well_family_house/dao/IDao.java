@@ -69,9 +69,9 @@ public interface IDao {
 	void insertEmotionIntoSongStory(int song_story_id, int song_story_emotion_id);
 	ArrayList<SongStoryEmotionData> getSongStoryEmotionData(int song_story_id);
 	ArrayList<Check> getFamilyUserCheck(int family_id, int user_id, int other_user_id);
-	void updateDeviceId(int user_id, String device_id);
 	ArrayList<Check> checkDeviceId(int user_id, String device_id);
 	void updateToken(int user_id, String token);
+	void updateDeviceIdToken(int user_id, String device_id, String token);
 	
 	
 }
