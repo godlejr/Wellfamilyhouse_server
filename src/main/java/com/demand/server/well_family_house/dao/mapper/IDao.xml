@@ -46,8 +46,8 @@
 	</update>
 
 	<insert id="join">
-		insert into users(email,password,name,birth,phone)
-		values(#{param1},#{param2},#{param3},#{param4},#{param5});
+		insert into users(email,password,name,birth,phone,login_category_id)
+		values(#{param1},#{param2},#{param3},#{param4},#{param5},#{param6});
 	</insert>
 
 

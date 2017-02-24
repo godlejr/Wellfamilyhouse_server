@@ -136,12 +136,12 @@ public class FAMILYController {
 		dao.updateToken(user_id,request.getParameter("token"));
 	}
 
-	@RequestMapping(value = "/join", method = RequestMethod.POST)
-	public void join(HttpServletRequest request) {
+	@RequestMapping(value = "/{login_category_id}/join", method = RequestMethod.POST)
+	public void join(HttpServletRequest request, @PathVariable int login_category_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		System.out.println(request.getParameter("name"));
 		dao.join(request.getParameter("email"), request.getParameter("password"), request.getParameter("name"),
-				request.getParameter("birth"), request.getParameter("phone"));
+				request.getParameter("birth"), request.getParameter("phone"),login_category_id);
 	}
 
 	// main
