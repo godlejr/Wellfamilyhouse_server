@@ -33,6 +33,7 @@ import com.demand.server.well_family_house.dto.Comment;
 import com.demand.server.well_family_house.dto.CommentCount;
 import com.demand.server.well_family_house.dto.CommentInfo;
 import com.demand.server.well_family_house.dto.Family;
+import com.demand.server.well_family_house.dto.FavoriteCategory;
 import com.demand.server.well_family_house.dto.Identification;
 import com.demand.server.well_family_house.dto.LikeCount;
 import com.demand.server.well_family_house.dto.Photo;
@@ -122,6 +123,8 @@ public class FAMILYController {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		dao.updateDeviceIdToken(user_id,request.getParameter("device_id"),request.getParameter("token"));
 	}
+	
+	
 	
 	@RequestMapping(value = "/{user_id}/check_device_id", method = { RequestMethod.GET,
 			RequestMethod.POST })
@@ -300,7 +303,7 @@ public class FAMILYController {
 	}
 	
 	// memory_sound main
-	@RequestMapping(value = "/song_category_List", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/song_category_List", method = RequestMethod.GET)
 	public ArrayList<SongCategory> song_category_List() {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getSongCategoryList();
@@ -319,13 +322,13 @@ public class FAMILYController {
 		return dao.getSongLikeCount(song_id);
 	}
 
-	@RequestMapping(value = "/song_list_by_Hits", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/song_list_by_Hits", method = RequestMethod.GET)
 	public ArrayList<Song> song_list_by_Hits() {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getSongListByHits();
 	}
 
-	@RequestMapping(value = "/song_random", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/song_random", method =  RequestMethod.GET)
 	public ArrayList<Song> song_random() {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getRandomSong(randomRange(149, 295));
@@ -385,7 +388,7 @@ public class FAMILYController {
 		return dao.getSongComment(songComment.getId());
 	}
 
-	@RequestMapping(value = "/song_range_List", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/song_range_List", method = RequestMethod.GET )
 	public ArrayList<Range> song_range_List() {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getSongRangeList();
@@ -698,4 +701,12 @@ public class FAMILYController {
 				Integer.parseInt(request.getParameter("user_id")), other_user_id);
 	}
 
+	//profile edit
+	@RequestMapping(value = "/favorite_category_List", method = RequestMethod.GET)
+	public ArrayList<FavoriteCategory> favorite_category_List() {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.getFavoriteCategoryList();
+	}
+	
+	
 }

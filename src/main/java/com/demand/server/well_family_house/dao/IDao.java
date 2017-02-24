@@ -72,6 +72,7 @@ public interface IDao {
 	ArrayList<Check> checkDeviceId(int user_id, String device_id);
 	void updateToken(int user_id, String token);
 	void updateDeviceIdToken(int user_id, String device_id, String token);
+	ArrayList<FavoriteCategory> getFavoriteCategoryList();
 	
 	
 }

@@ -475,4 +475,10 @@
 		user_id
 		!= #{param2} and user_id = #{param3};
 	</select>
+	
+	<!-- profile edit -->
+	<select id="getFavoriteCategoryList"
+		resultType="com.demand.server.well_family_house.dto.FavoriteCategory">
+		SELECT id,name,created_at,updated_at FROM favorite_categories;
+	</select>
 </mapper>
