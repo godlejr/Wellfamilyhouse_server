@@ -73,6 +73,9 @@ public interface IDao {
 	void updateToken(int user_id, String token);
 	void updateDeviceIdToken(int user_id, String device_id, String token);
 	ArrayList<FavoriteCategory> getFavoriteCategoryList();
+	ArrayList<Check> getCheckGender(int user_id);
+	ArrayList<Check> getCheckFavorite(int user_id, String favorite_category_id);
+	ArrayList<Check> getCheckSongCategory(int user_id, String song_category_id);
 	
 	
 }

@@ -708,5 +708,22 @@ public class FAMILYController {
 		return dao.getFavoriteCategoryList();
 	}
 	
+	@RequestMapping(value = "/{user_id}/check_gender", method = RequestMethod.GET)
+	public ArrayList<Check> check_gender(@PathVariable int user_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.getCheckGender(user_id);
+	}
+	
+	@RequestMapping(value = "/{user_id}/check_favorite", method = RequestMethod.POST)
+	public ArrayList<Check> check_favorite(HttpServletRequest request,@PathVariable int user_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.getCheckFavorite(user_id,request.getParameter("favorite_category_id"));
+	}
+	
+	@RequestMapping(value = "/{user_id}/check_song_category", method = RequestMethod.POST)
+	public ArrayList<Check> check_song_category(HttpServletRequest request,@PathVariable int user_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.getCheckSongCategory(user_id,request.getParameter("song_category_id") );
+	}
 	
 }

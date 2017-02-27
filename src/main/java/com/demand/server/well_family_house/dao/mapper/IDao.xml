@@ -30,7 +30,8 @@
 	</select>
 
 	<update id="updateDeviceIdToken">
-		update users set device_id = #{param2}, token = #{param3} where id =
+		update users set device_id = #{param2}, token =
+		#{param3} where id =
 		#{param1};
 	</update>
 
@@ -46,7 +47,8 @@
 	</update>
 
 	<insert id="join">
-		insert into users(email,password,name,birth,phone,login_category_id)
+		insert into
+		users(email,password,name,birth,phone,login_category_id)
 		values(#{param1},#{param2},#{param3},#{param4},#{param5},#{param6});
 	</insert>
 
@@ -475,10 +477,29 @@
 		user_id
 		!= #{param2} and user_id = #{param3};
 	</select>
-	
+
 	<!-- profile edit -->
 	<select id="getFavoriteCategoryList"
 		resultType="com.demand.server.well_family_house.dto.FavoriteCategory">
-		SELECT id,name,created_at,updated_at FROM favorite_categories;
+		SELECT id,name,created_at,updated_at FROM
+		favorite_categories;
+	</select>
+
+	<select id="getCheckGender" resultType="com.demand.server.well_family_house.dto.Check">
+		SELECT gender as checked
+		FROM wellfamily.users where id = #{param1};
+	</select>
+
+	<select id="getCheckFavorite" resultType="com.demand.server.well_family_house.dto.Check">
+		SELECT count(*) FROM
+		wellfamily.user_favorite_joiners where user_id = #{param1} and
+		favorite_category_id= #{param2};
+	</select>
+
+	<select id="getCheckSongCategory" resultType="com.demand.server.well_family_house.dto.Check">
+		SELECT count(*)
+		FROM wellfamily.user_song_category_joiners where user_id = #{param1}
+		and
+		song_category_id= #{param2};
 	</select>
 </mapper>
