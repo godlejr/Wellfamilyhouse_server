@@ -76,6 +76,14 @@ public interface IDao {
 	ArrayList<Check> getCheckGender(int user_id);
 	ArrayList<Check> getCheckFavorite(int user_id, int favorite_category_id);
 	ArrayList<Check> getCheckSongCategory(int user_id, int song_category_id);
+	User getUserAvatar(int user_id);
+	void updateUserAvatar(int user_id, String fileName);
+	Family getFamilyAvatar(int family_id);
+	void deleteFavorite(int user_id);
+	void deleteSongCategory(int user_id);
+	void insertFavorite(int user_id, int favorite_category_id);
+	void insertSongCategory(int user_id, int song_category_id);
+	void udpateUserInfo(int user_id, String name, String birth, String phone, int gender);
 	
 	
 }

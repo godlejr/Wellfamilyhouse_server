@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.demand.server.HomeController;
@@ -93,6 +95,7 @@ public class FAMILYController {
 			s3.setEndpoint(END_POINT_URL);
 			fileName = System.currentTimeMillis() + "";
 			ObjectMetadata objectMetadata = new ObjectMetadata();
+			
 			PutObjectRequest putObjectRequest = new PutObjectRequest(BUCKET, location + "/" + fileName + ext, imagefile,
 					objectMetadata);
 			putObjectRequest.setCannedAcl(CannedAccessControlList.PublicRead);
@@ -103,6 +106,26 @@ public class FAMILYController {
 		}
 
 		return fileName;
+	}
+	
+	public static void deleteFileFromAWSS3(String location, String fileName, String ext){
+		String ACCESS_KEY = "AKIAIUGMLWN3S757JDVA";
+		String SECRET_KEY = "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";
+		String END_POINT_URL = "http://s3.ap-northeast-2.amazonaws.com";
+		String BUCKET = "demand.files";
+		AmazonS3 s3;
+		
+		AWSCredentials credentials = new BasicAWSCredentials(ACCESS_KEY, SECRET_KEY);
+		s3 = new AmazonS3Client(credentials);
+		s3.setEndpoint(END_POINT_URL);
+		
+		 try {
+			 s3.deleteObject(new DeleteObjectRequest(BUCKET, location +"/"+ fileName + ext));
+	        } catch (AmazonServiceException ase) {
+				log(ase);
+	        } catch (AmazonClientException ace) {
+				log(ace);
+	        }
 	}
 	
 	// intro
@@ -645,6 +668,12 @@ public class FAMILYController {
 		} catch (IOException e) {
 			log(e);
 		}
+		
+		//delete prior avatar
+		String fileName = dao.getFamilyAvatar(family_id).getAvatar();
+		if(!fileName.equals("family_avatar.jpg")){
+			deleteFileFromAWSS3("apps/well_family_house/images/avatars/familys", fileName ,"");
+		}
 
 		try {
 			file_name = uploadFileToAWSS3(stringBuilder.toString(), "apps/well_family_house/images/avatars/familys",
@@ -726,4 +755,84 @@ public class FAMILYController {
 		return dao.getCheckSongCategory(user_id,Integer.parseInt(request.getParameter("song_category_id")) );
 	}
 	
+	@RequestMapping(value = "/{user_id}/update_user_avatar", method = RequestMethod.PUT)
+	public void update_user_avatar(HttpServletRequest request, @PathVariable int user_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		String file_name = null;
+
+		InputStream base64InputStream;
+		StringBuilder stringBuilder = null;
+		try {
+			base64InputStream = request.getInputStream();
+			if (base64InputStream != null) {
+				stringBuilder = new StringBuilder();
+				String line;
+				try {
+					BufferedReader reader = new BufferedReader(new InputStreamReader(base64InputStream, "UTF-8"));
+					while ((line = reader.readLine()) != null) {
+						stringBuilder.append(line).append("\n");
+					}
+				}catch(Exception e){
+					log(e);
+				} finally {
+					base64InputStream.close();
+				}
+			}
+		} catch (IOException e) {
+			log(e);
+		}
+		
+		//delete prior avatar
+		String fileName = dao.getUserAvatar(user_id).getAvatar();
+		if(!fileName.equals("avatar.jpg")){
+			deleteFileFromAWSS3("apps/well_family_house/images/avatars/users", fileName ,"");
+		}
+
+		try {
+			file_name = uploadFileToAWSS3(stringBuilder.toString(), "apps/well_family_house/images/avatars/users",
+					".jpg");
+		} catch (IllegalStateException e) {
+			log(e);
+		} catch (IOException e) {
+			log(e);
+		}
+
+		dao.updateUserAvatar(user_id, file_name + ".jpg");
+	}
+	
+	@RequestMapping(value = "/delete_favorite", method = RequestMethod.DELETE)
+	public void delete_favorite(HttpServletRequest request,@PathVariable int user_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		dao.deleteFavorite(Integer.parseInt(request.getParameter("user_id")));
+	}
+	
+	@RequestMapping(value = "/{user_id}/insert_favorite", method = RequestMethod.POST)
+	public void insert_favorite(HttpServletRequest request, @PathVariable int user_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		dao.insertFavorite(user_id, Integer.parseInt(request.getParameter("favorite_category_id")));
+	}
+	
+	@RequestMapping(value = "/delete_song_category", method = RequestMethod.DELETE)
+	public void delete_song_category(HttpServletRequest request,@PathVariable int user_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		dao.deleteSongCategory(Integer.parseInt(request.getParameter("user_id")));
+	}
+	
+	@RequestMapping(value = "/{user_id}/insert_song_category", method = RequestMethod.POST)
+	public void insert_song_category(HttpServletRequest request, @PathVariable int user_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		dao.insertSongCategory(user_id, Integer.parseInt(request.getParameter("song_category_id")));
+	}
+	
+	@RequestMapping(value = "/{user_id}/udpate_user_info", method = RequestMethod.PUT)
+	public void udpate_user_info(HttpServletRequest request, @PathVariable int user_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		String name = request.getParameter("name");
+		String birth = request.getParameter("birth");
+		String phone = request.getParameter("phone");
+		int gender = Integer.parseInt(request.getParameter("gender"));
+		
+		dao.udpateUserInfo(user_id,name,birth,phone,gender );
+	}
+
 }

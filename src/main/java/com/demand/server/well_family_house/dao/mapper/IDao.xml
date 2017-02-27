@@ -491,12 +491,61 @@
 	</select>
 
 	<select id="getCheckFavorite" resultType="com.demand.server.well_family_house.dto.Check">
-		SELECT count(*) as checked FROM wellfamily.user_favorite_joiners where user_id =  #{param1} and
+		SELECT count(*) as
+		checked FROM wellfamily.user_favorite_joiners where user_id =
+		#{param1} and
 		favorite_category_id= #{param2};
 	</select>
 
 	<select id="getCheckSongCategory" resultType="com.demand.server.well_family_house.dto.Check">
-		SELECT count(*) as checked FROM wellfamily.user_song_category_joiners where user_id =  #{param1} and
+		SELECT count(*) as
+		checked FROM wellfamily.user_song_category_joiners where user_id =
+		#{param1} and
 		song_category_id= #{param2};
 	</select>
+
+	<select id="getUserAvatar" resultType="com.demand.server.well_family_house.dto.User">
+		SELECT avatar FROM
+		wellfamily.users where id =#{param1};
+	</select>
+
+	<update id="updateUserAvatar">
+		update users set avatar = #{param2} where id =
+		#{param1};
+	</update>
+
+	<select id="getFamilyAvatar" resultType="com.demand.server.well_family_house.dto.User">
+		SELECT avatar FROM
+		wellfamily.familys where id =#{param1};
+	</select>
+
+	<delete id="deleteFavorite">
+		delete FROM wellfamily.user_favorite_joiners where
+		user_id=#{param1}
+	</delete>
+
+	<delete id="deleteSongCategory">
+		delete FROM wellfamily.user_song_category_joiners
+		where user_id=#{param1}
+	</delete>
+
+	<insert id="insertFavorite">
+		insert into
+		user_favorite_joiners(user_id,favorite_category_id)
+		values(#{param1},#{param2});
+	</insert>
+
+	<insert id="insertSongCategory">
+		insert into
+		user_favorite_joiners(user_id,song_category_id)
+		values(#{param1},#{param2});
+	</insert>
+
+	<update id="udpateUserInfo">
+		update users set name = #{param2},birth =
+		#{param3},phone = #{param4},gender = #{param5} where id =
+		#{param1};
+	</update>
+
+
 </mapper>
