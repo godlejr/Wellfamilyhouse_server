@@ -717,13 +717,13 @@ public class FAMILYController {
 	@RequestMapping(value = "/{user_id}/check_favorite", method = RequestMethod.POST)
 	public ArrayList<Check> check_favorite(HttpServletRequest request,@PathVariable int user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-		return dao.getCheckFavorite(user_id,request.getParameter("favorite_category_id"));
+		return dao.getCheckFavorite(user_id,Integer.parseInt(request.getParameter("favorite_category_id")));
 	}
 	
 	@RequestMapping(value = "/{user_id}/check_song_category", method = RequestMethod.POST)
 	public ArrayList<Check> check_song_category(HttpServletRequest request,@PathVariable int user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-		return dao.getCheckSongCategory(user_id,request.getParameter("song_category_id") );
+		return dao.getCheckSongCategory(user_id,Integer.parseInt(request.getParameter("song_category_id")) );
 	}
 	
 }
