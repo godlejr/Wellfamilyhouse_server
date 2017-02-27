@@ -670,7 +670,7 @@ public class FAMILYController {
 		}
 		
 		//delete prior avatar
-		String fileName = dao.getFamilyAvatar(family_id).get(0).getAvatar();
+		String fileName = dao.getFamilyAvatar(family_id).getAvatar();
 		if(!fileName.equals("family_avatar.jpg")){
 			deleteFileFromAWSS3("apps/well_family_house/images/avatars/familys", fileName ,"");
 		}

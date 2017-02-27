@@ -514,7 +514,7 @@
 		#{param1};
 	</update>
 
-	<select id="getFamilyAvatar" resultType="com.demand.server.well_family_house.dto.User">
+	<select id="getFamilyAvatar" resultType="com.demand.server.well_family_house.dto.Family">
 		SELECT avatar FROM
 		wellfamily.familys where id =#{param1};
 	</select>
