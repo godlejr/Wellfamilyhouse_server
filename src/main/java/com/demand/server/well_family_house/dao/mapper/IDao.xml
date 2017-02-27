@@ -491,15 +491,12 @@
 	</select>
 
 	<select id="getCheckFavorite" resultType="com.demand.server.well_family_house.dto.Check">
-		SELECT count(*) FROM
-		wellfamily.user_favorite_joiners where user_id = #{param1} and
+		SELECT count(*) as checked FROM wellfamily.user_favorite_joiners where user_id =  #{param1} and
 		favorite_category_id= #{param2};
 	</select>
 
 	<select id="getCheckSongCategory" resultType="com.demand.server.well_family_house.dto.Check">
-		SELECT count(*)
-		FROM wellfamily.user_song_category_joiners where user_id = #{param1}
-		and
+		SELECT count(*) as checked FROM wellfamily.user_song_category_joiners where user_id =  #{param1} and
 		song_category_id= #{param2};
 	</select>
 </mapper>
