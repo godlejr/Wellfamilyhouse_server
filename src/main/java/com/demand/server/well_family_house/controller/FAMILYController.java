@@ -834,5 +834,13 @@ public class FAMILYController {
 		
 		dao.udpateUserInfo(user_id,name,birth,phone,gender );
 	}
+	
+	//family_edit
+	@RequestMapping(value = "/{family_id}/update_family_info", method = RequestMethod.PUT)
+	public void update_family_info(HttpServletRequest request, @PathVariable int family_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		dao.updateFamilyInfo(family_id,request.getParameter("name"),request.getParameter("content"));
+	}
+	
 
 }

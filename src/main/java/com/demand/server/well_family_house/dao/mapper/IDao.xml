@@ -547,5 +547,11 @@
 		#{param1};
 	</update>
 
+	<!-- family edit -->
+	<update id="updateFamilyInfo">
+		update familys set name = #{param2}, content =
+		#{param3} where id =
+		#{param1};
+	</update>
 
 </mapper>
