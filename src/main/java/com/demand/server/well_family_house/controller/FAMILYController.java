@@ -801,7 +801,7 @@ public class FAMILYController {
 	}
 	
 	@RequestMapping(value = "/delete_favorite", method = RequestMethod.DELETE)
-	public void delete_favorite(HttpServletRequest request,@PathVariable int user_id) {
+	public void delete_favorite(HttpServletRequest request) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		dao.deleteFavorite(Integer.parseInt(request.getParameter("user_id")));
 	}
@@ -813,7 +813,7 @@ public class FAMILYController {
 	}
 	
 	@RequestMapping(value = "/delete_song_category", method = RequestMethod.DELETE)
-	public void delete_song_category(HttpServletRequest request,@PathVariable int user_id) {
+	public void delete_song_category(HttpServletRequest request) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		dao.deleteSongCategory(Integer.parseInt(request.getParameter("user_id")));
 	}
