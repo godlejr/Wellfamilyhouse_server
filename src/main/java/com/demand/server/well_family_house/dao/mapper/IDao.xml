@@ -554,4 +554,9 @@
 		#{param1};
 	</update>
 
+	<select id="getFamilyInfoByCreator" resultType="com.demand.server.well_family_house.dto.Family">
+		SELECT id,name,content,avatar,user_id,created_at
+		FROM familys where user_id = #{param1};
+	</select>
+
 </mapper>

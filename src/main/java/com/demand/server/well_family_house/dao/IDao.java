@@ -85,6 +85,7 @@ public interface IDao {
 	void insertSongCategory(int user_id, int song_category_id);
 	void udpateUserInfo(int user_id, String name, String birth, String phone, int gender);
 	void updateFamilyInfo(int family_id, String name, String content);
+	ArrayList<Family> getFamilyInfoByCreator(int user_id);
 	
 	
 }

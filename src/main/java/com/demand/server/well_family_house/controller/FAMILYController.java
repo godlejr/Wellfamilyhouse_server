@@ -182,6 +182,12 @@ public class FAMILYController {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getFamily(family_id);
 	}
+	
+	@RequestMapping(value = "/{user_id}/family_info_by_creator", method = RequestMethod.GET)
+	public ArrayList<Family> family_info_by_creator(@PathVariable int user_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.getFamilyInfoByCreator(user_id);
+	}
 
 	// family_main
 	@RequestMapping(value = "/{family_id}/family_user_Info", method = { RequestMethod.GET, RequestMethod.POST })
