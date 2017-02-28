@@ -521,7 +521,7 @@
 
 	<delete id="deleteFavorite">
 		delete FROM wellfamily.user_favorite_joiners where
-		user_id=#{param1}
+		user_id=#{param1};
 	</delete>
 
 	<delete id="deleteSongCategory">
@@ -537,7 +537,7 @@
 
 	<insert id="insertSongCategory">
 		insert into
-		user_favorite_joiners(user_id,song_category_id)
+		user_song_category_joiners(user_id,song_category_id)
 		values(#{param1},#{param2});
 	</insert>
 
