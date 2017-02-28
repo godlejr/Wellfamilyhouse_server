@@ -809,7 +809,7 @@ public class FAMILYController {
 	@RequestMapping(value = "/{user_id}/insert_favorite", method = RequestMethod.POST)
 	public void insert_favorite(HttpServletRequest request, @PathVariable int user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-		dao.insertFavorite(user_id, Integer.parseInt(request.getParameter("favorite_category_id")));
+		dao.insertFavorite(user_id, Integer.parseInt(request.getParameter("favorite_id")));
 	}
 	
 	@RequestMapping(value = "/delete_song_category", method = RequestMethod.DELETE)
