@@ -137,7 +137,7 @@
 		comment_id, c.user_id as user_id, u.name as user_name ,u.avatar as
 		avatar,c.content as content, c.created_at as created_at, c.deleted as
 		deleted FROM comments c,users u where c.user_id = u.id and c.story_id
-		=#{param1} order by c.updated_at;
+		=#{param1} order by c.created_at;
 	</select>
 
 	<insert id="insertComment" parameterType="com.demand.server.well_family_house.dto.Comment"
