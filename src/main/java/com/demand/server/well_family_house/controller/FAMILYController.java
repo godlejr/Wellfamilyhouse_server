@@ -848,5 +848,18 @@ public class FAMILYController {
 		dao.updateFamilyInfo(family_id,request.getParameter("name"),request.getParameter("content"));
 	}
 	
+	//comment_edit
+	@RequestMapping(value = "/{comment_id}/update_comment", method = RequestMethod.PUT)
+	public void update_comment(HttpServletRequest request, @PathVariable int comment_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		dao.updateComment(comment_id,request.getParameter("content"));
+	}
+	
+	@RequestMapping(value = "/delete_comment", method = RequestMethod.DELETE)
+	public void delete_comment(HttpServletRequest request) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		dao.deleteComment(Integer.parseInt(request.getParameter("comment_id")));
+	}
+	
 
 }

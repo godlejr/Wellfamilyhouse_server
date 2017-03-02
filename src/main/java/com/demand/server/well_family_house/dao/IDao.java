@@ -86,6 +86,8 @@ public interface IDao {
 	void udpateUserInfo(int user_id, String name, String birth, String phone, int gender);
 	void updateFamilyInfo(int family_id, String name, String content);
 	ArrayList<Family> getFamilyInfoByCreator(int family_id);
+	void updateComment(int comment_id, String content);
+	void deleteComment(int comment_id);
 	
 	
 }
