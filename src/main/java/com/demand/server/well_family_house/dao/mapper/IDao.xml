@@ -566,10 +566,35 @@
 		#{param1};
 	</update>
 
+	<update id="updateSongComment">
+		update song_comments set content = #{param2} where id
+		=
+		#{param1};
+	</update>
+
+
+	<update id="updateSongStoryComment">
+		update song_story_comments set content = #{param2}
+		where id =
+		#{param1};
+	</update>
+
+
 	<delete id="deleteComment">
 		delete FROM comments
 		where id=#{param1}
 	</delete>
+	
+	<delete id="deleteSongComment">
+		delete FROM song_comments
+		where id=#{param1}
+	</delete>
+	
+	<delete id="deleteSongStoryComment">
+		delete FROM song_story_comments
+		where id=#{param1}
+	</delete>
+	
 
 
 </mapper>

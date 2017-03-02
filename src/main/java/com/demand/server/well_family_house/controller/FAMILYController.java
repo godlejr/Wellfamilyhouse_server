@@ -54,7 +54,6 @@ import com.demand.server.well_family_house.dto.StoryInfo;
 import com.demand.server.well_family_house.dto.User;
 import com.demand.server.well_family_house.log.LogFlag;
 
-
 @RestController
 @RequestMapping("/family")
 public class FAMILYController {
@@ -62,22 +61,22 @@ public class FAMILYController {
 	@Autowired
 	private SqlSession well_family_house_sqlSession;
 	private static final Logger logger = LoggerFactory.getLogger(FAMILYController.class);
-	
-	public static void log(Exception e){
-		StackTraceElement[] ste =  e.getStackTrace();
+
+	public static void log(Exception e) {
+		StackTraceElement[] ste = e.getStackTrace();
 		String className = ste[0].getClassName();
 		String methodName = ste[0].getMethodName();
 		int lineNumber = ste[0].getLineNumber();
 		String fileName = ste[0].getFileName();
-		
-		if(LogFlag.printFlag){
-			if(logger.isInfoEnabled()){
+
+		if (LogFlag.printFlag) {
+			if (logger.isInfoEnabled()) {
 				logger.info("Exception: " + e.getMessage());
-				logger.info(className + "."+ methodName+" "+ fileName +" "+ lineNumber +" "+ "line" );
+				logger.info(className + "." + methodName + " " + fileName + " " + lineNumber + " " + "line");
 			}
 		}
 	}
-	
+
 	public static String uploadFileToAWSS3(String base64Data, String location, String ext)
 			throws IllegalStateException, IOException {
 		String ACCESS_KEY = "AKIAIUGMLWN3S757JDVA";
@@ -95,7 +94,7 @@ public class FAMILYController {
 			s3.setEndpoint(END_POINT_URL);
 			fileName = System.currentTimeMillis() + "";
 			ObjectMetadata objectMetadata = new ObjectMetadata();
-			
+
 			PutObjectRequest putObjectRequest = new PutObjectRequest(BUCKET, location + "/" + fileName + ext, imagefile,
 					objectMetadata);
 			putObjectRequest.setCannedAcl(CannedAccessControlList.PublicRead);
@@ -107,27 +106,27 @@ public class FAMILYController {
 
 		return fileName;
 	}
-	
-	public static void deleteFileFromAWSS3(String location, String fileName, String ext){
+
+	public static void deleteFileFromAWSS3(String location, String fileName, String ext) {
 		String ACCESS_KEY = "AKIAIUGMLWN3S757JDVA";
 		String SECRET_KEY = "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";
 		String END_POINT_URL = "http://s3.ap-northeast-2.amazonaws.com";
 		String BUCKET = "demand.files";
 		AmazonS3 s3;
-		
+
 		AWSCredentials credentials = new BasicAWSCredentials(ACCESS_KEY, SECRET_KEY);
 		s3 = new AmazonS3Client(credentials);
 		s3.setEndpoint(END_POINT_URL);
-		
-		 try {
-			 s3.deleteObject(new DeleteObjectRequest(BUCKET, location +"/"+ fileName + ext));
-	        } catch (AmazonServiceException ase) {
-				log(ase);
-	        } catch (AmazonClientException ace) {
-				log(ace);
-	        }
+
+		try {
+			s3.deleteObject(new DeleteObjectRequest(BUCKET, location + "/" + fileName + ext));
+		} catch (AmazonServiceException ase) {
+			log(ase);
+		} catch (AmazonClientException ace) {
+			log(ace);
+		}
 	}
-	
+
 	// intro
 	@RequestMapping(value = "/email_check", method = RequestMethod.POST)
 	public ArrayList<User> email_check(HttpServletRequest request) {
@@ -140,26 +139,23 @@ public class FAMILYController {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.login(request.getParameter("email"), request.getParameter("password"));
 	}
-	
+
 	@RequestMapping(value = "/{user_id}/update_deviceId_token", method = RequestMethod.PUT)
 	public void update_deviceId_token(HttpServletRequest request, @PathVariable int user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-		dao.updateDeviceIdToken(user_id,request.getParameter("device_id"),request.getParameter("token"));
+		dao.updateDeviceIdToken(user_id, request.getParameter("device_id"), request.getParameter("token"));
 	}
-	
-	
-	
-	@RequestMapping(value = "/{user_id}/check_device_id", method = { RequestMethod.GET,
-			RequestMethod.POST })
+
+	@RequestMapping(value = "/{user_id}/check_device_id", method = { RequestMethod.GET, RequestMethod.POST })
 	public ArrayList<Check> check_device_id(HttpServletRequest request, @PathVariable int user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-		return dao.checkDeviceId(user_id,request.getParameter("device_id"));
+		return dao.checkDeviceId(user_id, request.getParameter("device_id"));
 	}
-	
+
 	@RequestMapping(value = "/{user_id}/update_token", method = RequestMethod.PUT)
 	public void update_token(HttpServletRequest request, @PathVariable int user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-		dao.updateToken(user_id,request.getParameter("token"));
+		dao.updateToken(user_id, request.getParameter("token"));
 	}
 
 	@RequestMapping(value = "/{login_category_id}/join", method = RequestMethod.POST)
@@ -167,7 +163,7 @@ public class FAMILYController {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		System.out.println(request.getParameter("name"));
 		dao.join(request.getParameter("email"), request.getParameter("password"), request.getParameter("name"),
-				request.getParameter("birth"), request.getParameter("phone"),login_category_id);
+				request.getParameter("birth"), request.getParameter("phone"), login_category_id);
 	}
 
 	// main
@@ -182,7 +178,7 @@ public class FAMILYController {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getFamily(family_id);
 	}
-	
+
 	@RequestMapping(value = "/{family_id}/family_info_by_creator", method = RequestMethod.GET)
 	public ArrayList<Family> family_info_by_creator(@PathVariable int family_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
@@ -239,8 +235,7 @@ public class FAMILYController {
 		dao.updateLikeDown(Integer.parseInt(request.getParameter("user_id")), story_id);
 	}
 
-	@RequestMapping(value = "/{story_id}/family_content_like_check", method = { RequestMethod.GET,
-			RequestMethod.POST })
+	@RequestMapping(value = "/{story_id}/family_content_like_check", method = { RequestMethod.GET, RequestMethod.POST })
 	public ArrayList<Check> family_content_like_check(HttpServletRequest request, @PathVariable int story_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.checkLike(Integer.parseInt(request.getParameter("user_id")), story_id);
@@ -304,9 +299,9 @@ public class FAMILYController {
 					while ((line = reader.readLine()) != null) {
 						stringBuilder.append(line).append("\n");
 					}
-				}catch(Exception e){
+				} catch (Exception e) {
 					log(e);
-				}finally {
+				} finally {
 					base64InputStream.close();
 				}
 			}
@@ -330,7 +325,7 @@ public class FAMILYController {
 
 		dao.insertPhoto(photo);
 	}
-	
+
 	// memory_sound main
 	@RequestMapping(value = "/song_category_List", method = RequestMethod.GET)
 	public ArrayList<SongCategory> song_category_List() {
@@ -357,7 +352,7 @@ public class FAMILYController {
 		return dao.getSongListByHits();
 	}
 
-	@RequestMapping(value = "/song_random", method =  RequestMethod.GET)
+	@RequestMapping(value = "/song_random", method = RequestMethod.GET)
 	public ArrayList<Song> song_random() {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getRandomSong(randomRange(149, 295));
@@ -367,8 +362,7 @@ public class FAMILYController {
 		return (int) (Math.random() * (n2 - n1 + 1)) + n1;
 	}
 
-	@RequestMapping(value = "/{category_id}/song_list_by_Category", method = { RequestMethod.GET,
-			RequestMethod.POST })
+	@RequestMapping(value = "/{category_id}/song_list_by_Category", method = { RequestMethod.GET, RequestMethod.POST })
 	public ArrayList<Song> song_list_by_Category(@PathVariable int category_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getSongListByCategory(category_id);
@@ -417,7 +411,7 @@ public class FAMILYController {
 		return dao.getSongComment(songComment.getId());
 	}
 
-	@RequestMapping(value = "/song_range_List", method = RequestMethod.GET )
+	@RequestMapping(value = "/song_range_List", method = RequestMethod.GET)
 	public ArrayList<Range> song_range_List() {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getSongRangeList();
@@ -439,8 +433,7 @@ public class FAMILYController {
 		return dao.getSongStory(songStory.getId());
 	}
 
-	@RequestMapping(value = "/{song_story_id}/insert_song_photos", method = { RequestMethod.GET,
-			RequestMethod.POST })
+	@RequestMapping(value = "/{song_story_id}/insert_song_photos", method = { RequestMethod.GET, RequestMethod.POST })
 	public void insert_song_photos(HttpServletRequest request, @PathVariable int song_story_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		String file_name = null;
@@ -457,7 +450,7 @@ public class FAMILYController {
 					while ((line = reader.readLine()) != null) {
 						stringBuilder.append(line).append("\n");
 					}
-				}catch(Exception e){
+				} catch (Exception e) {
 					log(e);
 				} finally {
 					base64InputStream.close();
@@ -502,7 +495,7 @@ public class FAMILYController {
 					while ((line = reader.readLine()) != null) {
 						stringBuilder.append(line).append("\n");
 					}
-				}catch(Exception e){
+				} catch (Exception e) {
 					log(e);
 				} finally {
 					base64InputStream.close();
@@ -535,8 +528,7 @@ public class FAMILYController {
 		return dao.getSongStoryLikeCount(song_story_id);
 	}
 
-	@RequestMapping(value = "/{song_story_id}/song_story_like_up", method = { RequestMethod.GET,
-			RequestMethod.POST })
+	@RequestMapping(value = "/{song_story_id}/song_story_like_up", method = { RequestMethod.GET, RequestMethod.POST })
 	public void song_story_like_up(HttpServletRequest request, @PathVariable int song_story_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		dao.updateSongStoryLikeUp(Integer.parseInt(request.getParameter("user_id")), song_story_id);
@@ -608,8 +600,7 @@ public class FAMILYController {
 		return dao.getSongStoryComment(songStoryComment.getId());
 	}
 
-	@RequestMapping(value = "/{song_story_id}/song_story_avatar", method = { RequestMethod.GET,
-			RequestMethod.POST })
+	@RequestMapping(value = "/{song_story_id}/song_story_avatar", method = { RequestMethod.GET, RequestMethod.POST })
 	public ArrayList<SongStoryAvatar> song_story_avatar(HttpServletRequest request, @PathVariable int song_story_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getSongStoryAvatar(Integer.parseInt(request.getParameter("song_id")));
@@ -665,7 +656,7 @@ public class FAMILYController {
 					while ((line = reader.readLine()) != null) {
 						stringBuilder.append(line).append("\n");
 					}
-				}catch(Exception e){
+				} catch (Exception e) {
 					log(e);
 				} finally {
 					base64InputStream.close();
@@ -674,11 +665,11 @@ public class FAMILYController {
 		} catch (IOException e) {
 			log(e);
 		}
-		
-		//delete prior avatar
+
+		// delete prior avatar
 		String fileName = dao.getFamilyAvatar(family_id).getAvatar();
-		if(!fileName.equals("family_avatar.jpg")){
-			deleteFileFromAWSS3("apps/well_family_house/images/avatars/familys", fileName ,"");
+		if (!fileName.equals("family_avatar.jpg")) {
+			deleteFileFromAWSS3("apps/well_family_house/images/avatars/familys", fileName, "");
 		}
 
 		try {
@@ -736,31 +727,31 @@ public class FAMILYController {
 				Integer.parseInt(request.getParameter("user_id")), other_user_id);
 	}
 
-	//profile edit
+	// profile edit
 	@RequestMapping(value = "/favorite_category_List", method = RequestMethod.GET)
 	public ArrayList<FavoriteCategory> favorite_category_List() {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getFavoriteCategoryList();
 	}
-	
+
 	@RequestMapping(value = "/{user_id}/check_gender", method = RequestMethod.GET)
 	public ArrayList<Check> check_gender(@PathVariable int user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getCheckGender(user_id);
 	}
-	
+
 	@RequestMapping(value = "/{user_id}/check_favorite", method = RequestMethod.POST)
-	public ArrayList<Check> check_favorite(HttpServletRequest request,@PathVariable int user_id) {
+	public ArrayList<Check> check_favorite(HttpServletRequest request, @PathVariable int user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-		return dao.getCheckFavorite(user_id,Integer.parseInt(request.getParameter("favorite_category_id")));
+		return dao.getCheckFavorite(user_id, Integer.parseInt(request.getParameter("favorite_category_id")));
 	}
-	
+
 	@RequestMapping(value = "/{user_id}/check_song_category", method = RequestMethod.POST)
-	public ArrayList<Check> check_song_category(HttpServletRequest request,@PathVariable int user_id) {
+	public ArrayList<Check> check_song_category(HttpServletRequest request, @PathVariable int user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-		return dao.getCheckSongCategory(user_id,Integer.parseInt(request.getParameter("song_category_id")) );
+		return dao.getCheckSongCategory(user_id, Integer.parseInt(request.getParameter("song_category_id")));
 	}
-	
+
 	@RequestMapping(value = "/{user_id}/update_user_avatar", method = RequestMethod.PUT)
 	public void update_user_avatar(HttpServletRequest request, @PathVariable int user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
@@ -778,7 +769,7 @@ public class FAMILYController {
 					while ((line = reader.readLine()) != null) {
 						stringBuilder.append(line).append("\n");
 					}
-				}catch(Exception e){
+				} catch (Exception e) {
 					log(e);
 				} finally {
 					base64InputStream.close();
@@ -787,11 +778,11 @@ public class FAMILYController {
 		} catch (IOException e) {
 			log(e);
 		}
-		
-		//delete prior avatar
+
+		// delete prior avatar
 		String fileName = dao.getUserAvatar(user_id).getAvatar();
-		if(!fileName.equals("avatar.jpg")){
-			deleteFileFromAWSS3("apps/well_family_house/images/avatars/users", fileName ,"");
+		if (!fileName.equals("avatar.jpg")) {
+			deleteFileFromAWSS3("apps/well_family_house/images/avatars/users", fileName, "");
 		}
 
 		try {
@@ -805,31 +796,31 @@ public class FAMILYController {
 
 		dao.updateUserAvatar(user_id, file_name + ".jpg");
 	}
-	
+
 	@RequestMapping(value = "/delete_favorite", method = RequestMethod.DELETE)
 	public void delete_favorite(HttpServletRequest request) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		dao.deleteFavorite(Integer.parseInt(request.getParameter("user_id")));
 	}
-	
+
 	@RequestMapping(value = "/{user_id}/insert_favorite", method = RequestMethod.POST)
 	public void insert_favorite(HttpServletRequest request, @PathVariable int user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		dao.insertFavorite(user_id, Integer.parseInt(request.getParameter("favorite_id")));
 	}
-	
+
 	@RequestMapping(value = "/delete_song_category", method = RequestMethod.DELETE)
 	public void delete_song_category(HttpServletRequest request) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		dao.deleteSongCategory(Integer.parseInt(request.getParameter("user_id")));
 	}
-	
+
 	@RequestMapping(value = "/{user_id}/insert_song_category", method = RequestMethod.POST)
 	public void insert_song_category(HttpServletRequest request, @PathVariable int user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		dao.insertSongCategory(user_id, Integer.parseInt(request.getParameter("song_category_id")));
 	}
-	
+
 	@RequestMapping(value = "/{user_id}/udpate_user_info", method = RequestMethod.PUT)
 	public void udpate_user_info(HttpServletRequest request, @PathVariable int user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
@@ -837,29 +828,49 @@ public class FAMILYController {
 		String birth = request.getParameter("birth");
 		String phone = request.getParameter("phone");
 		int gender = Integer.parseInt(request.getParameter("gender"));
-		
-		dao.udpateUserInfo(user_id,name,birth,phone,gender );
+
+		dao.udpateUserInfo(user_id, name, birth, phone, gender);
 	}
-	
-	//family_edit
+
+	// family_edit
 	@RequestMapping(value = "/{family_id}/update_family_info", method = RequestMethod.PUT)
 	public void update_family_info(HttpServletRequest request, @PathVariable int family_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-		dao.updateFamilyInfo(family_id,request.getParameter("name"),request.getParameter("content"));
+		dao.updateFamilyInfo(family_id, request.getParameter("name"), request.getParameter("content"));
 	}
-	
-	//comment_edit
+
+	// comment_edit
 	@RequestMapping(value = "/{comment_id}/update_comment", method = RequestMethod.PUT)
 	public void update_comment(HttpServletRequest request, @PathVariable int comment_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-		dao.updateComment(comment_id,request.getParameter("content"));
+		int flag = Integer.parseInt(request.getParameter("flag"));
+		if (flag == 1) {
+			dao.updateComment(comment_id, request.getParameter("content"));
+		}
+		
+		if (flag == 2) {
+			dao.updateSongComment(comment_id, request.getParameter("content"));
+		}
+		
+		if (flag == 3) {
+			dao.updateSongStoryComment(comment_id, request.getParameter("content"));
+		}
+		
 	}
-	
+
 	@RequestMapping(value = "/delete_comment", method = RequestMethod.DELETE)
 	public void delete_comment(HttpServletRequest request) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-		dao.deleteComment(Integer.parseInt(request.getParameter("comment_id")));
+		int flag = Integer.parseInt(request.getParameter("flag"));
+		if (flag == 1) {
+			dao.deleteComment(Integer.parseInt(request.getParameter("comment_id")));
+		}
+		if (flag == 2) {
+			dao.deleteSongComment(Integer.parseInt(request.getParameter("comment_id")));
+		}
+		if (flag == 3) {
+			dao.deleteSongStoryComment(Integer.parseInt(request.getParameter("comment_id")));
+		}
 	}
-	
 
 }

@@ -87,7 +87,10 @@ public interface IDao {
 	void updateFamilyInfo(int family_id, String name, String content);
 	ArrayList<Family> getFamilyInfoByCreator(int family_id);
 	void updateComment(int comment_id, String content);
+	void updateSongComment(int comment_id, String content);
+	void updateSongStoryComment(int comment_id, String content);
 	void deleteComment(int comment_id);
-	
+	void deleteSongComment(int comment_id);
+	void deleteSongStoryComment(int comment_id);
 	
 }
