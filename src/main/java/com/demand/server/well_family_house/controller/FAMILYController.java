@@ -855,7 +855,6 @@ public class FAMILYController {
 		if (flag == 3) {
 			dao.updateSongStoryComment(comment_id, request.getParameter("content"));
 		}
-		
 	}
 
 	@RequestMapping(value = "/delete_comment", method = RequestMethod.DELETE)
