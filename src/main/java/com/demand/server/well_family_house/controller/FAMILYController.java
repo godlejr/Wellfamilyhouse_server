@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,6 +14,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +30,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.util.json.JSONException;
 import com.amazonaws.util.json.JSONObject;
 import com.demand.server.HomeController;
 import com.demand.server.well_family_house.dao.IDao;
@@ -36,6 +39,7 @@ import com.demand.server.well_family_house.dto.Comment;
 import com.demand.server.well_family_house.dto.CommentCount;
 import com.demand.server.well_family_house.dto.CommentInfo;
 import com.demand.server.well_family_house.dto.Family;
+import com.demand.server.well_family_house.dto.FirebaseResponse;
 import com.demand.server.well_family_house.dto.Category;
 import com.demand.server.well_family_house.dto.Identification;
 import com.demand.server.well_family_house.dto.LikeCount;
@@ -53,8 +57,13 @@ import com.demand.server.well_family_house.dto.SongStoryEmotionData;
 import com.demand.server.well_family_house.dto.SongStoryEmotionInfo;
 import com.demand.server.well_family_house.dto.Story;
 import com.demand.server.well_family_house.dto.StoryInfo;
+import com.demand.server.well_family_house.dto.Token;
 import com.demand.server.well_family_house.dto.User;
 import com.demand.server.well_family_house.log.LogFlag;
+import com.demand.server.well_family_house.util.AndroidPushNotification;
+
+
+
 
 @RestController
 @RequestMapping("/family")
@@ -62,6 +71,9 @@ public class FAMILYController {
 
 	@Autowired
 	private SqlSession well_family_house_sqlSession;
+	
+	@Autowired
+	AndroidPushNotification androidPushNotificationsService;
 
 	private static final String ACCESS_KEY = "AKIAIUGMLWN3S757JDVA";
 	private static final String SECRET_KEY = "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";
@@ -126,18 +138,33 @@ public class FAMILYController {
 		}
 	}
 
-	public static void sendFCM(int id, int story_id) {
-
-	}
-
-	public void sendFCM(int id) {
+	public void sendFCM(int id, Notification notification) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-		
-//		JSONObject fcm = new JSONObject();
-//		if(id== 1){
-//			
-//			fcm.put("to", value)
-//		}
+		int check = notification.getReceive_category_id();
+		int intent_flag;
+
+		try {
+			JSONObject body = new JSONObject();
+
+			if (check == 1) {
+				Token token = dao.getToken(notification.getReceiver_id());
+				body.put("to", token.getToken());
+			}
+
+	        body.put("priority", "high");
+	        
+	        JSONObject data = new JSONObject();
+	        data.put("key1", "value1");
+	        data.put("key2", "value2");
+	        body.put("data", data);
+	        
+	        HttpEntity<String> request = new HttpEntity<String>(body.toString());
+
+	        CompletableFuture<FirebaseResponse> pushNotification = androidPushNotificationsService.send(request);
+	        CompletableFuture.allOf(pushNotification).join();
+		} catch (JSONException e) {
+			log(e);
+		}
 	}
 
 	// intro
@@ -658,7 +685,7 @@ public class FAMILYController {
 		notification.setBehavior_id(1);
 
 		dao.insertNotification(notification); // alarm
-		sendFCM(notification.getId());
+		sendFCM(notification.getId(), notification);
 
 		return identificationList;
 	}

@@ -95,5 +95,6 @@ public interface IDao {
 	ArrayList<Category> getReportCategoryList();
 	void insertCommentReport(int user_id, int comment_category_id, int report_category_id, int comment_id);
 	void insertNotification(Notification notification);
+	Token getToken(int receiver_id);
 	
 }
