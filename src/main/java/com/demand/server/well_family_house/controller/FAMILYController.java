@@ -61,7 +61,7 @@ import com.demand.server.well_family_house.log.LogFlag;
 public class FAMILYController {
 
 	@Autowired
-	private static SqlSession well_family_house_sqlSession;
+	private SqlSession well_family_house_sqlSession;
 
 	private static final String ACCESS_KEY = "AKIAIUGMLWN3S757JDVA";
 	private static final String SECRET_KEY = "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";
@@ -130,7 +130,7 @@ public class FAMILYController {
 
 	}
 
-	public static void sendFCM(int id) {
+	public void sendFCM(int id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		
 //		JSONObject fcm = new JSONObject();
