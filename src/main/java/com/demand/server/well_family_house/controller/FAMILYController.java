@@ -874,13 +874,14 @@ public class FAMILYController {
 		}
 	}
 
+	// report
 	@RequestMapping(value = "/report_category_List", method = RequestMethod.GET)
 	public ArrayList<Category> report_category_List() {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getReportCategoryList();
 	}
 
-	// invite user
+	// comment_report
 	@RequestMapping(value = "/{user_id}/insert_comment_report", method = RequestMethod.POST)
 	public void insert_comment_report(HttpServletRequest request, @PathVariable int user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
