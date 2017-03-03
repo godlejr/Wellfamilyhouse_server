@@ -35,7 +35,7 @@ import com.demand.server.well_family_house.dto.Comment;
 import com.demand.server.well_family_house.dto.CommentCount;
 import com.demand.server.well_family_house.dto.CommentInfo;
 import com.demand.server.well_family_house.dto.Family;
-import com.demand.server.well_family_house.dto.FavoriteCategory;
+import com.demand.server.well_family_house.dto.Category;
 import com.demand.server.well_family_house.dto.Identification;
 import com.demand.server.well_family_house.dto.LikeCount;
 import com.demand.server.well_family_house.dto.Photo;
@@ -729,7 +729,7 @@ public class FAMILYController {
 
 	// profile edit
 	@RequestMapping(value = "/favorite_category_List", method = RequestMethod.GET)
-	public ArrayList<FavoriteCategory> favorite_category_List() {
+	public ArrayList<Category> favorite_category_List() {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getFavoriteCategoryList();
 	}
@@ -870,6 +870,12 @@ public class FAMILYController {
 		if (flag == 3) {
 			dao.deleteSongStoryComment(Integer.parseInt(request.getParameter("comment_id")));
 		}
+	}
+	
+	@RequestMapping(value = "/report_category_List", method = RequestMethod.GET)
+	public ArrayList<Category> report_category_List() {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.getReportCategoryList();
 	}
 
 }

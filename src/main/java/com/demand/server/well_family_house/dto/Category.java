@@ -1,16 +1,16 @@
 package com.demand.server.well_family_house.dto;
 
-public class FavoriteCategory {
+public class Category {
 	private int id;
 	private String name;
 	private String created_at;
 	private String updated_at;
 
-	public FavoriteCategory() {
+	public Category() {
 		super();
 	}
 
-	public FavoriteCategory(int id, String name, String created_at, String updated_at) {
+	public Category(int id, String name, String created_at, String updated_at) {
 		super();
 		this.id = id;
 		this.name = name;

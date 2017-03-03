@@ -72,7 +72,7 @@ public interface IDao {
 	ArrayList<Check> checkDeviceId(int user_id, String device_id);
 	void updateToken(int user_id, String token);
 	void updateDeviceIdToken(int user_id, String device_id, String token);
-	ArrayList<FavoriteCategory> getFavoriteCategoryList();
+	ArrayList<Category> getFavoriteCategoryList();
 	ArrayList<Check> getCheckGender(int user_id);
 	ArrayList<Check> getCheckFavorite(int user_id, int favorite_category_id);
 	ArrayList<Check> getCheckSongCategory(int user_id, int song_category_id);
@@ -92,5 +92,6 @@ public interface IDao {
 	void deleteComment(int comment_id);
 	void deleteSongComment(int comment_id);
 	void deleteSongStoryComment(int comment_id);
+	ArrayList<Category> getReportCategoryList();
 	
 }

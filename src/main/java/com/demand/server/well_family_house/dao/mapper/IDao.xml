@@ -480,7 +480,7 @@
 
 	<!-- profile edit -->
 	<select id="getFavoriteCategoryList"
-		resultType="com.demand.server.well_family_house.dto.FavoriteCategory">
+		resultType="com.demand.server.well_family_house.dto.Category">
 		SELECT id,name,created_at,updated_at FROM
 		favorite_categories;
 	</select>
@@ -595,6 +595,12 @@
 		where id=#{param1}
 	</delete>
 	
+	
+	<select id="getReportCategoryList"
+		resultType="com.demand.server.well_family_house.dto.Category">
+		SELECT id,name,created_at,updated_at FROM
+		report_categories;
+	</select>
 
 
 </mapper>
