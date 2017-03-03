@@ -28,6 +28,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.util.json.JSONObject;
 import com.demand.server.HomeController;
 import com.demand.server.well_family_house.dao.IDao;
 import com.demand.server.well_family_house.dto.Check;
@@ -38,6 +39,7 @@ import com.demand.server.well_family_house.dto.Family;
 import com.demand.server.well_family_house.dto.Category;
 import com.demand.server.well_family_house.dto.Identification;
 import com.demand.server.well_family_house.dto.LikeCount;
+import com.demand.server.well_family_house.dto.Notification;
 import com.demand.server.well_family_house.dto.Photo;
 import com.demand.server.well_family_house.dto.Range;
 import com.demand.server.well_family_house.dto.Song;
@@ -59,7 +61,12 @@ import com.demand.server.well_family_house.log.LogFlag;
 public class FAMILYController {
 
 	@Autowired
-	private SqlSession well_family_house_sqlSession;
+	private static SqlSession well_family_house_sqlSession;
+
+	private static final String ACCESS_KEY = "AKIAIUGMLWN3S757JDVA";
+	private static final String SECRET_KEY = "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";
+	private static final String END_POINT_URL = "http://s3.ap-northeast-2.amazonaws.com";
+	private static final String BUCKET = "demand.files";
 	private static final Logger logger = LoggerFactory.getLogger(FAMILYController.class);
 
 	public static void log(Exception e) {
@@ -79,10 +86,6 @@ public class FAMILYController {
 
 	public static String uploadFileToAWSS3(String base64Data, String location, String ext)
 			throws IllegalStateException, IOException {
-		String ACCESS_KEY = "AKIAIUGMLWN3S757JDVA";
-		String SECRET_KEY = "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";
-		String END_POINT_URL = "http://s3.ap-northeast-2.amazonaws.com";
-		String BUCKET = "demand.files";
 		AmazonS3 s3;
 		String fileName = null;
 
@@ -108,10 +111,6 @@ public class FAMILYController {
 	}
 
 	public static void deleteFileFromAWSS3(String location, String fileName, String ext) {
-		String ACCESS_KEY = "AKIAIUGMLWN3S757JDVA";
-		String SECRET_KEY = "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";
-		String END_POINT_URL = "http://s3.ap-northeast-2.amazonaws.com";
-		String BUCKET = "demand.files";
 		AmazonS3 s3;
 
 		AWSCredentials credentials = new BasicAWSCredentials(ACCESS_KEY, SECRET_KEY);
@@ -125,6 +124,20 @@ public class FAMILYController {
 		} catch (AmazonClientException ace) {
 			log(ace);
 		}
+	}
+
+	public static void sendFCM(int id, int story_id) {
+
+	}
+
+	public static void sendFCM(int id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		
+//		JSONObject fcm = new JSONObject();
+//		if(id== 1){
+//			
+//			fcm.put("to", value)
+//		}
 	}
 
 	// intro
@@ -637,6 +650,15 @@ public class FAMILYController {
 		identificationList.add(identification);
 
 		// push
+		Notification notification = new Notification();
+		notification.setUser_id(user_id);
+		notification.setReceive_category_id(1); // notify for me
+		notification.setReceiver_id(user_id);
+		notification.setContent_name(request.getParameter("family_name")); // family_name
+		notification.setBehavior_id(1);
+
+		dao.insertNotification(notification); // alarm
+		sendFCM(notification.getId());
 
 		return identificationList;
 	}

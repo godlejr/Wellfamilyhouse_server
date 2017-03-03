@@ -94,5 +94,6 @@ public interface IDao {
 	void deleteSongStoryComment(int comment_id);
 	ArrayList<Category> getReportCategoryList();
 	void insertCommentReport(int user_id, int comment_category_id, int report_category_id, int comment_id);
+	void insertNotification(Notification notification);
 	
 }

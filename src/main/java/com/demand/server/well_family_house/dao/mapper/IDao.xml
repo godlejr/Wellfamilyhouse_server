@@ -608,5 +608,11 @@
 		values(#{param1},#{param2},#{param3},#{param4});
 	</insert>
 
+	<insert id="insertNotification" parameterType="com.demand.server.well_family_house.dto.Notification"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		notifications(user_id,receive_category_id,receiver_id,content_name,behavior_id)
+		values(#{user_id},#{receive_category_id},#{receiver_id},#{content_name},#{behavior_id});
+	</insert>
 
 </mapper>
