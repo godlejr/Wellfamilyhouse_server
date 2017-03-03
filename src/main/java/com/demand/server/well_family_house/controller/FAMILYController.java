@@ -636,6 +636,8 @@ public class FAMILYController {
 
 		identificationList.add(identification);
 
+		// push
+
 		return identificationList;
 	}
 
@@ -847,11 +849,11 @@ public class FAMILYController {
 		if (flag == 1) {
 			dao.updateComment(comment_id, request.getParameter("content"));
 		}
-		
+
 		if (flag == 2) {
 			dao.updateSongComment(comment_id, request.getParameter("content"));
 		}
-		
+
 		if (flag == 3) {
 			dao.updateSongStoryComment(comment_id, request.getParameter("content"));
 		}
@@ -871,11 +873,20 @@ public class FAMILYController {
 			dao.deleteSongStoryComment(Integer.parseInt(request.getParameter("comment_id")));
 		}
 	}
-	
+
 	@RequestMapping(value = "/report_category_List", method = RequestMethod.GET)
 	public ArrayList<Category> report_category_List() {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getReportCategoryList();
+	}
+
+	// invite user
+	@RequestMapping(value = "/{user_id}/insert_comment_report", method = RequestMethod.POST)
+	public void insert_comment_report(HttpServletRequest request, @PathVariable int user_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		dao.insertCommentReport(user_id, Integer.parseInt(request.getParameter("comment_category_id")),
+				Integer.parseInt(request.getParameter("report_category_id")),
+				Integer.parseInt(request.getParameter("comment_id")));
 	}
 
 }

@@ -479,9 +479,9 @@
 	</select>
 
 	<!-- profile edit -->
-	<select id="getFavoriteCategoryList"
-		resultType="com.demand.server.well_family_house.dto.Category">
-		SELECT id,name,created_at,updated_at FROM
+	<select id="getFavoriteCategoryList" resultType="com.demand.server.well_family_house.dto.Category">
+		SELECT
+		id,name,created_at,updated_at FROM
 		favorite_categories;
 	</select>
 
@@ -584,23 +584,29 @@
 		delete FROM comments
 		where id=#{param1}
 	</delete>
-	
+
 	<delete id="deleteSongComment">
 		delete FROM song_comments
 		where id=#{param1}
 	</delete>
-	
+
 	<delete id="deleteSongStoryComment">
 		delete FROM song_story_comments
 		where id=#{param1}
 	</delete>
-	
-	
-	<select id="getReportCategoryList"
-		resultType="com.demand.server.well_family_house.dto.Category">
-		SELECT id,name,created_at,updated_at FROM
+
+
+	<select id="getReportCategoryList" resultType="com.demand.server.well_family_house.dto.Category">
+		SELECT
+		id,name,created_at,updated_at FROM
 		report_categories;
 	</select>
+
+	<insert id="insertCommentReport">
+		insert into
+		comment_reports(user_id,comment_category_id,report_category_id,comment_id)
+		values(#{param1},#{param2},#{param3},#{param4});
+	</insert>
 
 
 </mapper>
