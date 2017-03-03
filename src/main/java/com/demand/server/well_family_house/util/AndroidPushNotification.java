@@ -19,7 +19,6 @@ public class AndroidPushNotification {
 		RestTemplate restTemplate = new RestTemplate();
 	
 		
-		
 		return null;
 		
 	}
