@@ -141,8 +141,8 @@ public class FAMILYController {
 
 		if (check == 1) {
 			// receiver = me;
-			ArrayList<Token> tokenInfo = dao.getToken(notification.getReceiver_id());
-			setMessage(notification_id, tokenInfo);
+			ArrayList<Token> token = dao.getToken(notification.getReceiver_id());
+			setMessage(notification_id, token);
 		}
 	}
 
