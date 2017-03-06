@@ -14,7 +14,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,19 +29,18 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.util.json.JSONException;
-import com.amazonaws.util.json.JSONObject;
-import com.demand.server.HomeController;
 import com.demand.server.well_family_house.dao.IDao;
+import com.demand.server.well_family_house.dto.Category;
 import com.demand.server.well_family_house.dto.Check;
 import com.demand.server.well_family_house.dto.Comment;
 import com.demand.server.well_family_house.dto.CommentCount;
 import com.demand.server.well_family_house.dto.CommentInfo;
+import com.demand.server.well_family_house.dto.Data;
 import com.demand.server.well_family_house.dto.Family;
 import com.demand.server.well_family_house.dto.FirebaseResponse;
-import com.demand.server.well_family_house.dto.Category;
 import com.demand.server.well_family_house.dto.Identification;
 import com.demand.server.well_family_house.dto.LikeCount;
+import com.demand.server.well_family_house.dto.Message;
 import com.demand.server.well_family_house.dto.Notification;
 import com.demand.server.well_family_house.dto.Photo;
 import com.demand.server.well_family_house.dto.Range;
@@ -62,16 +60,13 @@ import com.demand.server.well_family_house.dto.User;
 import com.demand.server.well_family_house.log.LogFlag;
 import com.demand.server.well_family_house.util.AndroidPushNotification;
 
-
-
-
 @RestController
 @RequestMapping("/family")
 public class FAMILYController {
 
 	@Autowired
 	private SqlSession well_family_house_sqlSession;
-	
+
 	@Autowired
 	AndroidPushNotification androidPushNotificationsService;
 
@@ -138,33 +133,44 @@ public class FAMILYController {
 		}
 	}
 
-	public void sendFCM(int id, Notification notification) {
+	public void sendFCM(Notification notification) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		int notification_id = notification.getId();
 		int check = notification.getReceive_category_id();
-		int intent_flag;
-
-		try {
-			JSONObject body = new JSONObject();
-
-			if (check == 1) {
-				Token token = dao.getToken(notification.getReceiver_id());
-				body.put("to", token.getToken());
-			}
-
-	        body.put("priority", "high");
-	        
-	        JSONObject data = new JSONObject();
-	        data.put("key1", "value1");
-	        data.put("key2", "value2");
-	        body.put("data", data);
-	        
-	        HttpEntity<String> request = new HttpEntity<String>(body.toString());
-
-	        CompletableFuture<FirebaseResponse> pushNotification = androidPushNotificationsService.send(request);
-	        CompletableFuture.allOf(pushNotification).join();
-		} catch (JSONException e) {
-			log(e);
+		
+		Message message = null;
+		String body = null;
+		
+		if (check == 1) {
+			//receiver = me;
+			ArrayList<Token> tokenInfo = dao.getToken(notification.getReceiver_id());
+			message = setToken(notification_id,tokenInfo);
 		}
+		
+		body = dao.getBodyForNotification(notification_id);
+		Data data =new Data(body);
+		message.setData(data);
+	
+	
+		CompletableFuture<FirebaseResponse> pushNotification = androidPushNotificationsService.send(message);
+		CompletableFuture.allOf(pushNotification).join();
+
+	}
+
+	public Message setToken(int notification_id, ArrayList<Token> tokenInfo) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		int tokenSize = tokenInfo.size();
+		ArrayList<String> token = new ArrayList<String>();
+
+		for (int i = 0; i < tokenSize; i++) {
+			dao.insertUserNotification(tokenInfo.get(i).getId(), notification_id);
+			token.add(tokenInfo.get(i).getToken());
+		}
+
+		Message message = new Message();
+		message.setTo(token);
+
+		return message;
 	}
 
 	// intro
@@ -682,10 +688,12 @@ public class FAMILYController {
 		notification.setReceive_category_id(1); // notify for me
 		notification.setReceiver_id(user_id);
 		notification.setContent_name(request.getParameter("family_name")); // family_name
+		notification.setIntent_flag(1);
+		notification.setIntent_id(family.getId());
 		notification.setBehavior_id(1);
 
 		dao.insertNotification(notification); // alarm
-		sendFCM(notification.getId(), notification);
+		sendFCM(notification);
 
 		return identificationList;
 	}

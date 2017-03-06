@@ -1,6 +1,7 @@
 package com.demand.server.well_family_house.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.demand.server.well_family_house.dto.*;
 
@@ -95,6 +96,8 @@ public interface IDao {
 	ArrayList<Category> getReportCategoryList();
 	void insertCommentReport(int user_id, int comment_category_id, int report_category_id, int comment_id);
 	void insertNotification(Notification notification);
-	Token getToken(int receiver_id);
+	ArrayList<Token> getToken(int receiver_id);
+	void insertUserNotification(int id, int notification_id);
+	String getBodyForNotification(int notification_id);
 	
 }

@@ -6,6 +6,8 @@ public class Notification {
 	private int receive_category_id;
 	private int receiver_id;
 	private String content_name;
+	private int intent_flag;
+	private int intent_id;
 	private int behavior_id;
 	private String created_at;
 	private String updated_at;
@@ -15,13 +17,15 @@ public class Notification {
 	}
 
 	public Notification(int id, int user_id, int receive_category_id, int receiver_id, String content_name,
-			int behavior_id, String created_at, String updated_at) {
+			int intent_flag, int intent_id, int behavior_id, String created_at, String updated_at) {
 		super();
 		this.id = id;
 		this.user_id = user_id;
 		this.receive_category_id = receive_category_id;
 		this.receiver_id = receiver_id;
 		this.content_name = content_name;
+		this.intent_flag = intent_flag;
+		this.intent_id = intent_id;
 		this.behavior_id = behavior_id;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
@@ -67,6 +71,22 @@ public class Notification {
 		this.content_name = content_name;
 	}
 
+	public int getIntent_flag() {
+		return intent_flag;
+	}
+
+	public void setIntent_flag(int intent_flag) {
+		this.intent_flag = intent_flag;
+	}
+
+	public int getIntent_id() {
+		return intent_id;
+	}
+
+	public void setIntent_id(int intent_id) {
+		this.intent_id = intent_id;
+	}
+
 	public int getBehavior_id() {
 		return behavior_id;
 	}
@@ -90,7 +110,5 @@ public class Notification {
 	public void setUpdated_at(String updated_at) {
 		this.updated_at = updated_at;
 	}
-
-	
 
 }
