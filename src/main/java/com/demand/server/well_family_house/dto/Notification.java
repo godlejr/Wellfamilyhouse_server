@@ -9,6 +9,7 @@ public class Notification {
 	private int intent_flag;
 	private int intent_id;
 	private int behavior_id;
+	private int checked;
 	private String created_at;
 	private String updated_at;
 
@@ -17,7 +18,7 @@ public class Notification {
 	}
 
 	public Notification(int id, int user_id, int receive_category_id, int receiver_id, String content_name,
-			int intent_flag, int intent_id, int behavior_id, String created_at, String updated_at) {
+			int intent_flag, int intent_id, int behavior_id, int checked, String created_at, String updated_at) {
 		super();
 		this.id = id;
 		this.user_id = user_id;
@@ -27,6 +28,7 @@ public class Notification {
 		this.intent_flag = intent_flag;
 		this.intent_id = intent_id;
 		this.behavior_id = behavior_id;
+		this.checked = checked;
 		this.created_at = created_at;
 		this.updated_at = updated_at;
 	}
@@ -95,6 +97,14 @@ public class Notification {
 		this.behavior_id = behavior_id;
 	}
 
+	public int getChecked() {
+		return checked;
+	}
+
+	public void setChecked(int checked) {
+		this.checked = checked;
+	}
+
 	public String getCreated_at() {
 		return created_at;
 	}
@@ -110,5 +120,6 @@ public class Notification {
 	public void setUpdated_at(String updated_at) {
 		this.updated_at = updated_at;
 	}
+
 
 }

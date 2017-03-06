@@ -2,26 +2,34 @@ package com.demand.server.well_family_house.dto;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(Include.NON_NULL)
 public class Message {
-	private ArrayList<String> to;
+	private String to;
+	private String priority;
 	private Data data;
 
 	public Message() {
 		super();
+		this.priority = "high";
 	}
 
-	public Message(ArrayList<String> to, Data data) {
-		super();
-		this.to = to;
-		this.data = data;
-	}
-
-	public ArrayList<String> getTo() {
+	public String getTo() {
 		return to;
 	}
 
-	public void setTo(ArrayList<String> to) {
+	public void setTo(String to) {
 		this.to = to;
+	}
+
+	public String getPriority() {
+		return priority;
+	}
+
+	public void setPriority(String priority) {
+		this.priority = priority;
 	}
 
 	public Data getData() {
@@ -30,6 +38,15 @@ public class Message {
 
 	public void setData(Data data) {
 		this.data = data;
+	}
+
+	public Message(String to, String priority, Data data) {
+		super();
+		this.to = to;
+		this.priority = priority;
+		this.data = data;
+		this.priority = "high";
+
 	}
 
 }

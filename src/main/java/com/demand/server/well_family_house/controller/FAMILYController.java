@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -137,40 +138,52 @@ public class FAMILYController {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		int notification_id = notification.getId();
 		int check = notification.getReceive_category_id();
-		
-		Message message = null;
-		String body = null;
-		
-		if (check == 1) {
-			//receiver = me;
-			ArrayList<Token> tokenInfo = dao.getToken(notification.getReceiver_id());
-			message = setToken(notification_id,tokenInfo);
-		}
-		
-		body = dao.getBodyForNotification(notification_id);
-		Data data =new Data(body);
-		message.setData(data);
-	
-	
-		CompletableFuture<FirebaseResponse> pushNotification = androidPushNotificationsService.send(message);
-		CompletableFuture.allOf(pushNotification).join();
 
+		if (check == 1) {
+			// receiver = me;
+			ArrayList<Token> tokenInfo = dao.getToken(notification.getReceiver_id());
+			setMessage(notification_id, tokenInfo);
+		}
 	}
 
-	public Message setToken(int notification_id, ArrayList<Token> tokenInfo) {
+	public void setMessage(int notification_id, ArrayList<Token> token) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-		int tokenSize = tokenInfo.size();
-		ArrayList<String> token = new ArrayList<String>();
+		int tokenSize = token.size();
 
 		for (int i = 0; i < tokenSize; i++) {
-			dao.insertUserNotification(tokenInfo.get(i).getId(), notification_id);
-			token.add(tokenInfo.get(i).getToken());
+			dao.insertUserNotification(token.get(i).getId(), notification_id);
+
+			Message message = new Message();
+			message.setTo(token.get(i).getToken());
+
+			String body = dao.getBodyForNotification(notification_id);
+			Data data = new Data(body);
+			message.setData(data);
+
+			CompletableFuture<FirebaseResponse> pushNotification = androidPushNotificationsService.send(message);
+			CompletableFuture.allOf(pushNotification).join();
+
+			try {
+				FirebaseResponse firebaseResponse = pushNotification.get();
+				if (firebaseResponse.getSuccess() == 1) {
+					if (LogFlag.printFlag) {
+						if (logger.isInfoEnabled()) {
+							logger.info("notification success");
+						}
+					}
+				} else {
+					if (LogFlag.printFlag) {
+						if (logger.isInfoEnabled()) {
+							logger.info("notification fail");
+						}
+					}
+				}
+			} catch (InterruptedException e) {
+				log(e);
+			} catch (ExecutionException e) {
+				log(e);
+			}
 		}
-
-		Message message = new Message();
-		message.setTo(token);
-
-		return message;
 	}
 
 	// intro
@@ -692,7 +705,7 @@ public class FAMILYController {
 		notification.setIntent_id(family.getId());
 		notification.setBehavior_id(1);
 
-		dao.insertNotification(notification); // alarm
+		dao.insertNotification(notification); // insert notification
 		sendFCM(notification);
 
 		return identificationList;
