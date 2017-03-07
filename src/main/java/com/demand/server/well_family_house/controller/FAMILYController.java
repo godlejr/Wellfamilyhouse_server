@@ -990,9 +990,15 @@ public class FAMILYController {
 
 	//notifications 
 	@RequestMapping(value = "/{notification_id}/NotificationForCreatingFamily", method = RequestMethod.GET)
-	public NotificationInfo notificationInfo(HttpServletRequest request, @PathVariable int notification_id) {
+	public NotificationInfo NotificationForCreatingFamily( @PathVariable int notification_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return	dao.getNotificationForCreatingFamily(notification_id);
+	}
+	
+	@RequestMapping(value = "/{notification_id}/NotificationForWritingStory", method = RequestMethod.GET)
+	public NotificationInfo NotificationForWritingStory( @PathVariable int notification_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return	dao.getNotificationForWritingStory(notification_id);
 	}
 	
 	

@@ -200,4 +200,6 @@ public interface IDao {
 
 	ArrayList<Token> getTokenForFamily(int receiver_id,int user_id);
 
+	NotificationInfo getNotificationForWritingStory(int notification_id);
+
 }
