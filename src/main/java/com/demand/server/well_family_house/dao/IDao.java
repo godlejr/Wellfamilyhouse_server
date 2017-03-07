@@ -198,6 +198,6 @@ public interface IDao {
 
 	void updateNotificationCheck(int notification_id);
 
-	ArrayList<Token> getTokenForFamily(int receiver_id);
+	ArrayList<Token> getTokenForFamily(int receiver_id,int user_id);
 
 }

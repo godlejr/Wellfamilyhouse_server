@@ -138,6 +138,7 @@ public class FAMILYController {
 	public void sendFCM(Notification notification) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		int notification_id = notification.getId();
+		int user_id = notification.getUser_id();//ÇàÀ§ÀÚ
 		int check = notification.getReceive_category_id();
 
 		if (check == 1) {
@@ -147,7 +148,7 @@ public class FAMILYController {
 		}
 		
 		if(check == 3){
-			ArrayList<Token> token = dao.getTokenForFamily(notification.getReceiver_id());
+			ArrayList<Token> token = dao.getTokenForFamily(notification.getReceiver_id(),user_id);
 			setMessage(notification_id, token);
 		}
 		

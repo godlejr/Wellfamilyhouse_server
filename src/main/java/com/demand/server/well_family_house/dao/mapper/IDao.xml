@@ -630,7 +630,7 @@
 		SELECT us.id as
 		id,us.token as token FROM family_joiners fj ,users us
 		where fj.user_id = us.id and
-		fj.family_id = #{param1};
+		fj.family_id = #{param1} and us.id !=#{param2};
 	</select>
 
 	<!-- set token -->
