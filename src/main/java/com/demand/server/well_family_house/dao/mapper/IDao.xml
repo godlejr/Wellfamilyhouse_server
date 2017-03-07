@@ -661,7 +661,7 @@
 		user_notification_joiners nj , notifications nt
 		where
 		nj.notification_id = nt.id and
-		nj.user_id = #{param1} limit 15;
+		nj.user_id = #{param1} order by nt.created_at desc limit 15;
 	</select>
 
 	<!-- get notificationInfo -->
