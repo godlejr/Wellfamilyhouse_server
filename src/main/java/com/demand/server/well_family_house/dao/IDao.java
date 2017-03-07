@@ -186,7 +186,7 @@ public interface IDao {
 
 	void insertNotification(Notification notification);
 
-	ArrayList<Token> getToken(int receiver_id);
+	ArrayList<Token> getTokenForMe(int receiver_id);
 
 	void insertUserNotification(int id, int notification_id);
 
@@ -197,5 +197,7 @@ public interface IDao {
 	NotificationInfo getNotificationForCreatingFamily(int notification_id);
 
 	void updateNotificationCheck(int notification_id);
+
+	ArrayList<Token> getTokenForFamily(int receiver_id);
 
 }

@@ -618,11 +618,19 @@
 
 
 	<!-- get token -->
-	<select id="getToken" resultType="com.demand.server.well_family_house.dto.Token">
+	<select id="getTokenForMe" resultType="com.demand.server.well_family_house.dto.Token">
 		select
 		id,token from users
 		where
 		id = #{param1};
+	</select>
+
+	<!-- get token -->
+	<select id="getTokenForFamily" resultType="com.demand.server.well_family_house.dto.Token">
+		SELECT us.id as
+		id,us.token as token FROM family_joiners fj ,users us
+		where fj.user_id = us.id and
+		fj.family_id = #{param1};
 	</select>
 
 	<!-- set token -->
@@ -661,7 +669,8 @@
 		user_notification_joiners nj , notifications nt
 		where
 		nj.notification_id = nt.id and
-		nj.user_id = #{param1} order by nt.created_at desc limit 15;
+		nj.user_id = #{param1} order by
+		nt.created_at desc limit 15;
 	</select>
 
 	<!-- get notificationInfo -->

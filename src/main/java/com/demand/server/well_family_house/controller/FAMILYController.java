@@ -142,9 +142,15 @@ public class FAMILYController {
 
 		if (check == 1) {
 			// receiver = me;
-			ArrayList<Token> token = dao.getToken(notification.getReceiver_id());
+			ArrayList<Token> token = dao.getTokenForMe(notification.getReceiver_id());
 			setMessage(notification_id, token);
 		}
+		
+		if(check == 3){
+			ArrayList<Token> token = dao.getTokenForFamily(notification.getReceiver_id());
+			setMessage(notification_id, token);
+		}
+		
 	}
 
 	public void setMessage(int notification_id, ArrayList<Token> token) {
@@ -332,12 +338,26 @@ public class FAMILYController {
 	@RequestMapping(value = "/{user_id}/insert_story", method = RequestMethod.POST)
 	public ArrayList<Story> insert_story(HttpServletRequest request, @PathVariable int user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		int family_id = Integer.parseInt(request.getParameter("family_id"));
+		String content = request.getParameter("content");
 		Story story = new Story();
 		story.setUser_id(user_id);
-		story.setFamily_id(Integer.parseInt(request.getParameter("family_id")));
-		story.setContent(request.getParameter("content"));
+		story.setFamily_id(family_id);
+		story.setContent(content);
 
 		dao.insertStory(story);
+		
+		Notification notification = new Notification();
+		notification.setUser_id(user_id);
+		notification.setReceive_category_id(3); // notify for me
+		notification.setReceiver_id(family_id);
+		notification.setContent_name(request.getParameter("family_name")); // family_name
+		notification.setIntent_flag(2);
+		notification.setIntent_id(story.getId());
+		notification.setBehavior_id(5);
+
+		dao.insertNotification(notification); // insert notification
+		sendFCM(notification);
 
 		return dao.getStory(story.getId());
 	}
@@ -967,11 +987,14 @@ public class FAMILYController {
 		return dao.getNotification(user_id);
 	}
 
+	//notifications 
 	@RequestMapping(value = "/{notification_id}/NotificationForCreatingFamily", method = RequestMethod.GET)
 	public NotificationInfo notificationInfo(HttpServletRequest request, @PathVariable int notification_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return	dao.getNotificationForCreatingFamily(notification_id);
 	}
+	
+	
 	
 	@RequestMapping(value = "/update_notification_check", method = RequestMethod.POST)
 	public void notificationInfo(HttpServletRequest request) {
