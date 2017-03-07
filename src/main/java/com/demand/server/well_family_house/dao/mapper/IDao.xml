@@ -652,11 +652,13 @@
 		receiver_id,
 		nt.content_name as content_name, nt.intent_flag as
 		intent_flag, nt.intent_id as
-		intent_id, nt.receiver_id as receiver_id,
+		intent_id, nt.receiver_id as
+		receiver_id,nt.behavior_id as behavior_id,
 		nt.checked as checked,
 		nt.created_at as created_at,nt.updated_at as
 		updated_at
-		FROM user_notification_joiners nj , notifications nt
+		FROM
+		user_notification_joiners nj , notifications nt
 		where
 		nj.notification_id = nt.id and
 		nj.user_id = #{param1} limit 15;
@@ -673,7 +675,7 @@
 		nt.user_id = us.id and
 		nt.id =#{param1};
 	</select>
-	
+
 	<update id="updateNotificationCheck">
 		update notifications set checked = 1 where id =
 		#{param1};
