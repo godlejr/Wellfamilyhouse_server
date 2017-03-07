@@ -959,5 +959,13 @@ public class FAMILYController {
 				Integer.parseInt(request.getParameter("report_category_id")),
 				Integer.parseInt(request.getParameter("comment_id")));
 	}
+	
+	@RequestMapping(value = "/{user_id}/notifications", method = RequestMethod.GET)
+	public ArrayList<Notification> notifications(@PathVariable int user_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return dao.getNotification(user_id);
+	}
+	
+	
 
 }

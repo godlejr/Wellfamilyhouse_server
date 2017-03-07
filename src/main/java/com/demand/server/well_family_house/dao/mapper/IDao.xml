@@ -634,11 +634,28 @@
 
 	<!-- get msg -->
 	<select id="getBodyForNotification" resultType="String">
-		SELECT CONCAT(us.name,'님이 "',nt.content_name,'" ', bh.name) as message FROM notifications
+		SELECT
+		CONCAT(us.name,'님이 "',nt.content_name,'" ', bh.name) as message FROM
+		notifications
 		nt,users us, behaviors bh
 		where us.id = nt.user_id and
 		bh.id = nt.behavior_id and
 		nt.id =#{param1};
 	</select>
-	
+
+
+	<!-- get msg -->
+	<select id="getNotification"
+		resultType="com.demand.server.well_family_house.dto.Notification">
+		SELECT nt.id as id, nt.user_id as user_id,
+		nt.receive_category_id as receive_category_id, nt.receiver_id as
+		receiver_id,
+		nt.content_name as content_name, nt.intent_flag as intent_flag, nt.intent_id as
+		intent_id, nt.receiver_id as receiver_id, nt.checked as checked,
+		nt.created_at as created_at,nt.updated_at as updated_at
+		FROM user_notification_joiners nj , notifications nt
+		where nj.notification_id = nt.id and
+		nj.user_id = #{param1} limit 15;
+	</select>
+
 </mapper>

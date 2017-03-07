@@ -99,5 +99,6 @@ public interface IDao {
 	ArrayList<Token> getToken(int receiver_id);
 	void insertUserNotification(int id, int notification_id);
 	String getBodyForNotification(int notification_id);
+	ArrayList<Notification> getNotification(int user_id);
 	
 }

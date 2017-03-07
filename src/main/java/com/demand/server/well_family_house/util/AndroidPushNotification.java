@@ -5,15 +5,12 @@ import java.util.concurrent.CompletableFuture;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.demand.server.well_family_house.dto.FirebaseResponse;
 import com.demand.server.well_family_house.dto.Message;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @Service
@@ -27,7 +24,6 @@ public class AndroidPushNotification {
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.set("Authorization", "key=" + FIREBASE_SERVER_KEY);
 		httpHeaders.setContentType(new MediaType("application","json"));
-		
 		
 		HttpEntity<Message> requestEntity = new HttpEntity<Message>(message, httpHeaders);
 	
