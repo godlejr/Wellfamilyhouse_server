@@ -43,6 +43,7 @@ import com.demand.server.well_family_house.dto.Identification;
 import com.demand.server.well_family_house.dto.LikeCount;
 import com.demand.server.well_family_house.dto.Message;
 import com.demand.server.well_family_house.dto.Notification;
+import com.demand.server.well_family_house.dto.NotificationInfo;
 import com.demand.server.well_family_house.dto.Photo;
 import com.demand.server.well_family_house.dto.Range;
 import com.demand.server.well_family_house.dto.Song;
@@ -959,13 +960,24 @@ public class FAMILYController {
 				Integer.parseInt(request.getParameter("report_category_id")),
 				Integer.parseInt(request.getParameter("comment_id")));
 	}
-	
+
 	@RequestMapping(value = "/{user_id}/notifications", method = RequestMethod.GET)
 	public ArrayList<Notification> notifications(@PathVariable int user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getNotification(user_id);
 	}
+
+	@RequestMapping(value = "/{notification_id}/NotificationForCreatingFamily", method = RequestMethod.GET)
+	public NotificationInfo notificationInfo(HttpServletRequest request, @PathVariable int notification_id) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		return	dao.getNotificationForCreatingFamily(notification_id);
+	}
 	
+	@RequestMapping(value = "/update_notification_check", method = RequestMethod.POST)
+	public void notificationInfo(HttpServletRequest request) {
+		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
+		dao.updateNotificationCheck(Integer.parseInt(request.getParameter("notification_id")));
+	}
 	
 
 }
