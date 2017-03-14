@@ -2,22 +2,19 @@
 <beans:beans xmlns="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:security="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+				 http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
 
-	<!-- DispatcherServlet Context: defines this servlet's request-processing 
-		infrastructure -->
-
-	<!-- Enables the Spring MVC @Controller programming model -->
+	<security:global-method-security
+		secured-annotations="enabled" />
 	<annotation-driven />
-
-	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
-		up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
 
-	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
-		in the /WEB-INF/views directory -->
 	<beans:bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
@@ -50,36 +47,13 @@
 	</beans:bean>
 
 
-
-	<!-- h2o -->
-	<beans:bean name="h2o_dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver"></beans:property>
-		<beans:property name="url"
-			value="jdbc:mysql://demand.chf1ewq1wbza.ap-northeast-2.rds.amazonaws.com:3306/h2o?characterEncoding=utf8"></beans:property>
-		<beans:property name="username" value="demand"></beans:property>
-		<beans:property name="password" value="demand8312"></beans:property>
-	</beans:bean>
-
-	<beans:bean id="h2o_sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<beans:property name="dataSource" ref="h2o_dataSource"></beans:property>
-		<beans:property name="mapperLocations"
-			value="classpath:com/demand/server/h2o/dao/mapper/*.xml"></beans:property>
-	</beans:bean>
-
-	<beans:bean id="h2o_sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-		<beans:constructor-arg index="0"
-			ref="h2o_sqlSessionFactory"></beans:constructor-arg>
-	</beans:bean>
-
-
 	<!-- well_family_house -->
 	<beans:bean name="well_family_house_dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver"></beans:property>
 		<beans:property name="url"
 			value="jdbc:mysql://demand.chf1ewq1wbza.ap-northeast-2.rds.amazonaws.com:3306/wellfamily?characterEncoding=utf8"></beans:property>
-		
+
 		<beans:property name="username" value="demand"></beans:property>
 		<beans:property name="password" value="demand8312"></beans:property>
 	</beans:bean>
@@ -94,9 +68,23 @@
 		<beans:constructor-arg index="0"
 			ref="well_family_house_sqlSessionFactory"></beans:constructor-arg>
 	</beans:bean>
+	
+	
 
 
-
-
+	<!-- view resolver for the exception control -->
+	<beans:bean
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<beans:property name="exceptionMappings">
+			<beans:props>
+				<beans:prop key=".AccessDeniedException">home</beans:prop>
+				<!-- <prop key=".DataAccessException">errors/dataAccessFailure</prop> 
+					<prop key=".TypeMismatchException">errors/resourceNotFound</prop> <prop key=".NoSuchRequestHandlingMethodException">errors/resourceNotFound</prop> 
+					<prop key=".MissingServletRequestParameterException">errors/resourceNotFound</prop> -->
+			</beans:props>
+		</beans:property>
+		<beans:property name="defaultErrorView" value="errors/generalError" />
+		<beans:property name="warnLogCategory" value="com.rockycode" />
+	</beans:bean>
 
 </beans:beans>

@@ -554,13 +554,6 @@
 		#{param1};
 	</update>
 
-	<select id="getFamilyInfoByCreator" resultType="com.demand.server.well_family_house.dto.Family">
-		SELECT
-		id,name,content,avatar,user_id,created_at
-		FROM familys where id =
-		#{param1};
-	</select>
-
 	<update id="updateComment">
 		update comments set content = #{param2} where id =
 		#{param1};
