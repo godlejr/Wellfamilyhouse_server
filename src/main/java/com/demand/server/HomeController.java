@@ -33,7 +33,6 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		System.out.println( org.springframework.core.SpringVersion.getVersion() );
 
-
 		model.addAttribute("serverTime", formattedDate );
 		
 		return "home";
