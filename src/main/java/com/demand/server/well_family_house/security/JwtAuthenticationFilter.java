@@ -20,7 +20,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter{
-	public final String HEADER ="Authentication";
+	public final String HEADER ="Authorization";
 	private UsernamePasswordAuthenticationToken authRequest;
 
 	@Autowired
@@ -46,8 +46,6 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
 	        }else{
 	        	authRequest = new UsernamePasswordAuthenticationToken("demand",token);
 	        }
-			System.out.println("test1");
-
 	        return getAuthenticationManager().authenticate(authRequest);
 	}
 

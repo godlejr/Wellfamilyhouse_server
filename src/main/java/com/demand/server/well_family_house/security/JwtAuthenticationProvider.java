@@ -20,8 +20,6 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 		jwtUtil = new JwtUtil();
 		int user_level = jwtUtil.getUser_level(token);
 
-		System.out.println("test2");
-
 		List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
 
 		if (user_level == 9) {
@@ -31,9 +29,8 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 			grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 			System.out.println("ROLE_USER");
 		}
-		System.out.println("test3");
 		authentication = new UsernamePasswordAuthenticationToken("demand", "demand8312", grantedAuthorities);
-		// SecurityContextHolder.setContext();
+
 		return authentication;
 	}
 
