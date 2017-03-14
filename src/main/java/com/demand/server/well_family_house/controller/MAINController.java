@@ -27,7 +27,7 @@ public class MAINController {
 	JwtUtil jwtUtil;
 
 	@RequestMapping(value = "/check/{email}", method = RequestMethod.GET)
-	public ArrayList<User> email_check(@PathVariable String email) {
+	public User email_check(@PathVariable String email) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.email_check(email);
 	}

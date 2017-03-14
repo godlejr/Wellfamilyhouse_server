@@ -19,12 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demand.server.well_family_house.dao.IDao;
-import com.demand.server.well_family_house.dto.Check;
-import com.demand.server.well_family_house.dto.CommentCount;
 import com.demand.server.well_family_house.dto.CommentInfo;
-import com.demand.server.well_family_house.dto.LikeCount;
 import com.demand.server.well_family_house.dto.SongPhoto;
-import com.demand.server.well_family_house.dto.SongStoryAvatar;
 import com.demand.server.well_family_house.dto.SongStoryComment;
 import com.demand.server.well_family_house.dto.SongStoryEmotionData;
 import com.demand.server.well_family_house.flag.LogFlag;
@@ -147,13 +143,13 @@ public class SONGSTORYController {
 
 	// count (memory_sound my page)
 	@RequestMapping(value = "/{song_story_id}/comment_count", method = RequestMethod.GET)
-	public ArrayList<CommentCount> song_story_comment_Count(@PathVariable int song_story_id) {
+	public int song_story_comment_Count(@PathVariable int song_story_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getSongStoryCommentCount(song_story_id);
 	}
 
 	@RequestMapping(value = "/{song_story_id}/like_count", method = RequestMethod.GET)
-	public ArrayList<LikeCount> song_story_like_Count(@PathVariable int song_story_id) {
+	public int song_story_like_Count(@PathVariable int song_story_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getSongStoryLikeCount(song_story_id);
 	}
@@ -172,7 +168,7 @@ public class SONGSTORYController {
 	}
 
 	@RequestMapping(value = "/{song_story_id}/like_check/{user_id}", method = RequestMethod.GET)
-	public ArrayList<Check> song_story_like_check(HttpServletRequest request, @PathVariable int user_id,
+	public int song_story_like_check(HttpServletRequest request, @PathVariable int user_id,
 			@PathVariable int song_story_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.checkSongStoryLike(user_id, song_story_id);
@@ -192,7 +188,7 @@ public class SONGSTORYController {
 	}
 
 	@RequestMapping(value = "/{song_story_id}/comments", method = RequestMethod.POST)
-	public ArrayList<SongStoryComment> insert_song_story_comment(HttpServletRequest request,
+	public SongStoryComment insert_song_story_comment(HttpServletRequest request,
 			@PathVariable int song_story_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		
@@ -206,7 +202,7 @@ public class SONGSTORYController {
 	}
 
 	@RequestMapping(value = "/{song_story_id}/avatars", method = RequestMethod.GET)
-	public ArrayList<SongStoryAvatar> song_story_avatar(HttpServletRequest request, @PathVariable int song_story_id) {
+	public String song_story_avatar(HttpServletRequest request, @PathVariable int song_story_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getSongStoryAvatar(Integer.parseInt(request.getParameter("song_id")));
 	}

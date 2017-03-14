@@ -20,9 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.demand.server.well_family_house.dao.IDao;
 import com.demand.server.well_family_house.dto.Category;
-import com.demand.server.well_family_house.dto.Check;
 import com.demand.server.well_family_house.dto.Family;
-import com.demand.server.well_family_house.dto.Identification;
 import com.demand.server.well_family_house.dto.Notification;
 import com.demand.server.well_family_house.dto.SongStory;
 import com.demand.server.well_family_house.dto.User;
@@ -64,7 +62,7 @@ public class USERController {
 	}
 
 	@RequestMapping(value = "/{user_id}", method = RequestMethod.GET)
-	public ArrayList<User> user_Info(@PathVariable int user_id) {
+	public User user_Info(@PathVariable int user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getUserInfo(user_id);
 	}
@@ -77,7 +75,7 @@ public class USERController {
 	}
 
 	@RequestMapping(value = "/{user_id}/deviceids/{device_id}", method = RequestMethod.GET)
-	public ArrayList<Check> check_device_id(HttpServletRequest request, @PathVariable int user_id,
+	public int check_device_id(HttpServletRequest request, @PathVariable int user_id,
 			@PathVariable String device_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.checkDeviceId(user_id, device_id);
@@ -97,7 +95,7 @@ public class USERController {
 
 	// user_check from total families
 	@RequestMapping(value = "/{story_user_id}/family_check/{user_id}", method = RequestMethod.GET)
-	public ArrayList<Check> family_check(HttpServletRequest request, @PathVariable int story_user_id,
+	public int family_check(HttpServletRequest request, @PathVariable int story_user_id,
 			@PathVariable int user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.checkFamily(user_id, story_user_id);
@@ -135,10 +133,8 @@ public class USERController {
 
 	// insert_family
 	@RequestMapping(value = "/{user_id}/familys", method = RequestMethod.POST)
-	public ArrayList<Identification> insert_family(HttpServletRequest request, @PathVariable int user_id) {
+	public int insert_family(HttpServletRequest request, @PathVariable int user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-
-		ArrayList<Identification> identificationList = new ArrayList<Identification>();
 
 		Family family = new Family();
 		family.setName(request.getParameter("family_name"));
@@ -146,10 +142,7 @@ public class USERController {
 		family.setUser_id(user_id);
 
 		dao.insertFamily(family);
-		dao.insertFamilyJoiner(family.getId(), user_id);
-		Identification identification = new Identification(family.getId());
-
-		identificationList.add(identification);
+		dao.insertFamilyJoiner(family.getId(), user_id);	
 
 		// push
 		Notification notification = new Notification();
@@ -164,12 +157,12 @@ public class USERController {
 		dao.insertNotification(notification); // insert notification
 		androidPushConnection.sendFCM(notification);
 
-		return identificationList;
+		return family.getId();
 	}
 
 	// user_check from particular family
 	@RequestMapping(value = "/{other_user_id}/sole_family_check/{user_id}", method = RequestMethod.GET)
-	public ArrayList<Check> family_user_check(HttpServletRequest request, @PathVariable int other_user_id,
+	public int family_user_check(HttpServletRequest request, @PathVariable int other_user_id,
 			@PathVariable int user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getFamilyUserCheck(Integer.parseInt(request.getParameter("family_id")), user_id, other_user_id);
@@ -183,19 +176,19 @@ public class USERController {
 	}
 
 	@RequestMapping(value = "/{user_id}/check_genders", method = RequestMethod.GET)
-	public ArrayList<Check> check_gender(@PathVariable int user_id) {
+	public int check_gender(@PathVariable int user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getCheckGender(user_id);
 	}
 
 	@RequestMapping(value = "/{user_id}/favorite_check/{favorite_category_id}", method = RequestMethod.GET)
-	public ArrayList<Check> check_favorite(@PathVariable int user_id, @PathVariable int favorite_category_id) {
+	public int check_favorite(@PathVariable int user_id, @PathVariable int favorite_category_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getCheckFavorite(user_id, favorite_category_id);
 	}
 
 	@RequestMapping(value = "/{user_id}/song_favorite_check/{song_category_id}", method = RequestMethod.GET)
-	public ArrayList<Check> check_song_category( @PathVariable int user_id, @PathVariable int song_category_id) {
+	public int check_song_category( @PathVariable int user_id, @PathVariable int song_category_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getCheckSongCategory(user_id, song_category_id);
 	}

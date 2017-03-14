@@ -19,11 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demand.server.well_family_house.dao.IDao;
-import com.demand.server.well_family_house.dto.Check;
 import com.demand.server.well_family_house.dto.Comment;
-import com.demand.server.well_family_house.dto.CommentCount;
 import com.demand.server.well_family_house.dto.CommentInfo;
-import com.demand.server.well_family_house.dto.LikeCount;
 import com.demand.server.well_family_house.dto.Notification;
 import com.demand.server.well_family_house.dto.Photo;
 import com.demand.server.well_family_house.dto.Story;
@@ -66,13 +63,13 @@ public class STORYController {
 
 	// content_info (family_main)
 	@RequestMapping(value = "/{story_id}/comment_count", method = RequestMethod.GET)
-	public ArrayList<CommentCount> family_comment_Count(@PathVariable int story_id) {
+	public int family_comment_Count(@PathVariable int story_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getCommentCount(story_id);
 	}
 
 	@RequestMapping(value = "/{story_id}/like_count", method = RequestMethod.GET)
-	public ArrayList<LikeCount> family_like_Count(@PathVariable int story_id) {
+	public int family_like_Count(@PathVariable int story_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getLikeCount(story_id);
 	}
@@ -97,7 +94,7 @@ public class STORYController {
 	}
 
 	@RequestMapping(value = "/{story_id}/like_check/{user_id}", method = RequestMethod.GET)
-	public ArrayList<Check> family_content_like_check(HttpServletRequest request, @PathVariable int story_id,
+	public int family_content_like_check(HttpServletRequest request, @PathVariable int story_id,
 			@PathVariable int user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.checkLike(user_id, story_id);
@@ -111,7 +108,7 @@ public class STORYController {
 	}
 
 	@RequestMapping(value = "/{story_id}/comments", method = RequestMethod.POST)
-	public ArrayList<Comment> insert_comment(HttpServletRequest request, @PathVariable int story_id) {
+	public Comment insert_comment(HttpServletRequest request, @PathVariable int story_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 
 		int user_id = Integer.parseInt(request.getParameter("user_id"));
@@ -126,7 +123,7 @@ public class STORYController {
 
 	// insert story
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public ArrayList<Story> insert_story(HttpServletRequest request) {
+	public Story insert_story(HttpServletRequest request) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		int family_id = Integer.parseInt(request.getParameter("family_id"));
 		int user_id = Integer.parseInt(request.getParameter("user_id"));

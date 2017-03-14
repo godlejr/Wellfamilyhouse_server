@@ -6,7 +6,7 @@ import java.util.List;
 import com.demand.server.well_family_house.dto.*;
 
 public interface IDao {
-	ArrayList<User> email_check(String email);
+	User email_check(String email);
 
 	User login(String email, String password);
 
@@ -22,17 +22,17 @@ public interface IDao {
 
 	ArrayList<Photo> getPhotoList(int family_id);
 
-	ArrayList<CommentCount> getCommentCount(int story_id);
+	int getCommentCount(int story_id);
 
-	ArrayList<LikeCount> getLikeCount(int story_id);
+	int getLikeCount(int story_id);
 
 	void updateLikeUp(int user_id, int story_id);
 
 	void updateLikeDown(int user_id, int story_id);
 
-	ArrayList<Check> checkLike(int user_id, int story_id);
+	int checkLike(int user_id, int story_id);
 
-	ArrayList<User> getUserInfo(int user_id);
+	User getUserInfo(int user_id);
 
 	ArrayList<CommentInfo> getCommentList(int story_id);
 
@@ -42,19 +42,19 @@ public interface IDao {
 
 	void insertPhoto(Photo photo);
 
-	ArrayList<Story> getStory(int story_id);
+	Story getStory(int story_id);
 
-	ArrayList<Comment> getComment(int comment_id);
+	Comment getComment(int comment_id);
 
-	ArrayList<CommentCount> getSongCommentCount(int song_id);
+	int getSongCommentCount(int song_id);
 
-	ArrayList<LikeCount> getSongLikeCount(int song_id);
+	int getSongLikeCount(int song_id);
 
 	ArrayList<SongCategory> getSongCategoryList();
 
 	ArrayList<Song> getSongListByHits();
 
-	ArrayList<Song> getRandomSong(int song_id);
+	Song getRandomSong(int song_id);
 
 	ArrayList<Song> getSongListByCategory(int category_id);
 
@@ -66,33 +66,33 @@ public interface IDao {
 
 	void updateSongLikeDown(int user_id, int song_id);
 
-	ArrayList<Check> checkSongLike(int user_id, int song_id);
+	int checkSongLike(int user_id, int song_id);
 
 	void insertSongComment(SongComment songComment);
 
-	ArrayList<SongComment> getSongComment(int song_id);
+	SongComment getSongComment(int song_id);
 
 	ArrayList<Range> getSongRangeList();
 
 	void insertSongStory(SongStory songStory);
 
-	ArrayList<SongStory> getSongStory(int id);
+	SongStory getSongStory(int id);
 
 	void insertSongPhoto(SongPhoto songPhoto);
 
 	void insertAudio(int parseInt, String file_name);
 
-	ArrayList<CommentCount> getSongStoryCommentCount(int song_story_id);
+	int getSongStoryCommentCount(int song_story_id);
 
-	ArrayList<LikeCount> getSongStoryLikeCount(int song_story_id);
+	int getSongStoryLikeCount(int song_story_id);
 
 	void updateSongStoryLikeUp(int user_id, int song_story_id);
 
 	void updateSongStoryLikeDown(int user_id, int song_story_id);
 
-	ArrayList<Check> checkSongStoryLike(int user_id, int song_story_id);
+	int checkSongStoryLike(int user_id, int song_story_id);
 
-	ArrayList<Check> checkFamily(int user_id, int story_user_id);
+	int checkFamily(int user_id, int story_user_id);
 
 	ArrayList<SongStory> getSongStoryPublicList(int story_user_id);
 
@@ -106,9 +106,9 @@ public interface IDao {
 
 	void insertSongStoryComment(SongStoryComment songStoryComment);
 
-	ArrayList<SongStoryComment> getSongStoryComment(int song_story_id);
+	SongStoryComment getSongStoryComment(int song_story_id);
 
-	ArrayList<SongStoryAvatar> getSongStoryAvatar(int song_id);
+	String getSongStoryAvatar(int song_id);
 
 	ArrayList<Family> getFamilySearchList(String family_name);
 
@@ -120,7 +120,7 @@ public interface IDao {
 
 	ArrayList<User> getUserSearchList(String search);
 
-	ArrayList<Family> getFamily(int family_id);
+	Family getFamily(int family_id);
 
 	void insertUserIntoFamily(int family_id, int user_id);
 
@@ -132,9 +132,9 @@ public interface IDao {
 
 	ArrayList<SongStoryEmotionData> getSongStoryEmotionData(int song_story_id);
 
-	ArrayList<Check> getFamilyUserCheck(int family_id, int user_id, int other_user_id);
+	int getFamilyUserCheck(int family_id, int user_id, int other_user_id);
 
-	ArrayList<Check> checkDeviceId(int user_id, String device_id);
+	int checkDeviceId(int user_id, String device_id);
 
 	void updateToken(int user_id, String token);
 
@@ -142,11 +142,11 @@ public interface IDao {
 
 	ArrayList<Category> getFavoriteCategoryList();
 
-	ArrayList<Check> getCheckGender(int user_id);
+	int getCheckGender(int user_id);
 
-	ArrayList<Check> getCheckFavorite(int user_id, int favorite_category_id);
+	int getCheckFavorite(int user_id, int favorite_category_id);
 
-	ArrayList<Check> getCheckSongCategory(int user_id, int song_category_id);
+	int getCheckSongCategory(int user_id, int song_category_id);
 
 	User getUserAvatar(int user_id);
 
@@ -198,7 +198,7 @@ public interface IDao {
 
 	void updateNotificationCheck(int notification_id);
 
-	ArrayList<Token> getTokenForFamily(int receiver_id,int user_id);
+	ArrayList<Token> getTokenForFamily(int receiver_id, int user_id);
 
 	NotificationInfo getNotificationForWritingStory(int notification_id);
 

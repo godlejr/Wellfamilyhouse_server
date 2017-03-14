@@ -35,7 +35,7 @@
 		#{param1};
 	</update>
 
-	<select id="checkDeviceId" resultType="com.demand.server.well_family_house.dto.Check">
+	<select id="checkDeviceId" resultType="int">
 		SELECT count(device_id) as
 		checked FROM wellfamily.users where id=#{param1} and device_id =
 		#{param2};
@@ -95,14 +95,14 @@
 	</select>
 
 	<!-- content count (family main) -->
-	<select id="getLikeCount" resultType="com.demand.server.well_family_house.dto.LikeCount">
+	<select id="getLikeCount" resultType="int">
 		select count(user_id) as
 		like_count from story_likes where
 		story_id = #{param1};
 	</select>
 
 	<select id="getCommentCount"
-		resultType="com.demand.server.well_family_house.dto.CommentCount">
+		resultType="int">
 		SELECT count(user_id) as comment_count
 		FROM comments where
 		story_id = #{param1};
@@ -125,7 +125,7 @@
 		story_id =#{param2};
 	</delete>
 
-	<select id="checkLike" resultType="com.demand.server.well_family_house.dto.Check">
+	<select id="checkLike" resultType="int">
 		SELECT count(id) as checked
 		FROM story_likes where user_id = #{param1} and story_id = #{param2};
 	</select>
@@ -174,7 +174,7 @@
 
 
 	<!-- memory song -->
-	<select id="getSongLikeCount" resultType="com.demand.server.well_family_house.dto.LikeCount">
+	<select id="getSongLikeCount" resultType="int">
 		select count(user_id)
 		as
 		like_count from song_likes where
@@ -182,7 +182,7 @@
 	</select>
 
 	<select id="getSongCommentCount"
-		resultType="com.demand.server.well_family_house.dto.CommentCount">
+		resultType="int">
 		SELECT count(user_id) as comment_count
 		FROM song_comments
 		where
@@ -235,7 +235,7 @@
 		song_id =#{param2};
 	</delete>
 
-	<select id="checkSongLike" resultType="com.demand.server.well_family_house.dto.Check">
+	<select id="checkSongLike" resultType="int">
 		SELECT count(id) as
 		checked
 		FROM song_likes where user_id = #{param1} and song_id =
@@ -287,7 +287,7 @@
 	</update>
 
 	<!-- memory song -->
-	<select id="getSongStoryLikeCount" resultType="com.demand.server.well_family_house.dto.LikeCount">
+	<select id="getSongStoryLikeCount" resultType="int">
 		select
 		count(user_id) as
 		like_count from song_story_likes where
@@ -296,7 +296,7 @@
 	</select>
 
 	<select id="getSongStoryCommentCount"
-		resultType="com.demand.server.well_family_house.dto.CommentCount">
+		resultType="int">
 		SELECT count(user_id) as comment_count
 		FROM
 		song_story_comments
@@ -315,7 +315,7 @@
 		song_story_id =#{param2};
 	</delete>
 
-	<select id="checkSongStoryLike" resultType="com.demand.server.well_family_house.dto.Check">
+	<select id="checkSongStoryLike" resultType="int">
 		SELECT count(id) as
 		checked
 		FROM song_story_likes where user_id = #{param1} and
@@ -323,7 +323,7 @@
 		= #{param2};
 	</select>
 
-	<select id="checkFamily" resultType="com.demand.server.well_family_house.dto.Check">
+	<select id="checkFamily" resultType="int">
 		select count(a.family_id) as
 		checked from (SELECT family_id FROM wellfamily.family_joiners where
 		user_id =#{param1}) a,
@@ -381,7 +381,7 @@
 	</select>
 
 	<select id="getSongStoryAvatar"
-		resultType="com.demand.server.well_family_house.dto.SongStoryAvatar">
+		resultType="String">
 		SELECT avatar FROM wellfamily.songs where id = #{param1};
 	</select>
 
@@ -471,7 +471,7 @@
 		e.id;
 	</select>
 
-	<select id="getFamilyUserCheck" resultType="com.demand.server.well_family_house.dto.Check">
+	<select id="getFamilyUserCheck" resultType="int">
 		SELECT count(id) as
 		checked FROM wellfamily.family_joiners where family_id = #{param1} and
 		user_id
@@ -485,19 +485,19 @@
 		favorite_categories;
 	</select>
 
-	<select id="getCheckGender" resultType="com.demand.server.well_family_house.dto.Check">
+	<select id="getCheckGender" resultType="int">
 		SELECT gender as checked
 		FROM wellfamily.users where id = #{param1};
 	</select>
 
-	<select id="getCheckFavorite" resultType="com.demand.server.well_family_house.dto.Check">
+	<select id="getCheckFavorite" resultType="int">
 		SELECT count(*) as
 		checked FROM wellfamily.user_favorite_joiners where user_id =
 		#{param1} and
 		favorite_category_id= #{param2};
 	</select>
 
-	<select id="getCheckSongCategory" resultType="com.demand.server.well_family_house.dto.Check">
+	<select id="getCheckSongCategory" resultType="int">
 		SELECT count(*) as
 		checked FROM wellfamily.user_song_category_joiners where user_id =
 		#{param1} and

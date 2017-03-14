@@ -61,7 +61,7 @@ public class FAMILYController {
 
 	// main
 	@RequestMapping(value = "/{family_id}", method = RequestMethod.GET)
-	public ArrayList<Family> family(@PathVariable int family_id) {
+	public Family family(@PathVariable int family_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getFamily(family_id);
 	}
