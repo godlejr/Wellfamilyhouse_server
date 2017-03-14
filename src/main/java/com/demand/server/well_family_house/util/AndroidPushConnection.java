@@ -32,7 +32,6 @@ public class AndroidPushConnection {
 	public AndroidPushConnection() {
 		super();
 	}
-
 	public void sendFCM(Notification notification) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		int notification_id = notification.getId();
