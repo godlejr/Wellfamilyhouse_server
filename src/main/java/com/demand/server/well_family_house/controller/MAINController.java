@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.demand.server.well_family_house.dao.IDao;
 import com.demand.server.well_family_house.dto.Category;
 import com.demand.server.well_family_house.dto.User;
-import com.demand.server.well_family_house.flag.UserFlag;
 import com.demand.server.well_family_house.util.JwtUtil;
 
 @RestController
@@ -39,7 +38,7 @@ public class MAINController {
 		User user = dao.login(request.getParameter("email"), request.getParameter("password"));
 		
 		if (user != null) {
-			user.setAccess_token(jwtUtil.generateToken(UserFlag.USER));
+			user.setAccess_token(jwtUtil.generateToken(user.getLevel()));
 			return user;
 		} else {
 			return null;
