@@ -18,7 +18,6 @@ import com.demand.server.well_family_house.dto.Notification;
 import com.demand.server.well_family_house.dto.Token;
 import com.demand.server.well_family_house.flag.LogFlag;
 
-
 @Service
 public class AndroidPushConnection {
 	@Autowired
@@ -32,6 +31,7 @@ public class AndroidPushConnection {
 	public AndroidPushConnection() {
 		super();
 	}
+
 	public void sendFCM(Notification notification) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		int notification_id = notification.getId();

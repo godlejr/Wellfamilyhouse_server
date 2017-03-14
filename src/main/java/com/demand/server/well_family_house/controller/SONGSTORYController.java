@@ -24,7 +24,6 @@ import com.demand.server.well_family_house.dto.SongPhoto;
 import com.demand.server.well_family_house.dto.SongStoryComment;
 import com.demand.server.well_family_house.dto.SongStoryEmotionData;
 import com.demand.server.well_family_house.flag.LogFlag;
-import com.demand.server.well_family_house.util.AndroidPushConnection;
 import com.demand.server.well_family_house.util.AwsS3Connection;
 
 @Secured("ROLE_USER")
@@ -34,9 +33,6 @@ public class SONGSTORYController {
 
 	@Autowired
 	private SqlSession well_family_house_sqlSession;
-
-	@Autowired
-	private AndroidPushConnection androidPushConnection;
 
 	@Autowired
 	private AwsS3Connection awsS3Connection;
@@ -188,10 +184,9 @@ public class SONGSTORYController {
 	}
 
 	@RequestMapping(value = "/{song_story_id}/comments", method = RequestMethod.POST)
-	public SongStoryComment insert_song_story_comment(HttpServletRequest request,
-			@PathVariable int song_story_id) {
+	public SongStoryComment insert_song_story_comment(HttpServletRequest request, @PathVariable int song_story_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-		
+
 		SongStoryComment songStoryComment = new SongStoryComment();
 		songStoryComment.setUser_id(Integer.parseInt(request.getParameter("user_id")));
 		songStoryComment.setSong_story_id(song_story_id);
@@ -206,9 +201,8 @@ public class SONGSTORYController {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getSongStoryAvatar(Integer.parseInt(request.getParameter("song_id")));
 	}
-	
-	
-	//insert emotions
+
+	// insert emotions
 	@RequestMapping(value = "/{song_story_id}/emotions", method = RequestMethod.POST)
 	public void insert_emotion_into_song_story(HttpServletRequest request, @PathVariable int song_story_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
@@ -221,6 +215,5 @@ public class SONGSTORYController {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getSongStoryEmotionData(song_story_id);
 	}
-	
-	
+
 }

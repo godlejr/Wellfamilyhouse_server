@@ -24,7 +24,6 @@ import com.demand.server.well_family_house.dto.Photo;
 import com.demand.server.well_family_house.dto.StoryInfo;
 import com.demand.server.well_family_house.dto.User;
 import com.demand.server.well_family_house.flag.LogFlag;
-import com.demand.server.well_family_house.util.AndroidPushConnection;
 import com.demand.server.well_family_house.util.AwsS3Connection;
 
 @Secured("ROLE_USER")
@@ -34,9 +33,6 @@ public class FAMILYController {
 
 	@Autowired
 	private SqlSession well_family_house_sqlSession;
-
-	@Autowired
-	private AndroidPushConnection androidPushConnection;
 	
 	@Autowired
 	private AwsS3Connection awsS3Connection;

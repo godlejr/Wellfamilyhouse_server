@@ -23,26 +23,17 @@ import com.demand.server.well_family_house.dto.SongComment;
 import com.demand.server.well_family_house.dto.SongStory;
 import com.demand.server.well_family_house.dto.SongStoryEmotionInfo;
 import com.demand.server.well_family_house.flag.LogFlag;
-import com.demand.server.well_family_house.util.AndroidPushConnection;
-import com.demand.server.well_family_house.util.AwsS3Connection;
-
 
 @RestController
 @Secured("ROLE_USER")
 @RequestMapping("/songs")
 public class SONGController {
-	
+
 	@Autowired
 	private SqlSession well_family_house_sqlSession;
 
-	@Autowired
-	private AndroidPushConnection androidPushConnection;
-	
-	@Autowired
-	private AwsS3Connection awsS3Connection;
-
 	private static final Logger logger = LoggerFactory.getLogger(SONGController.class);
-	
+
 	public static void log(Exception e) {
 		StackTraceElement[] ste = e.getStackTrace();
 		String className = ste[0].getClassName();
@@ -57,11 +48,11 @@ public class SONGController {
 			}
 		}
 	}
-	
+
 	public static int randomRange(int n1, int n2) {
 		return (int) (Math.random() * (n2 - n1 + 1)) + n1;
 	}
-	
+
 	// memory_sound main
 	@RequestMapping(value = "/categories", method = RequestMethod.GET)
 	public ArrayList<SongCategory> song_category_List() {
@@ -70,7 +61,7 @@ public class SONGController {
 	}
 
 	// count (memory_sound main)
-	@RequestMapping(value = "/{song_id}/comment_count", method =  RequestMethod.GET)
+	@RequestMapping(value = "/{song_id}/comment_count", method = RequestMethod.GET)
 	public int song_comment_Count(@PathVariable int song_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getSongCommentCount(song_id);
@@ -120,7 +111,7 @@ public class SONGController {
 	}
 
 	@RequestMapping(value = "/{song_id}/likes/{user_id}", method = RequestMethod.DELETE)
-	public void song_like_down(HttpServletRequest request, @PathVariable int song_id,@PathVariable int user_id) {
+	public void song_like_down(HttpServletRequest request, @PathVariable int song_id, @PathVariable int user_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		dao.updateSongLikeDown(user_id, song_id);
 	}
@@ -131,11 +122,11 @@ public class SONGController {
 		return dao.checkSongLike(user_id, song_id);
 	}
 
-	@RequestMapping(value = "/{song_id}/comments", method =  RequestMethod.POST )
+	@RequestMapping(value = "/{song_id}/comments", method = RequestMethod.POST)
 	public SongComment insert_song_comment(HttpServletRequest request, @PathVariable int song_id) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		int user_id = Integer.parseInt(request.getParameter("user_id"));
-		
+
 		SongComment songComment = new SongComment();
 		songComment.setUser_id(user_id);
 		songComment.setSong_id(song_id);
@@ -152,12 +143,12 @@ public class SONGController {
 	}
 
 	// insert story
-	@RequestMapping(value = "/stories", method = RequestMethod.POST )
+	@RequestMapping(value = "/stories", method = RequestMethod.POST)
 	public SongStory insert_song_story(HttpServletRequest request) {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
-		
+
 		int user_id = Integer.parseInt(request.getParameter("user_id"));
-		
+
 		SongStory songStory = new SongStory();
 		songStory.setUser_id(user_id);
 		songStory.setRange_id(Integer.parseInt(request.getParameter("range_id")));
@@ -169,12 +160,12 @@ public class SONGController {
 		dao.insertSongStory(songStory);
 		return dao.getSongStory(songStory.getId());
 	}
-	
+
 	// emotions
 	@RequestMapping(value = "/emotions", method = RequestMethod.GET)
 	public ArrayList<SongStoryEmotionInfo> song_story_emotion_List() {
 		IDao dao = well_family_house_sqlSession.getMapper(IDao.class);
 		return dao.getEmotionList();
 	}
-	
+
 }

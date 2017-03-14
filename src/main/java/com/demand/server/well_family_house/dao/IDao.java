@@ -1,9 +1,27 @@
 package com.demand.server.well_family_house.dao;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import com.demand.server.well_family_house.dto.*;
+import com.demand.server.well_family_house.dto.Category;
+import com.demand.server.well_family_house.dto.Comment;
+import com.demand.server.well_family_house.dto.CommentInfo;
+import com.demand.server.well_family_house.dto.Family;
+import com.demand.server.well_family_house.dto.Notification;
+import com.demand.server.well_family_house.dto.NotificationInfo;
+import com.demand.server.well_family_house.dto.Photo;
+import com.demand.server.well_family_house.dto.Range;
+import com.demand.server.well_family_house.dto.Song;
+import com.demand.server.well_family_house.dto.SongCategory;
+import com.demand.server.well_family_house.dto.SongComment;
+import com.demand.server.well_family_house.dto.SongPhoto;
+import com.demand.server.well_family_house.dto.SongStory;
+import com.demand.server.well_family_house.dto.SongStoryComment;
+import com.demand.server.well_family_house.dto.SongStoryEmotionData;
+import com.demand.server.well_family_house.dto.SongStoryEmotionInfo;
+import com.demand.server.well_family_house.dto.Story;
+import com.demand.server.well_family_house.dto.StoryInfo;
+import com.demand.server.well_family_house.dto.Token;
+import com.demand.server.well_family_house.dto.User;
 
 public interface IDao {
 	User email_check(String email);

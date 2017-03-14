@@ -1,7 +1,5 @@
 package com.demand.server.well_family_house.dto;
 
-import java.util.ArrayList;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 

@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.demand.server.well_family_house.dao.IDao;
 import com.demand.server.well_family_house.dto.NotificationInfo;
 import com.demand.server.well_family_house.flag.LogFlag;
-import com.demand.server.well_family_house.util.AndroidPushConnection;
-import com.demand.server.well_family_house.util.AwsS3Connection;
 
 @Secured("ROLE_USER")
 @RestController
@@ -22,12 +20,6 @@ import com.demand.server.well_family_house.util.AwsS3Connection;
 public class NOTIFICATIONController {
 	@Autowired
 	private SqlSession well_family_house_sqlSession;
-
-	@Autowired
-	private AndroidPushConnection androidPushConnection;
-
-	@Autowired
-	private AwsS3Connection awsS3Connection;
 
 	private static final Logger logger = LoggerFactory.getLogger(NOTIFICATIONController.class);
 
