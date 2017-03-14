@@ -19,7 +19,6 @@ public class JwtUtil {
 	public String generateToken(int user_level) {
 		Claims claims = Jwts.claims().setSubject("demand");
 		claims.put("user_level", user_level + "");
-
 		return Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS512, secret_key).compact();
 	}
 

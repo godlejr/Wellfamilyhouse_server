@@ -40,7 +40,7 @@
 
 	<beans:bean id="jwtAuthenticationFilter"
 		class="com.demand.server.well_family_house.security.JwtAuthenticationFilter">
-		<beans:constructor-arg value="/family/**">
+		<beans:constructor-arg value="/**">
 		</beans:constructor-arg>
 		<beans:property name="authenticationManager" ref="authenticationManager" />
 	</beans:bean>

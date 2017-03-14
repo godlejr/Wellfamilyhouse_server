@@ -33,8 +33,6 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
         setAuthenticationManager(authenticationManager);
 	}
 
-
-
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {

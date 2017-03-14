@@ -29,8 +29,9 @@ import com.demand.server.well_family_house.flag.LogFlag;
 import com.demand.server.well_family_house.util.AndroidPushConnection;
 import com.demand.server.well_family_house.util.AwsS3Connection;
 
-@Secured("ROLE_USER")
+
 @RestController
+@Secured("ROLE_USER")
 @RequestMapping("/songs")
 public class SONGController {
 	

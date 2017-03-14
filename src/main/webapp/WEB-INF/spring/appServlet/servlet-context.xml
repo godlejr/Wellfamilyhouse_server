@@ -68,8 +68,6 @@
 		<beans:constructor-arg index="0"
 			ref="well_family_house_sqlSessionFactory"></beans:constructor-arg>
 	</beans:bean>
-	
-	
 
 
 	<!-- view resolver for the exception control -->
@@ -83,8 +81,8 @@
 					<prop key=".MissingServletRequestParameterException">errors/resourceNotFound</prop> -->
 			</beans:props>
 		</beans:property>
-		<beans:property name="defaultErrorView" value="errors/generalError" />
-		<beans:property name="warnLogCategory" value="com.rockycode" />
+		<!--<beans:property name="defaultErrorView" value="errors/generalError" />
+		<beans:property name="warnLogCategory" value="com.rockycode" />-->
 	</beans:bean>
 
 </beans:beans>
