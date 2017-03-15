@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.demand.server.well_family_house.main.service.impl.MainMapper">
+
+	<select id="selectEmailCheck"
+		resultType="com.demand.server.well_family_house.common.dto.Email">
+		select email from
+		users where
+		email = #{param1};
+	</select>
+
+	<select id="selectLogin" resultType="com.demand.server.well_family_house.common.dto.User">
+		select
+		id,email,name,birth,phone,avatar,level from
+		users
+		where
+		email = #{param1}
+		and password = #{param2};
+	</select>
+
+	<insert id="insertJoin">
+		insert into
+		users(email,password,name,birth,phone,login_category_id)
+		values(#{param1},#{param2},#{param3},#{param4},#{param5},#{param6});
+	</insert>
+
+	<select id="selectReportCategoryList"
+		resultType="com.demand.server.well_family_house.common.dto.Category">
+		SELECT
+		id,name,created_at,updated_at FROM
+		report_categories;
+	</select>
+
+</mapper>

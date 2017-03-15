@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.demand.server.well_family_house.comment.service.impl.CommentMapper">
+
+	<update id="updateComment">
+		update comments set content = #{param2} where id =
+		#{param1};
+	</update>
+
+	<update id="updateSongComment">
+		update song_comments set content = #{param2} where id
+		=#{param1};
+	</update>
+
+
+	<update id="updateSongStoryComment">
+		update song_story_comments set content = #{param2}
+		where id =
+		#{param1};
+	</update>
+
+
+	<delete id="deleteComment">
+		delete FROM comments
+		where id=#{param1}
+	</delete>
+
+	<delete id="deleteSongComment">
+		delete FROM song_comments
+		where id=#{param1}
+	</delete>
+
+	<delete id="deleteSongStoryComment">
+		delete FROM song_story_comments
+		where id=#{param1}
+	</delete>
+
+</mapper>

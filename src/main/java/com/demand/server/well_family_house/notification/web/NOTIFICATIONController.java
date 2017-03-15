@@ -1,0 +1,34 @@
+package com.demand.server.well_family_house.notification.web;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.demand.server.well_family_house.common.dto.NotificationInfo;
+import com.demand.server.well_family_house.notification.service.impl.NotificationServiceImpl;
+
+@Secured("ROLE_USER")
+@RestController
+@RequestMapping("/notifications")
+public class NOTIFICATIONController {
+	@Autowired
+	private NotificationServiceImpl notificationServiceImpl;
+
+	@RequestMapping(value = "/{notification_id}/family_formation", method = RequestMethod.GET)
+	public NotificationInfo NotificationForCreatingFamily(@PathVariable int notification_id) throws Exception {
+		return notificationServiceImpl.selectNotificationForCreatingFamily(notification_id);
+	}
+
+	@RequestMapping(value = "/{notification_id}/writing_stories", method = RequestMethod.GET)
+	public NotificationInfo NotificationForWritingStory(@PathVariable int notification_id) throws Exception {
+		return notificationServiceImpl.selectNotificationForWritingStory(notification_id);
+	}
+
+	@RequestMapping(value = "/{notification_id}", method = RequestMethod.PUT)
+	public void notificationInfo(@PathVariable int notification_id) throws Exception {
+		notificationServiceImpl.updateNotificationCheck(notification_id);
+	}
+}

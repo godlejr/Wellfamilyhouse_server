@@ -222,6 +222,7 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.7.0</version>
 		</dependency>
+	
 	</dependencies>
 	<build>
 		<!-- maven deploy setting -->
@@ -236,6 +237,7 @@
 				<directory>src/main/resources</directory>
 			</resource>
 		</resources>
+
 		<plugins>
 			<plugin>
 				<artifactId>maven-eclipse-plugin</artifactId>

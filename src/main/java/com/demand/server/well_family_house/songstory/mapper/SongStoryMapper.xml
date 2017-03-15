@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.demand.server.well_family_house.songstory.service.impl.SongStoryMapper">
+
+	<insert id="insertSongPhoto"
+		parameterType="com.demand.server.well_family_house.common.dto.SongPhoto">
+		insert into
+		song_photos(song_story_id,type,name,ext)
+		values(#{song_story_id},#{type},#{name},#{ext});
+	</insert>
+
+	<update id="updateAudio">
+		update song_stories set record_file = #{param2} where
+		id = #{param1};
+	</update>
+
+	<select id="selectSongStoryLikeCount" resultType="int">
+		select
+		count(user_id) as
+		like_count from song_story_likes where
+		song_story_id =
+		#{param1};
+	</select>
+
+	<select id="selectSongStoryCommentCount" resultType="int">
+		SELECT
+		count(user_id) as comment_count
+		FROM
+		song_story_comments
+		where
+		song_story_id = #{param1};
+	</select>
+
+	<insert id="insertSongStoryLikeUp">
+		insert into song_story_likes(user_id,song_story_id)
+		values(#{param1},#{param2});
+	</insert>
+
+	<delete id="deleteSongStoryLikeDown">
+		delete from song_story_likes where user_id =
+		#{param1} and
+		song_story_id =#{param2};
+	</delete>
+
+	<select id="selectSongStoryLikeCheck" resultType="int">
+		SELECT
+		count(id) as
+		checked
+		FROM song_story_likes where user_id = #{param1} and
+		song_story_id
+		= #{param2};
+	</select>
+
+
+	<select id="selectSongStoryPhotoList"
+		resultType="com.demand.server.well_family_house.common.dto.SongPhoto">
+		SELECT * FROM
+		wellfamily.song_photos
+		where song_story_id=
+		#{param1};
+	</select>
+
+	<select id="selectSongStoryCommentList"
+		resultType="com.demand.server.well_family_house.common.dto.CommentInfo">
+		select c.id as
+		comment_id, c.user_id as user_id, u.name as
+		user_name ,u.avatar as
+		avatar,c.content as content, c.created_at as
+		created_at, c.deleted as
+		deleted FROM song_story_comments c,users u
+		where c.user_id = u.id and
+		c.song_story_id
+		=#{param1} order by
+		c.updated_at;
+	</select>
+
+	<insert id="insertSongStoryComment"
+		parameterType="com.demand.server.well_family_house.common.dto.SongStoryComment"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		song_story_comments(user_id,song_story_id,content)
+		values(#{user_id},#{song_story_id},#{content});
+	</insert>
+
+	<select id="selectSongStoryComment"
+		resultType="com.demand.server.well_family_house.common.dto.SongStoryComment">
+		select * from
+		song_story_comments where
+		id = #{param1};
+	</select>
+
+
+	<select id="selectSongStoryAvatar" resultType="String">
+		SELECT avatar FROM
+		wellfamily.songs where id = #{param1};
+	</select>
+
+	<insert id="insertEmotionIntoSongStory">
+		insert into
+		song_story_emotion_joiners(song_story_id,song_story_emotion_id)
+		values(#{param1},#{param2});
+	</insert>
+
+	<select id="selectSongStoryEmotionData"
+		resultType="com.demand.server.well_family_house.common.dto.SongStoryEmotionData">
+		select e.id as id, e.name as name, e.emotion_category_id as
+		emotion_category_id,ec.avatar as avatar, e.created_at as created_at,
+		e.updated_at as updated_at
+		from (SELECT ej.id as id, e.name as name,
+		e.emotion_category_id as
+		emotion_category_id, ej.created_at as
+		created_at, ej.updated_at as
+		updated_at
+		FROM
+		wellfamily.song_story_emotion_joiners ej, song_story_emotions e
+		where
+		ej.song_story_emotion_id = e.id and ej.song_story_id = #{param1}) e
+		,emotion_categories ec where e.emotion_category_id =ec.id order by
+		e.id;
+	</select>
+
+
+
+
+
+
+</mapper>

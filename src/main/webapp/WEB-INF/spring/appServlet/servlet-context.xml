@@ -37,8 +37,12 @@
 
 	<beans:bean id="ppg_sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<beans:property name="dataSource" ref="ppg_dataSource"></beans:property>
-		<beans:property name="mapperLocations"
-			value="classpath:com/demand/server/ppg/dao/mapper/*.xml"></beans:property>
+		<beans:property name="mapperLocations">
+			<beans:array>
+				<beans:value>classpath:com/demand/server/ppg/dao/mapper/*.xml
+				</beans:value>
+			</beans:array>
+		</beans:property>
 	</beans:bean>
 
 	<beans:bean id="ppg_sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
@@ -60,8 +64,19 @@
 
 	<beans:bean id="well_family_house_sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<beans:property name="dataSource" ref="well_family_house_dataSource"></beans:property>
-		<beans:property name="mapperLocations"
-			value="classpath:com/demand/server/well_family_house/dao/mapper/*.xml"></beans:property>
+
+		<beans:property name="mapperLocations">
+			<beans:array>
+				<beans:value>classpath:com/demand/server/well_family_house/dao/mapper/*.xml
+				</beans:value>
+				<beans:value>classpath:com/demand/server/well_family_house/family/mapper/*.xml
+				</beans:value>
+				<beans:value>classpath:com/demand/server/well_family_house/comment/mapper/*.xml
+				</beans:value>
+				<beans:value>classpath:com/demand/server/well_family_house/main/mapper/*.xml
+				</beans:value>
+			</beans:array>
+		</beans:property>
 	</beans:bean>
 
 	<beans:bean id="well_family_house_sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
@@ -69,6 +84,15 @@
 			ref="well_family_house_sqlSessionFactory"></beans:constructor-arg>
 	</beans:bean>
 
+	<!-- mapper scanner -->
+	<beans:bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<beans:property name="basePackage"
+			value="com.demand.server.well_family_house" />
+		<beans:property name="annotationClass"
+			value="org.springframework.stereotype.Repository" />
+		<beans:property name="sqlSessionFactory"
+			ref="well_family_house_sqlSessionFactory"></beans:property>
+	</beans:bean>
 
 	<!-- view resolver for the exception control -->
 	<beans:bean
@@ -81,8 +105,8 @@
 					<prop key=".MissingServletRequestParameterException">errors/resourceNotFound</prop> -->
 			</beans:props>
 		</beans:property>
-		<!--<beans:property name="defaultErrorView" value="errors/generalError" />
-		<beans:property name="warnLogCategory" value="com.rockycode" />-->
+		<!--<beans:property name="defaultErrorView" value="errors/generalError" 
+			/> <beans:property name="warnLogCategory" value="com.rockycode" /> -->
 	</beans:bean>
 
 </beans:beans>

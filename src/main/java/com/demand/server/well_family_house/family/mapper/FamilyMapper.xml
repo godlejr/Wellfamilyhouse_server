@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.demand.server.well_family_house.family.service.impl.FamilyMapper">
+
+	<select id="selectFamily"
+		resultType="com.demand.server.well_family_house.common.dto.Family">
+		SELECT
+		id,name,content,avatar,user_id,created_at FROM
+		wellfamily.familys
+		where id = #{param1};
+	</select>
+
+	<select id="selectFamilyUsersInfo" resultType="com.demand.server.well_family_house.common.dto.User">
+		select u.id as id
+		,u.email as email,u.name as name,u.birth as birth,u.phone as phone,
+		u.avatar as avatar,u.level as level from users u, (SELECT * FROM
+		family_joiners where
+		family_id = #{param1} and user_id != #{param2}) f
+		where u.id = f.user_id order by name;
+	</select>
+
+	<select id="selectContentList"
+		resultType="com.demand.server.well_family_house.common.dto.StoryInfo">
+		SELECT u.id as
+		user_id,
+		u.name as name,u.avatar as avatar,
+		s.id as story_id,
+		s.created_at as
+		created_at
+		, s.content
+		as content
+		FROM
+		users u, stories s
+		where u.id =
+		s.user_id and
+		s.family_id=#{param1} order
+		by s.created_at
+		desc;
+	</select>
+
+	<select id="selectPhotoList"
+		resultType="com.demand.server.well_family_house.common.dto.Photo">
+		select p.id as id,
+		p.story_id as story_id, p.type as type,
+		p.name as name, p.ext as ext
+		from photos p, (SELECT id FROM stories
+		where family_id =#{param1}) s
+		where p.story_id = s.id order by
+		p.updated_at desc;
+	</select>
+
+	<select id="selectFamilyAvatar" resultType="String">
+		SELECT avatar FROM
+		wellfamily.familys where id =#{param1};
+	</select>
+
+	<update id="updateFamilyAvatar">
+		update familys set avatar = #{param2} where id =
+		#{param1};
+	</update>
+
+
+	<insert id="insertUserIntoFamily">
+		insert into
+		family_joiners(family_id,user_id)
+		values(#{param1},#{param2});
+	</insert>
+
+	<delete id="deleteUserFromFamily">
+		delete from family_joiners where family_id
+		=#{param1}
+		and user_id = #{param2};
+	</delete>
+
+	<!-- family edit -->
+	<update id="updateFamilyInfo">
+		update familys set name = #{param2}, content =
+		#{param3} where id =
+		#{param1};
+	</update>
+
+</mapper>
