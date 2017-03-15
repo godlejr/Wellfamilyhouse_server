@@ -88,7 +88,7 @@ public class USERController {
 	}
 
 	// insert_family
-	@RequestMapping(value = "/{user_id}/familys", method = RequestMethod.POST)
+	@RequestMapping(value = "/{user_id}/families", method = RequestMethod.POST)
 	public int insert_family(HttpServletRequest request, @PathVariable int user_id) throws Exception {		
 		String family_name = request.getParameter("family_name");
 		String content = request.getParameter("family_content");

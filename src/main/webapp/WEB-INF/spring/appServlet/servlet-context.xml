@@ -67,13 +67,21 @@
 
 		<beans:property name="mapperLocations">
 			<beans:array>
-				<beans:value>classpath:com/demand/server/well_family_house/dao/mapper/*.xml
-				</beans:value>
 				<beans:value>classpath:com/demand/server/well_family_house/family/mapper/*.xml
 				</beans:value>
 				<beans:value>classpath:com/demand/server/well_family_house/comment/mapper/*.xml
 				</beans:value>
 				<beans:value>classpath:com/demand/server/well_family_house/main/mapper/*.xml
+				</beans:value>
+				<beans:value>classpath:com/demand/server/well_family_house/story/mapper/*.xml
+				</beans:value>
+				<beans:value>classpath:com/demand/server/well_family_house/songstory/mapper/*.xml
+				</beans:value>
+				<beans:value>classpath:com/demand/server/well_family_house/notification/mapper/*.xml
+				</beans:value>
+				<beans:value>classpath:com/demand/server/well_family_house/song/mapper/*.xml
+				</beans:value>
+				<beans:value>classpath:com/demand/server/well_family_house/user/mapper/*.xml
 				</beans:value>
 			</beans:array>
 		</beans:property>
