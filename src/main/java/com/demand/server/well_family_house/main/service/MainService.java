@@ -7,7 +7,7 @@ import com.demand.server.well_family_house.common.dto.User;
 
 public interface MainService {
 
-	User selectEmailCheck(String email) throws Exception;
+	int selectEmailCheck(String email) throws Exception;
 
 	User selectLogin(String email, String password) throws Exception;
 

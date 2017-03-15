@@ -22,7 +22,7 @@ public class MAINController {
 	private MainServiceImpl mainServiceImpl;
 
 	@RequestMapping(value = "/check/{email}", method = RequestMethod.GET)
-	public User email_check(@PathVariable String email) throws Exception {
+	public int email_check(@PathVariable String email) throws Exception {
 		return mainServiceImpl.selectEmailCheck(email);
 	}
 

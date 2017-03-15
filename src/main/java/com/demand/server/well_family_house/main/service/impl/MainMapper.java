@@ -9,7 +9,7 @@ import com.demand.server.well_family_house.common.dto.User;
 
 @Repository
 public interface MainMapper {
-	User selectEmailCheck(String email);
+	int selectEmailCheck(String email);
 
 	User selectLogin(String email, String password);
 

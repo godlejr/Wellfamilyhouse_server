@@ -7,8 +7,8 @@
 	namespace="com.demand.server.well_family_house.main.service.impl.MainMapper">
 
 	<select id="selectEmailCheck"
-		resultType="com.demand.server.well_family_house.common.dto.Email">
-		select email from
+		resultType="int">
+		select count(email) from
 		users where
 		email = #{param1};
 	</select>

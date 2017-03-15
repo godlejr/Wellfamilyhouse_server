@@ -20,7 +20,7 @@ public class MainServiceImpl implements MainService{
 	private JwtUtil jwtUtil;
 	
 	@Override
-	public User selectEmailCheck(String email) throws Exception {
+	public int selectEmailCheck(String email) throws Exception {
 		return mainMapper.selectEmailCheck(email);
 	}
 
