@@ -84,6 +84,7 @@ public class USERController {
 
 	@RequestMapping(value = "/{user_id}/find_user/{search}", method = RequestMethod.GET)
 	public ArrayList<User> find_user(@PathVariable int user_id, @PathVariable String search) throws Exception {
+		System.out.println(search);
 		return userServiceImpl.selectUserSearchList(search);
 	}
 

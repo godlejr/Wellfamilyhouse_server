@@ -23,6 +23,7 @@ public class MAINController {
 
 	@RequestMapping(value = "/check/{email}", method = RequestMethod.GET)
 	public int email_check(@PathVariable String email) throws Exception {
+		System.out.println(email);
 		return mainServiceImpl.selectEmailCheck(email);
 	}
 
