@@ -32,8 +32,8 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		System.out.println( org.springframework.core.SpringVersion.getVersion() );
 		
-		model.addAttribute("default", new java.io.OutputStreamWriter(new java.io.ByteArrayOutputStream()).getEncoding() );
-		model.addAttribute("set", System.getProperty("file.encoding") );
+		model.addAttribute("ddd", new java.io.OutputStreamWriter(new java.io.ByteArrayOutputStream()).getEncoding() );
+		model.addAttribute("sss", System.getProperty("file.encoding") );
 
 		
 		

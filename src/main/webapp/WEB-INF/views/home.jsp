@@ -10,8 +10,8 @@
 	Demand server!  
 </h1>
 
-<P> default encoding: ${default}. </P>
+<P> default encoding: ${ddd}. </P>
 
-<P> default encoding: ${set}. </P>
+<P> default encoding: ${sss}. </P>
 </body>
 </html>
