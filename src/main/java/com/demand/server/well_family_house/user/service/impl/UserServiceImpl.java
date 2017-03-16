@@ -209,7 +209,7 @@ public class UserServiceImpl implements UserService {
 		}
 
 		// delete prior avatar
-		String fileName = userMapper.selectUserAvatar(user_id).getAvatar();
+		String fileName = userMapper.selectUserAvatar(user_id);
 		if (!fileName.equals("avatar.jpg")) {
 			awsS3Connection.deleteFileFromAWSS3("apps/well_family_house/images/avatars/users", fileName, "");
 		}

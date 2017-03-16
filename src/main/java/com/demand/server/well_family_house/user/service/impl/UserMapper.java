@@ -48,7 +48,7 @@ public interface UserMapper {
 
 	int selectSongCategoryCheck(int user_id, int song_category_id) throws Exception;
 
-	User selectUserAvatar(int user_id) throws Exception;
+	String selectUserAvatar(int user_id) throws Exception;
 
 	void updateUserAvatar(int user_id, String fileName) throws Exception;
 
