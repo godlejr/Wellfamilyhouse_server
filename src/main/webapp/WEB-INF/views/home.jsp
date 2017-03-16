@@ -10,6 +10,8 @@
 	Demand server!  
 </h1>
 
-<P>  The time on the server is ${serverTime}. </P>
+<P> default encoding: ${default}. </P>
+
+<P> default encoding: ${set}. </P>
 </body>
 </html>
