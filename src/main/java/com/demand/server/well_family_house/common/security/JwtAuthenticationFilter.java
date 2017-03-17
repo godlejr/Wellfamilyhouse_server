@@ -40,7 +40,7 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
 			String token = request.getHeader(HEADER);
 
 	        if (token == null) {
-	            throw new AuthenticationServiceException("À£ÆÐ¹Ð¸® ÇÏ¿ì½º ¹Ì½ÂÀÎ  by the developer 'DongJoo KIM' of Demand corporation.");
+	            throw new AuthenticationServiceException("ì›°íŒ¨ë°€ë¦¬í•˜ìš°ìŠ¤ by the developer 'DongJoo KIM' of Demand corporation.");
 	        }else{
 	        	authRequest = new UsernamePasswordAuthenticationToken("demand",token);
 	        }

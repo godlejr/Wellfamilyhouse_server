@@ -34,7 +34,7 @@ public class AndroidPushConnection {
 
 	public void sendFCM(Notification notification) throws Exception {
 		int notification_id = notification.getId();
-		int user_id = notification.getUser_id();// ÇàÀ§ÀÚ
+		int user_id = notification.getUser_id();
 		int check = notification.getReceive_category_id();
 
 		if (check == NotificationTOFlag.ME) {

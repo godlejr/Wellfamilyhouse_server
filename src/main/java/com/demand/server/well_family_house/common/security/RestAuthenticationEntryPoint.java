@@ -16,7 +16,7 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 	public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
 			throws IOException, ServletException {
 		//request without any credentials
-		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "À£ÆÐ¹Ð¸® ÇÏ¿ì½º ¹Ì½ÂÀÎ  by the developer 'DongJoo KIM' of Demand corporation.");
+		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "ì›°íŒ¨ë°€ë¦¬í•˜ìš°ìŠ¤  by the developer 'DongJoo KIM' of Demand corporation.");
 	}
 
 }
