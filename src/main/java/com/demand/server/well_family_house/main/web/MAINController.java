@@ -21,10 +21,9 @@ public class MAINController {
 	@Autowired
 	private MainServiceImpl mainServiceImpl;
 
-	@RequestMapping(value = "/check/{email}", method = RequestMethod.GET)
-	public int email_check(@PathVariable String email) throws Exception {
-		System.out.println(email);
-		return mainServiceImpl.selectEmailCheck(email);
+	@RequestMapping(value = "/check", method = RequestMethod.GET)
+	public int email_check(HttpServletRequest request) throws Exception {
+		return mainServiceImpl.selectEmailCheck(request.getParameter("email"));
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
