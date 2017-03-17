@@ -32,24 +32,24 @@ public class AndroidPushConnection {
 		super();
 	}
 
-	public void sendFCM(Notification notification) throws Exception {
+	public void insertFCM(Notification notification) throws Exception {
 		int notification_id = notification.getId();
 		int user_id = notification.getUser_id();
 		int check = notification.getReceive_category_id();
 
 		if (check == NotificationTOFlag.ME) {
 			ArrayList<Token> token = notificationMapper.selectTokenForMe(notification.getReceiver_id());
-			setMessage(notification_id, token);
+			insertMessage(notification_id, token);
 		}
 
 		if (check == NotificationTOFlag.FAMILY) {
 			ArrayList<Token> token = notificationMapper.selectTokenForFamily(notification.getReceiver_id(), user_id);
-			setMessage(notification_id, token);
+			insertMessage(notification_id, token);
 		}
 
 	}
 
-	public void setMessage(int notification_id, ArrayList<Token> token) throws Exception {
+	public void insertMessage(int notification_id, ArrayList<Token> token) throws Exception {
 		int tokenSize = token.size();
 
 		for (int i = 0; i < tokenSize; i++) {

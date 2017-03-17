@@ -179,7 +179,7 @@ public class UserServiceImpl implements UserService {
 		notification.setIntent_id(family.getId());
 
 		notificationMapper.insertNotification(notification);
-		androidPushConnection.sendFCM(notification);
+		androidPushConnection.insertFCM(notification);
 
 		return family.getId();
 	}

@@ -2,12 +2,16 @@
 <beans:beans xmlns="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:security="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-				 http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
 
 	<security:global-method-security
@@ -83,6 +87,8 @@
 				</beans:value>
 				<beans:value>classpath:com/demand/server/well_family_house/user/mapper/*.xml
 				</beans:value>
+				<beans:value>classpath:com/demand/server/well_family_house/test/mapper/*.xml
+				</beans:value>
 			</beans:array>
 		</beans:property>
 	</beans:bean>
@@ -91,6 +97,26 @@
 		<beans:constructor-arg index="0"
 			ref="well_family_house_sqlSessionFactory"></beans:constructor-arg>
 	</beans:bean>
+	
+	<!-- transaction -->
+	<beans:bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<beans:property name="dataSource" ref="well_family_house_dataSource"></beans:property>
+	</beans:bean>
+	
+	<aop:config proxy-target-class="true">
+    	<aop:pointcut id="serviceImpls" expression="within(@org.springframework.stereotype.Service *)" />
+    	<aop:advisor id="transactionAdvisor" pointcut-ref="serviceImpls" advice-ref="txAdvice"/>
+	</aop:config>
+	
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+    	<tx:attributes>
+    	    <tx:method name="insert*" rollback-for="Exception"/>
+    	    <tx:method name="update*" rollback-for="Exception"/>
+    	    <tx:method name="selete*" rollback-for="Exception"/>
+    	    <tx:method name="delete*" rollback-for="Exception"/>
+    	</tx:attributes>
+	</tx:advice>
+
 
 	<!-- mapper scanner -->
 	<beans:bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

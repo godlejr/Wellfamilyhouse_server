@@ -102,7 +102,7 @@ public class StoryServiceImpl implements StoryService {
 		notification.setIntent_id(story.getId());
 		notificationMapper.insertNotification(notification);
 
-		androidPushConnection.sendFCM(notification);
+		androidPushConnection.insertFCM(notification);
 
 		return storyMapper.selectStory(story.getId());
 	}
