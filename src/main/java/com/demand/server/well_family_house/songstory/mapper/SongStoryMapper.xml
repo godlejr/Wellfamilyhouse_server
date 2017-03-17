@@ -93,12 +93,6 @@
 		id = #{param1};
 	</select>
 
-
-	<select id="selectSongStoryAvatar" resultType="String">
-		SELECT avatar FROM
-		wellfamily.songs where id = #{param1};
-	</select>
-
 	<insert id="insertEmotionIntoSongStory">
 		insert into
 		song_story_emotion_joiners(song_story_id,song_story_emotion_id)

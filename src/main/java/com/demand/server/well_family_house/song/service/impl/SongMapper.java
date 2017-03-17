@@ -49,4 +49,6 @@ public interface SongMapper {
 	ArrayList<SongStoryEmotionInfo> selectEmotionList()throws Exception;
 
 
+	String selectSongAvatar(int song_id) throws Exception;
+
 }

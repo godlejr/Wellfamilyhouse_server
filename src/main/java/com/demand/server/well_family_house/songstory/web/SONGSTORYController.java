@@ -84,11 +84,6 @@ public class SONGSTORYController {
 		return songStoryServiceImpl.insertSongStoryComment(songStoryComment);
 	}
 
-	@RequestMapping(value = "/{song_story_id}/avatars", method = RequestMethod.GET)
-	public String song_story_avatar(HttpServletRequest request, @PathVariable int song_story_id) throws NumberFormatException, Exception {
-		return songStoryServiceImpl.selectSongStoryAvatar(Integer.parseInt(request.getParameter("song_id")));
-	}
-
 	@RequestMapping(value = "/{song_story_id}/emotions", method = RequestMethod.POST)
 	public void insert_emotion_into_song_story(HttpServletRequest request, @PathVariable int song_story_id) throws NumberFormatException, Exception {
 		songStoryServiceImpl.insertEmotionIntoSongStory(song_story_id, Integer.parseInt(request.getParameter("song_story_emotion_id")));

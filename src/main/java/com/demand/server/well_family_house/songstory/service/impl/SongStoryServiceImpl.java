@@ -80,11 +80,6 @@ public class SongStoryServiceImpl implements SongStoryService {
 	}
 
 	@Override
-	public String selectSongStoryAvatar(int song_id) throws Exception {
-		return songStoryMapper.selectSongStoryAvatar(song_id);
-	}
-
-	@Override
 	public void insertEmotionIntoSongStory(int song_story_id, int song_story_emotion_id)
 			throws NumberFormatException, Exception {
 		songStoryMapper.insertEmotionIntoSongStory(song_story_id, song_story_emotion_id);

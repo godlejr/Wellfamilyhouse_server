@@ -40,4 +40,7 @@ public interface SongService {
 	SongComment insertSongComment(SongComment songComment) throws Exception;
 
 	SongStory insertSongStory(SongStory songStory) throws Exception;
+	
+	String selectSongAvatar(int song_id) throws Exception;
+
 }

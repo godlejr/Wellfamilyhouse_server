@@ -123,5 +123,10 @@ public class SONGController {
 
 		return songServiceImpl.insertSongStory(songStory);
 	}
+	
+	@RequestMapping(value = "/{song_id}/avatars", method = RequestMethod.GET)
+	public String song_story_avatar(@PathVariable int song_id) throws NumberFormatException, Exception {
+		return songServiceImpl.selectSongAvatar(song_id);
+	}
 
 }

@@ -34,8 +34,6 @@ public interface SongStoryMapper {
 
 	SongStoryComment selectSongStoryComment(int song_story_id) throws Exception;
 
-	String selectSongStoryAvatar(int song_id) throws Exception;
-
 	void insertEmotionIntoSongStory(int song_story_id, int song_story_emotion_id)
 			throws NumberFormatException, Exception;
 

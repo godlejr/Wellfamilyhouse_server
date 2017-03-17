@@ -20,6 +20,11 @@
 		#{param1};
 	</select>
 
+	<select id="selectSongAvatar" resultType="String">
+		SELECT avatar FROM
+		wellfamily.songs where id = #{param1};
+	</select>
+
 	<select id="selectSongLikeCount" resultType="int">
 		select
 		count(user_id)

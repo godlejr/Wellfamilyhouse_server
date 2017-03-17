@@ -97,4 +97,9 @@ public class SongServiceImpl implements SongService {
 		return songMapper.selectSongStory(songStory.getId());
 	}
 
+	@Override
+	public String selectSongAvatar(int song_id) throws Exception {
+		return songMapper.selectSongAvatar(song_id);
+	}
+
 }
