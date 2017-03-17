@@ -21,7 +21,7 @@ public class MAINController {
 	@Autowired
 	private MainServiceImpl mainServiceImpl;
 
-	@RequestMapping(value = "/check", method = RequestMethod.GET)
+	@RequestMapping(value = "/check", method = RequestMethod.POST)
 	public int email_check(HttpServletRequest request) throws Exception {
 		return mainServiceImpl.selectEmailCheck(request.getParameter("email"));
 	}
