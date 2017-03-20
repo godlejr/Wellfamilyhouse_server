@@ -70,11 +70,15 @@ public class StoryServiceImpl implements StoryService {
 	}
 
 	@Override
-	public void insertLikeUp(int user_id, int story_id, Notification notification) throws NumberFormatException, Exception {
-		notification.setReceiver_id(storyMapper.selectUser(story_id));
-		notificationMapper.insertNotification(notification);
-		androidPushConnection.insertFCM(notification);
-		
+	public void insertLikeUp(int user_id, int story_id, Notification notification)
+			throws NumberFormatException, Exception {
+		int story_user_id = storyMapper.selectUser(notification.getIntent_id());
+
+		if (user_id != story_user_id) {
+			notification.setReceiver_id(story_user_id);
+			notificationMapper.insertNotification(notification);
+			androidPushConnection.insertFCM(notification);
+		}
 		storyMapper.insertLikeUp(user_id, story_id);
 	}
 
@@ -96,12 +100,13 @@ public class StoryServiceImpl implements StoryService {
 	@Override
 	public Comment insertComment(Comment comment, Notification notification) throws Exception {
 		storyMapper.insertComment(comment);
-	
-		notification.setReceiver_id(storyMapper.selectUser(notification.getIntent_id()));
-	
-		notificationMapper.insertNotification(notification);
-		androidPushConnection.insertFCM(notification);
+		int story_user_id = storyMapper.selectUser(notification.getIntent_id());
 
+		if (story_user_id != comment.getUser_id()) {
+			notification.setReceiver_id(story_user_id);
+			notificationMapper.insertNotification(notification);
+			androidPushConnection.insertFCM(notification);
+		}
 		return storyMapper.selectComment(comment.getId());
 	}
 
