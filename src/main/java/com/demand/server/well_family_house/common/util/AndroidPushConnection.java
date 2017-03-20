@@ -43,6 +43,7 @@ public class AndroidPushConnection {
 			insertMessage(notification_id, token);
 		}
 
+		
 		if (check == NotificationTOFlag.FAMILY) {
 			ArrayList<Token> token = notificationMapper.selectTokenForFamily(receiver_ref_id, user_id);
 			insertMessage(notification_id, token);
