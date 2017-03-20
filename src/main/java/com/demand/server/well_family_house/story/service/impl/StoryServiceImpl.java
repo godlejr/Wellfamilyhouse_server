@@ -70,7 +70,11 @@ public class StoryServiceImpl implements StoryService {
 	}
 
 	@Override
-	public void insertLikeUp(int user_id, int story_id) throws NumberFormatException, Exception {
+	public void insertLikeUp(int user_id, int story_id, Notification notification) throws NumberFormatException, Exception {
+		notification.setReceiver_id(storyMapper.selectUser(story_id));
+		notificationMapper.insertNotification(notification);
+		androidPushConnection.insertFCM(notification);
+		
 		storyMapper.insertLikeUp(user_id, story_id);
 	}
 

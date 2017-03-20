@@ -17,7 +17,7 @@ public interface StoryService {
 
 	ArrayList<Photo> selectContentPhotoList(int story_id) throws Exception;
 
-	void insertLikeUp(int user_id, int story_id) throws NumberFormatException, Exception;
+	void insertLikeUp(int user_id, int story_id, Notification notification) throws NumberFormatException, Exception;
 
 	void deleteLikeDown(int user_id, int story_id) throws Exception;
 
@@ -25,11 +25,10 @@ public interface StoryService {
 
 	ArrayList<CommentInfo> selectCommentList(int story_id) throws Exception;
 
-	Comment insertComment(Comment comment,Notification notification) throws Exception;
+	Comment insertComment(Comment comment, Notification notification) throws Exception;
 
 	Story insertStory(Story story, Notification notification) throws Exception;
 
 	void insertPhoto(InputStream base64InputStream, int story_id) throws IOException, Exception;
-	
 
 }

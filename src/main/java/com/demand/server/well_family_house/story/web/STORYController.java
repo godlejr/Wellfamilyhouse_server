@@ -47,7 +47,17 @@ public class STORYController {
 	@RequestMapping(value = "/{story_id}/likes", method = RequestMethod.POST)
 	public void family_content_like_up(HttpServletRequest request, @PathVariable int story_id)
 			throws NumberFormatException, Exception {
-		storyServiceImpl.insertLikeUp(Integer.parseInt(request.getParameter("user_id")), story_id);
+		int user_id = Integer.parseInt(request.getParameter("user_id"));
+		
+		Notification notification = new Notification();
+		notification.setUser_id(user_id);
+		notification.setReceive_category_id(NotificationTOFlag.WRITER);
+		notification.setContent_name("회원님의 게시글");
+		notification.setIntent_flag(NotificationINTENTFlag.STORY_DETAIL);
+		notification.setBehavior_id(NotificationBEHAVIORFlag.LIKE);
+		notification.setIntent_id(story_id);
+		
+		storyServiceImpl.insertLikeUp(user_id, story_id,notification);
 	}
 
 	@RequestMapping(value = "/{story_id}/likes/{user_id}", method = RequestMethod.DELETE)
