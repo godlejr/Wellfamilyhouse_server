@@ -19,15 +19,14 @@ public interface NotificationMapper {
 
 	void insertNotification(Notification notification) throws Exception;
 
-	
-	
-	ArrayList<Token> selectTokenForMe(int receiver_id) throws Exception;
-
 	void insertUserNotification(int id, int notification_id) throws Exception;
 
 	String selectBodyForNotification(int notification_id) throws Exception;
 
 	ArrayList<Notification> selectNotification(int user_id) throws Exception;
 
+	ArrayList<Token> selectTokenForUser(int receiver_id) throws Exception;
+	
 	ArrayList<Token> selectTokenForFamily(int receiver_id, int user_id) throws Exception;
+
 }

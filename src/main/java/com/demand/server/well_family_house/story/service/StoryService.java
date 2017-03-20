@@ -25,9 +25,11 @@ public interface StoryService {
 
 	ArrayList<CommentInfo> selectCommentList(int story_id) throws Exception;
 
-	Comment insertComment(Comment comment) throws Exception;
+	Comment insertComment(Comment comment,Notification notification) throws Exception;
 
 	Story insertStory(Story story, Notification notification) throws Exception;
 
 	void insertPhoto(InputStream base64InputStream, int story_id) throws IOException, Exception;
+	
+
 }

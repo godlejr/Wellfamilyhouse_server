@@ -69,12 +69,22 @@ public class STORYController {
 
 	@RequestMapping(value = "/{story_id}/comments", method = RequestMethod.POST)
 	public Comment insert_comment(HttpServletRequest request, @PathVariable int story_id) throws Exception {
+		int user_id = Integer.parseInt(request.getParameter("user_id"));
+		
 		Comment comment = new Comment();
-		comment.setUser_id(Integer.parseInt(request.getParameter("user_id")));
+		comment.setUser_id(user_id);
 		comment.setStory_id(story_id);
 		comment.setContent(request.getParameter("content"));
+		
+		Notification notification = new Notification();
+		notification.setUser_id(user_id);
+		notification.setReceive_category_id(NotificationTOFlag.WRITER);
+		notification.setContent_name("회원님의 게시글");
+		notification.setIntent_flag(NotificationINTENTFlag.STORY_DETAIL);
+		notification.setBehavior_id(NotificationBEHAVIORFlag.WRITING_THE_COMMENT);
+		notification.setIntent_id(story_id);
 
-		return storyServiceImpl.insertComment(comment);
+		return storyServiceImpl.insertComment(comment,notification);
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)

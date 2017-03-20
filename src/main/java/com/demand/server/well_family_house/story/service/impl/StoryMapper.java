@@ -37,5 +37,7 @@ public interface StoryMapper {
 	Story selectStory(int story_id) throws Exception;
 
 	void insertPhoto(Photo photo) throws IOException,Exception;
+	
+	int selectUser(int story_id) throws Exception;
 
 }

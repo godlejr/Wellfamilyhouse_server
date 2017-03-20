@@ -79,7 +79,7 @@
 		stories(user_id,family_id,content)
 		values(#{user_id},#{family_id},#{content});
 	</insert>
-	
+
 	<select id="selectStory"
 		resultType="com.demand.server.well_family_house.common.dto.Story">
 		select id,
@@ -95,4 +95,9 @@
 		values(#{story_id},#{type},#{name},#{ext});
 	</insert>
 
+	<select id="selectUser" resultType="int">
+		SELECT user_id FROM stories
+		where id = #{param1};
+	</select>
+	
 </mapper>

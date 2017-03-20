@@ -27,7 +27,7 @@ public class StoryServiceImpl implements StoryService {
 
 	@Autowired
 	private StoryMapper storyMapper;
-	
+
 	@Autowired
 	private NotificationMapper notificationMapper;
 
@@ -90,8 +90,14 @@ public class StoryServiceImpl implements StoryService {
 	}
 
 	@Override
-	public Comment insertComment(Comment comment) throws Exception {
+	public Comment insertComment(Comment comment, Notification notification) throws Exception {
 		storyMapper.insertComment(comment);
+	
+		notification.setReceiver_id(storyMapper.selectUser(notification.getIntent_id()));
+	
+		notificationMapper.insertNotification(notification);
+		androidPushConnection.insertFCM(notification);
+
 		return storyMapper.selectComment(comment.getId());
 	}
 

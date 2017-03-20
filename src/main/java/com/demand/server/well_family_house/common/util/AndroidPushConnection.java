@@ -36,14 +36,20 @@ public class AndroidPushConnection {
 		int notification_id = notification.getId();
 		int user_id = notification.getUser_id();
 		int check = notification.getReceive_category_id();
+		int receiver_ref_id = notification.getReceiver_id();
 
 		if (check == NotificationTOFlag.ME) {
-			ArrayList<Token> token = notificationMapper.selectTokenForMe(notification.getReceiver_id());
+			ArrayList<Token> token = notificationMapper.selectTokenForUser(receiver_ref_id);
 			insertMessage(notification_id, token);
 		}
 
 		if (check == NotificationTOFlag.FAMILY) {
-			ArrayList<Token> token = notificationMapper.selectTokenForFamily(notification.getReceiver_id(), user_id);
+			ArrayList<Token> token = notificationMapper.selectTokenForFamily(receiver_ref_id, user_id);
+			insertMessage(notification_id, token);
+		}
+		
+		if(check == NotificationTOFlag.WRITER){
+			ArrayList<Token> token = notificationMapper.selectTokenForUser(receiver_ref_id);
 			insertMessage(notification_id, token);
 		}
 
