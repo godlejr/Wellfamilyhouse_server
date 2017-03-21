@@ -117,7 +117,10 @@
 		e.id;
 	</select>
 
-
+	<select id="selectUser" resultType="int">
+		SELECT user_id FROM song_stories
+		where id = #{param1};
+	</select>
 
 
 

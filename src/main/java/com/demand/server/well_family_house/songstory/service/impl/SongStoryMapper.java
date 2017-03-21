@@ -39,4 +39,6 @@ public interface SongStoryMapper {
 
 	ArrayList<SongStoryEmotionData> selectSongStoryEmotionData(int song_story_id) throws Exception;
 
+	int selectUser(int story_id) throws Exception;
+
 }

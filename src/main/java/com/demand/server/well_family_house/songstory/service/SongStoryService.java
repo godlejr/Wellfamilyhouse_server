@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import com.demand.server.well_family_house.common.dto.CommentInfo;
+import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.SongPhoto;
 import com.demand.server.well_family_house.common.dto.SongStoryComment;
 import com.demand.server.well_family_house.common.dto.SongStoryEmotionData;
@@ -14,7 +15,7 @@ public interface SongStoryService {
 
 	int selectSongStoryLikeCount(int song_story_id) throws Exception;
 
-	void insertSongStoryLikeUp(int user_id, int song_story_id) throws Exception;
+	void insertSongStoryLikeUp(int user_id, int song_story_id, Notification notification) throws Exception;
 
 	void deleteSongStoryLikeDown(int user_id, int song_story_id) throws Exception;
 
@@ -33,6 +34,6 @@ public interface SongStoryService {
 
 	void insertSongStoryAudio(InputStream base64InputStream, int song_story_id) throws IOException, Exception;
 
-	SongStoryComment insertSongStoryComment(SongStoryComment songStoryComment) throws Exception;
+	SongStoryComment insertSongStoryComment(SongStoryComment songStoryComment, Notification notification) throws Exception;
 
 }

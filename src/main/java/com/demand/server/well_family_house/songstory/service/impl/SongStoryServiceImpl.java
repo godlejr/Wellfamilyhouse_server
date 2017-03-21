@@ -12,11 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demand.server.well_family_house.common.dto.CommentInfo;
+import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.SongPhoto;
 import com.demand.server.well_family_house.common.dto.SongStoryComment;
 import com.demand.server.well_family_house.common.dto.SongStoryEmotionData;
 import com.demand.server.well_family_house.common.flag.LogFlag;
+import com.demand.server.well_family_house.common.util.AndroidPushConnection;
 import com.demand.server.well_family_house.common.util.AwsS3Connection;
+import com.demand.server.well_family_house.notification.service.impl.NotificationMapper;
 import com.demand.server.well_family_house.songstory.service.SongStoryService;
 
 @Service
@@ -24,6 +27,12 @@ public class SongStoryServiceImpl implements SongStoryService {
 	@Autowired
 	private SongStoryMapper songStoryMapper;
 
+	@Autowired
+	private NotificationMapper notificationMapper;
+
+	@Autowired
+	private AndroidPushConnection androidPushConnection;
+	
 	@Autowired
 	private AwsS3Connection awsS3Connection;
 
@@ -55,7 +64,15 @@ public class SongStoryServiceImpl implements SongStoryService {
 	}
 
 	@Override
-	public void insertSongStoryLikeUp(int user_id, int song_story_id) throws Exception {
+	public void insertSongStoryLikeUp(int user_id, int song_story_id,Notification notification) throws Exception {
+		
+		int song_story_user_id = songStoryMapper.selectUser(notification.getIntent_id());
+
+		if (user_id != song_story_user_id) {
+			notification.setReceiver_id(song_story_user_id);
+			notificationMapper.insertNotification(notification);
+			androidPushConnection.insertFCM(notification);
+		}
 		songStoryMapper.insertSongStoryLikeUp(user_id, song_story_id);
 	}
 
@@ -166,7 +183,14 @@ public class SongStoryServiceImpl implements SongStoryService {
 	}
 
 	@Override
-	public SongStoryComment insertSongStoryComment(SongStoryComment songStoryComment) throws Exception {
+	public SongStoryComment insertSongStoryComment(SongStoryComment songStoryComment, Notification notification) throws Exception {
+		int song_story_user_id = songStoryMapper.selectUser(notification.getIntent_id());
+
+		if (song_story_user_id != songStoryComment.getUser_id()) {
+			notification.setReceiver_id(song_story_user_id);
+			notificationMapper.insertNotification(notification);
+			androidPushConnection.insertFCM(notification);
+		}
 		songStoryMapper.insertSongStoryComment(songStoryComment);
 		return songStoryMapper.selectSongStoryComment(songStoryComment.getId());
 	}
