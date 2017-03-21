@@ -36,7 +36,8 @@
 
 		where nt.behavior_id = bh.id and
 		nt.user_id = us.id and
-		nt.id =#{param1};
+		nt.id
+		=#{param1};
 	</select>
 
 
@@ -79,7 +80,6 @@
 		id = #{param1};
 	</select>
 
-	<!-- get token -->
 	<select id="selectTokenForFamily"
 		resultType="com.demand.server.well_family_house.common.dto.Token">
 		SELECT us.id as
@@ -89,6 +89,20 @@
 		= us.id and
 		fj.family_id = #{param1} and us.id
 		!=#{param2};
+	</select>
+
+	<select id="selectTokenForFamiles"
+		resultType="com.demand.server.well_family_house.common.dto.Token">
+		SELECT us.id as id, us.token as token
+		from users us,
+		(SELECT user_id
+		from family_joiners fj
+		,(SELECT family_id
+		FROM wellfamily.family_joiners
+		where user_id =#{param1} ) fm
+		where fj.family_id = fm.family_id AND
+		fj.user_id != #{param1}) fu
+		where us.id = fu.user_id
 	</select>
 
 	<!-- set token -->

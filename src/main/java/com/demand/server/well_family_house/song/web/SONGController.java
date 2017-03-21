@@ -12,12 +12,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demand.server.well_family_house.common.dto.CommentInfo;
+import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.Range;
 import com.demand.server.well_family_house.common.dto.Song;
 import com.demand.server.well_family_house.common.dto.SongCategory;
 import com.demand.server.well_family_house.common.dto.SongComment;
 import com.demand.server.well_family_house.common.dto.SongStory;
 import com.demand.server.well_family_house.common.dto.SongStoryEmotionInfo;
+import com.demand.server.well_family_house.common.flag.NotificationBEHAVIORFlag;
+import com.demand.server.well_family_house.common.flag.NotificationINTENTFlag;
+import com.demand.server.well_family_house.common.flag.NotificationTOFlag;
+import com.demand.server.well_family_house.common.flag.SongStoryRANGEFlag;
 import com.demand.server.well_family_house.song.service.impl.SongServiceImpl;
 
 @RestController
@@ -112,18 +117,33 @@ public class SONGController {
 
 	@RequestMapping(value = "/stories", method = RequestMethod.POST)
 	public SongStory insert_song_story(HttpServletRequest request) throws Exception {
+		int user_id = Integer.parseInt(request.getParameter("user_id"));
+		int range_id = Integer.parseInt(request.getParameter("range_id"));
+
 		SongStory songStory = new SongStory();
-		songStory.setUser_id(Integer.parseInt(request.getParameter("user_id")));
-		songStory.setRange_id(Integer.parseInt(request.getParameter("range_id")));
+		songStory.setUser_id(user_id);
+		songStory.setRange_id(range_id);
 		songStory.setSong_id(Integer.parseInt(request.getParameter("song_id")));
 		songStory.setSong_title(request.getParameter("song_title"));
 		songStory.setSong_singer(request.getParameter("song_singer"));
 		songStory.setContent(request.getParameter("content"));
 		songStory.setLocation(request.getParameter("location"));
 
-		return songServiceImpl.insertSongStory(songStory);
+		if (range_id != SongStoryRANGEFlag.ME) {
+			Notification notification = new Notification();
+			notification.setUser_id(user_id);
+			notification.setReceive_category_id(NotificationTOFlag.FAMILIES);
+			notification.setReceiver_id(user_id);
+			notification.setContent_name("추억소리에");
+			notification.setIntent_flag(NotificationINTENTFlag.SONG_STORY_DETAIL);
+			notification.setBehavior_id(NotificationBEHAVIORFlag.WRITING_THE_STORY);
+
+			return songServiceImpl.insertSongStory(songStory, notification);
+		} else {
+			return songServiceImpl.insertSongStory(songStory);
+		}
 	}
-	
+
 	@RequestMapping(value = "/{song_id}/avatars", method = RequestMethod.GET)
 	public String song_story_avatar(@PathVariable int song_id) throws NumberFormatException, Exception {
 		return songServiceImpl.selectSongAvatar(song_id);

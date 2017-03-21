@@ -3,6 +3,7 @@ package com.demand.server.well_family_house.song.service;
 import java.util.ArrayList;
 
 import com.demand.server.well_family_house.common.dto.CommentInfo;
+import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.Range;
 import com.demand.server.well_family_house.common.dto.Song;
 import com.demand.server.well_family_house.common.dto.SongCategory;
@@ -41,6 +42,8 @@ public interface SongService {
 
 	SongStory insertSongStory(SongStory songStory) throws Exception;
 	
+	SongStory insertSongStory(SongStory songStory,Notification notification) throws Exception;
+
 	String selectSongAvatar(int song_id) throws Exception;
 
 }

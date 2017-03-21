@@ -43,17 +43,21 @@ public class AndroidPushConnection {
 			insertMessage(notification_id, token);
 		}
 
-		
-		if (check == NotificationTOFlag.FAMILY) {
-			ArrayList<Token> token = notificationMapper.selectTokenForFamily(receiver_ref_id, user_id);
-			insertMessage(notification_id, token);
-		}
-		
 		if(check == NotificationTOFlag.WRITER){
 			ArrayList<Token> token = notificationMapper.selectTokenForUser(receiver_ref_id);
 			insertMessage(notification_id, token);
 		}
 
+		if (check == NotificationTOFlag.FAMILY) {
+			ArrayList<Token> token = notificationMapper.selectTokenForFamily(receiver_ref_id, user_id);
+			insertMessage(notification_id, token);
+		}
+		
+		if (check == NotificationTOFlag.FAMILIES) {
+			ArrayList<Token> token = notificationMapper.selectTokenForFamiles(receiver_ref_id);
+			insertMessage(notification_id, token);
+		}
+		
 	}
 
 	public void insertMessage(int notification_id, ArrayList<Token> token) throws Exception {

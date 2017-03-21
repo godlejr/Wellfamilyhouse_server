@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demand.server.well_family_house.common.dto.CommentInfo;
+import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.Range;
 import com.demand.server.well_family_house.common.dto.Song;
 import com.demand.server.well_family_house.common.dto.SongCategory;
 import com.demand.server.well_family_house.common.dto.SongComment;
 import com.demand.server.well_family_house.common.dto.SongStory;
 import com.demand.server.well_family_house.common.dto.SongStoryEmotionInfo;
+import com.demand.server.well_family_house.common.util.AndroidPushConnection;
+import com.demand.server.well_family_house.notification.service.impl.NotificationMapper;
 import com.demand.server.well_family_house.song.service.SongService;
 
 @Service
@@ -19,6 +22,12 @@ public class SongServiceImpl implements SongService {
 
 	@Autowired
 	private SongMapper songMapper;
+	
+	@Autowired
+	private NotificationMapper notificationMapper;
+
+	@Autowired
+	private AndroidPushConnection androidPushConnection;
 
 	@Override
 	public ArrayList<SongCategory> selectSongCategoryList() throws Exception {
@@ -95,6 +104,18 @@ public class SongServiceImpl implements SongService {
 	public SongStory insertSongStory(SongStory songStory) throws Exception {
 		songMapper.insertSongStory(songStory);
 		return songMapper.selectSongStory(songStory.getId());
+	}
+
+	@Override
+	public SongStory insertSongStory(SongStory songStory, Notification notification) throws Exception {
+		songMapper.insertSongStory(songStory);
+		int song_story_id = songStory.getId();
+		
+		notification.setIntent_id(song_story_id);
+		notificationMapper.insertNotification(notification);
+		androidPushConnection.insertFCM(notification);
+		
+		return songMapper.selectSongStory(song_story_id);
 	}
 
 	@Override
