@@ -10,6 +10,7 @@ import com.demand.server.well_family_house.common.dto.CommentInfo;
 import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.Photo;
 import com.demand.server.well_family_house.common.dto.Story;
+import com.demand.server.well_family_house.common.dto.StoryInfoForNotification;
 
 @Repository
 public interface StoryMapper {
@@ -40,4 +41,5 @@ public interface StoryMapper {
 	
 	int selectUser(int story_id) throws Exception;
 
+	StoryInfoForNotification selectStoryInfo(int story_id) throws Exception;
 }

@@ -17,6 +17,7 @@ import com.demand.server.well_family_house.common.dto.CommentInfo;
 import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.Photo;
 import com.demand.server.well_family_house.common.dto.Story;
+import com.demand.server.well_family_house.common.dto.StoryInfoForNotification;
 import com.demand.server.well_family_house.common.flag.NotificationBEHAVIORFlag;
 import com.demand.server.well_family_house.common.flag.NotificationINTENTFlag;
 import com.demand.server.well_family_house.common.flag.NotificationTOFlag;
@@ -118,6 +119,11 @@ public class STORYController {
 		notification.setBehavior_id(NotificationBEHAVIORFlag.WRITING_THE_STORY);
 
 		return storyServiceImpl.insertStory(story, notification);
+	}
+	
+	@RequestMapping(value = "/{story_id}", method = RequestMethod.GET)
+	public StoryInfoForNotification storyDetailForNotification(@PathVariable int story_id) throws IOException, Exception {
+		return storyServiceImpl.selectStoryInfo(story_id);
 	}
 
 	@RequestMapping(value = "/{story_id}/photos", method = RequestMethod.POST)

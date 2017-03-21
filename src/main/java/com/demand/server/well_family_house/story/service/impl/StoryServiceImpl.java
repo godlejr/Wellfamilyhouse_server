@@ -16,6 +16,7 @@ import com.demand.server.well_family_house.common.dto.CommentInfo;
 import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.Photo;
 import com.demand.server.well_family_house.common.dto.Story;
+import com.demand.server.well_family_house.common.dto.StoryInfoForNotification;
 import com.demand.server.well_family_house.common.flag.LogFlag;
 import com.demand.server.well_family_house.common.util.AndroidPushConnection;
 import com.demand.server.well_family_house.common.util.AwsS3Connection;
@@ -160,6 +161,11 @@ public class StoryServiceImpl implements StoryService {
 		photo.setName(file_name);
 		photo.setExt("jpg");
 		storyMapper.insertPhoto(photo);
+	}
+
+	@Override
+	public StoryInfoForNotification selectStoryInfo(int story_id) throws Exception {
+		return storyMapper.selectStoryInfo(story_id);
 	}
 
 }

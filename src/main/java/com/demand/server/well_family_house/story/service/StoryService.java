@@ -9,6 +9,7 @@ import com.demand.server.well_family_house.common.dto.CommentInfo;
 import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.Photo;
 import com.demand.server.well_family_house.common.dto.Story;
+import com.demand.server.well_family_house.common.dto.StoryInfoForNotification;
 
 public interface StoryService {
 	int selectCommentCount(int story_id) throws Exception;
@@ -30,5 +31,7 @@ public interface StoryService {
 	Story insertStory(Story story, Notification notification) throws Exception;
 
 	void insertPhoto(InputStream base64InputStream, int story_id) throws IOException, Exception;
+
+	StoryInfoForNotification selectStoryInfo(int story_id) throws Exception;
 
 }
