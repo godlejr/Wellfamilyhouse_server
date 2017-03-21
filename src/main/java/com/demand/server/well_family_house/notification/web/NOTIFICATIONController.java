@@ -36,6 +36,11 @@ public class NOTIFICATIONController {
 	public NotificationInfo NotificationForWritingStory(@PathVariable int notification_id) throws Exception {
 		return notificationServiceImpl.selectNotificationForWritingStory(notification_id);
 	}
+	
+	@RequestMapping(value = "/{notification_id}/songstories", method = RequestMethod.GET)
+	public NotificationInfo NotificationForWritingSongStory(@PathVariable int notification_id) throws Exception {
+		return notificationServiceImpl.selectNotificationForWritingSongStory(notification_id);
+	}
 
 	@RequestMapping(value = "/{notification_id}", method = RequestMethod.PUT)
 	public void notificationInfo(@PathVariable int notification_id) throws Exception {

@@ -134,7 +134,7 @@ public class SONGController {
 			notification.setUser_id(user_id);
 			notification.setReceive_category_id(NotificationTOFlag.FAMILIES);
 			notification.setReceiver_id(user_id);
-			notification.setContent_name("추억소리에");
+			notification.setContent_name("추억소리");
 			notification.setIntent_flag(NotificationINTENTFlag.SONG_STORY_DETAIL);
 			notification.setBehavior_id(NotificationBEHAVIORFlag.WRITING_THE_STORY);
 
