@@ -73,7 +73,7 @@ public class AndroidPushConnection {
 			Data data = new Data(body);
 			message.setData(data);
 
-			CompletableFuture<FirebaseResponse> pushNotification = androidPushNotificationsService.send(message);
+			CompletableFuture<FirebaseResponse> pushNotification = androidPushNotificationsService.insertMsg(message);
 			CompletableFuture.allOf(pushNotification).join();
 
 			try {

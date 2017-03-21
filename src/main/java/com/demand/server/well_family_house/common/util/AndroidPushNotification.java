@@ -18,7 +18,7 @@ public class AndroidPushNotification {
 	private static final String FIREBASE_SERVER_KEY = "AAAAF8eRpe0:APA91bE9onTVWmVx3HgQWr2Xqz9pBuw_13iRNbO1JgtaGF0z19bLWexNuOvG7ePtWoUb7lXjS-ncmFoEmQrx9JfAo_SnG6QAJT8qSgY7UGj2f1nWPLfpNilRrRDNngITm_jZR-Z6vLDR";
 
 	@Async
-	public CompletableFuture<FirebaseResponse> send(Message message){
+	public CompletableFuture<FirebaseResponse> insertMsg(Message message){
 		RestTemplate restTemplate = new RestTemplate();
 				
 		HttpHeaders httpHeaders = new HttpHeaders();
