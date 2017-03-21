@@ -66,27 +66,9 @@
 		by(pt.story_id)
 	</select>
 	
-	<select id="selectNotificationForWritingSongStory"
-		resultType="com.demand.server.well_family_house.common.dto.NotificationInfo">
-	SELECT	sb.id AS id, sb.avatar AS avatar, sb.name AS name,
-			sb.content AS content, sb.title AS title, concat(pt.name,".",pt.ext) AS photo
-
-		FROM	song_photos pt, 
-				(SELECT	us.id AS id, us.avatar AS avatar, us.name AS name,
-						nt.content_name AS content, st.content AS title, st.id AS song_story_id
-
-						FROM 	notifications nt,
-								behaviors bh, 
-                                users us, 
-                                song_stories st
-
-						WHERE	nt.behavior_id = bh.id	AND
-								nt.intent_id =st.id 	AND
-								nt.user_id = us.id		AND
-								nt.id =#{param1}) sb
-
-		WHERE		pt.song_story_id = sb.song_story_id 
-        GROUP BY	pt.song_story_id
+	<select id="selectNotificationForWritingSongStory" statementType="CALLABLE"
+		resultType="com.demand.server.well_family_house.common.dto.NotificationInfo" >
+		{CALL notification_song_story(#{param1})}
 	</select>
 
 	<update id="updateNotificationCheck">
