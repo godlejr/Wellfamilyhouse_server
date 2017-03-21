@@ -55,7 +55,7 @@ public class SONGSTORYController {
 	@RequestMapping(value = "/{song_story_id}/likes", method = RequestMethod.POST)
 	public void song_story_like_up(HttpServletRequest request, @PathVariable int song_story_id)
 			throws NumberFormatException, Exception {
-		int user_id = -Integer.parseInt(request.getParameter("user_id"));
+		int user_id = Integer.parseInt(request.getParameter("user_id"));
 
 		Notification notification = new Notification();
 		notification.setUser_id(user_id);
