@@ -12,6 +12,12 @@ public class NotificationServiceImpl implements NotificationService {
 	private NotificationMapper notificationMapper;
 
 	@Override
+	public void updateNotificationCheck(int notification_id) throws Exception {
+		notificationMapper.updateNotificationCheck(notification_id);
+	}
+
+	
+	@Override
 	public NotificationInfo selectNotificationForCreatingFamily(int notification_id) throws Exception {
 		return notificationMapper.selectNotificationForCreatingFamily(notification_id);
 	}
@@ -22,8 +28,8 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 
 	@Override
-	public void updateNotificationCheck(int notification_id) throws Exception {
-		notificationMapper.updateNotificationCheck(notification_id);
+	public NotificationInfo selectNotificationForWritingCommentAndLike(int notification_id) throws Exception {
+		return notificationMapper.selectNotificationForWritingCommentAndLike(notification_id);
 	}
 
 }

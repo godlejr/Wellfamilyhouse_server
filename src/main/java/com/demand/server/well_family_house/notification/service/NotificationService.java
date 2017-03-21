@@ -8,5 +8,9 @@ public interface NotificationService {
 
 	NotificationInfo selectNotificationForWritingStory(int notification_id) throws Exception;
 
+	NotificationInfo selectNotificationForWritingCommentAndLike(int notification_id) throws Exception;
+	
+	
+
 	void updateNotificationCheck(int notification_id) throws Exception;
 }

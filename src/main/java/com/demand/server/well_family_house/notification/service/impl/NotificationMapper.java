@@ -11,10 +11,16 @@ import com.demand.server.well_family_house.common.dto.Token;
 @Repository
 public interface NotificationMapper {
 
+	//notify for android
 	NotificationInfo selectNotificationForCreatingFamily(int notification_id) throws Exception;
 
 	NotificationInfo selectNotificationForWritingStory(int notification_id) throws Exception;
+	
+	NotificationInfo selectNotificationForWritingCommentAndLike(int notification_id) throws Exception;
 
+	
+	
+	
 	void updateNotificationCheck(int notification_id) throws Exception;
 
 	void insertNotification(Notification notification) throws Exception;

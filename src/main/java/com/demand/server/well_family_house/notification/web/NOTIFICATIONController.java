@@ -17,12 +17,22 @@ public class NOTIFICATIONController {
 	@Autowired
 	private NotificationServiceImpl notificationServiceImpl;
 
-	@RequestMapping(value = "/{notification_id}/family_formation", method = RequestMethod.GET)
+	@RequestMapping(value = "/{notification_id}/families", method = RequestMethod.GET)
 	public NotificationInfo NotificationForCreatingFamily(@PathVariable int notification_id) throws Exception {
 		return notificationServiceImpl.selectNotificationForCreatingFamily(notification_id);
 	}
+	
+	@RequestMapping(value = "/{notification_id}/comments", method = RequestMethod.GET)
+	public NotificationInfo NotificationForWritingComment(@PathVariable int notification_id) throws Exception {
+		return notificationServiceImpl.selectNotificationForWritingCommentAndLike(notification_id);
+	}
+	
+	@RequestMapping(value = "/{notification_id}/likes", method = RequestMethod.GET)
+	public NotificationInfo NotificationForLike(@PathVariable int notification_id) throws Exception {
+		return notificationServiceImpl.selectNotificationForWritingCommentAndLike(notification_id);
+	}
 
-	@RequestMapping(value = "/{notification_id}/writing_stories", method = RequestMethod.GET)
+	@RequestMapping(value = "/{notification_id}/stories", method = RequestMethod.GET)
 	public NotificationInfo NotificationForWritingStory(@PathVariable int notification_id) throws Exception {
 		return notificationServiceImpl.selectNotificationForWritingStory(notification_id);
 	}
