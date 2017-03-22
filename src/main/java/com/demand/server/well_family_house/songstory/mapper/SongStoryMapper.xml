@@ -118,11 +118,28 @@
 	</select>
 
 	<select id="selectUser" resultType="int">
-		SELECT user_id FROM song_stories
+		SELECT user_id FROM
+		song_stories
 		where id = #{param1};
 	</select>
 
-
+	<select id="selectSongStoryInfo"
+		resultType="com.demand.server.well_family_house.common.dto.SongStoryInfoForNotification">
+		SELECT	ss.id AS id, ss.range_id AS range_id, ss.song_id AS song_id,
+        ss.song_title AS song_title, ss.record_file AS record_file,
+        ss.content AS content, ss.location AS location,
+        ss.created_at AS created_at, ss.hits AS hits,
+        us.id AS user_id, us.level AS user_level, 
+        us.name AS user_name, us.email AS user_email, 
+        us.avatar AS user_avatar, us.phone AS user_phone,
+        us.birth AS	user_birth
+        
+		FROM	song_stories ss,
+                users us
+                
+        WHERE	ss.user_id = us.id	AND
+				ss.id = #{param1};
+	</select>
 
 
 </mapper>

@@ -17,6 +17,7 @@ import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.SongPhoto;
 import com.demand.server.well_family_house.common.dto.SongStoryComment;
 import com.demand.server.well_family_house.common.dto.SongStoryEmotionData;
+import com.demand.server.well_family_house.common.dto.SongStoryInfoForNotification;
 import com.demand.server.well_family_house.common.flag.NotificationBEHAVIORFlag;
 import com.demand.server.well_family_house.common.flag.NotificationINTENTFlag;
 import com.demand.server.well_family_house.common.flag.NotificationTOFlag;
@@ -94,13 +95,12 @@ public class SONGSTORYController {
 	public SongStoryComment insert_song_story_comment(HttpServletRequest request, @PathVariable int song_story_id)
 			throws Exception {
 		int user_id = Integer.parseInt(request.getParameter("user_id"));
-		
+
 		SongStoryComment songStoryComment = new SongStoryComment();
 		songStoryComment.setUser_id(user_id);
 		songStoryComment.setSong_story_id(song_story_id);
 		songStoryComment.setContent(request.getParameter("content"));
-		
-		
+
 		Notification notification = new Notification();
 		notification.setUser_id(user_id);
 		notification.setReceive_category_id(NotificationTOFlag.WRITER);
@@ -109,7 +109,7 @@ public class SONGSTORYController {
 		notification.setBehavior_id(NotificationBEHAVIORFlag.WRITING_THE_COMMENT);
 		notification.setIntent_id(song_story_id);
 
-		return songStoryServiceImpl.insertSongStoryComment(songStoryComment,notification);
+		return songStoryServiceImpl.insertSongStoryComment(songStoryComment, notification);
 	}
 
 	@RequestMapping(value = "/{song_story_id}/emotions", method = RequestMethod.POST)
@@ -123,6 +123,11 @@ public class SONGSTORYController {
 	public ArrayList<SongStoryEmotionData> song_story_emotion_data_List(@PathVariable int song_story_id)
 			throws Exception {
 		return songStoryServiceImpl.selectSongStoryEmotionData(song_story_id);
+	}
+
+	@RequestMapping(value = "/{song_story_id}", method = RequestMethod.GET)
+	public SongStoryInfoForNotification storyDetailForNotification(@PathVariable int song_story_id) throws Exception {
+		return songStoryServiceImpl.selectSongStoryInfo(song_story_id);
 	}
 
 }

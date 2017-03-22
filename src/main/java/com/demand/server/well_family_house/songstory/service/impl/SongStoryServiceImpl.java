@@ -16,6 +16,7 @@ import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.SongPhoto;
 import com.demand.server.well_family_house.common.dto.SongStoryComment;
 import com.demand.server.well_family_house.common.dto.SongStoryEmotionData;
+import com.demand.server.well_family_house.common.dto.SongStoryInfoForNotification;
 import com.demand.server.well_family_house.common.flag.LogFlag;
 import com.demand.server.well_family_house.common.util.AndroidPushConnection;
 import com.demand.server.well_family_house.common.util.AwsS3Connection;
@@ -193,6 +194,11 @@ public class SongStoryServiceImpl implements SongStoryService {
 		}
 		songStoryMapper.insertSongStoryComment(songStoryComment);
 		return songStoryMapper.selectSongStoryComment(songStoryComment.getId());
+	}
+
+	@Override
+	public SongStoryInfoForNotification selectSongStoryInfo(int song_story_id) throws Exception {
+		return songStoryMapper.selectSongStoryInfo(song_story_id);
 	}
 
 }

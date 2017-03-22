@@ -9,6 +9,8 @@ import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.SongPhoto;
 import com.demand.server.well_family_house.common.dto.SongStoryComment;
 import com.demand.server.well_family_house.common.dto.SongStoryEmotionData;
+import com.demand.server.well_family_house.common.dto.SongStoryInfoForNotification;
+import com.demand.server.well_family_house.common.dto.StoryInfoForNotification;
 
 public interface SongStoryService {
 	int selectSongStoryCommentCount(int song_story_id) throws Exception;
@@ -36,5 +38,6 @@ public interface SongStoryService {
 
 	SongStoryComment insertSongStoryComment(SongStoryComment songStoryComment, Notification notification) throws Exception;
 
-	
+	SongStoryInfoForNotification selectSongStoryInfo(int song_story_id) throws Exception;
+
 }

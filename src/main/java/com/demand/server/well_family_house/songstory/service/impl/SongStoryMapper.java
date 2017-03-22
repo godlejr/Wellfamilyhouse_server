@@ -8,6 +8,7 @@ import com.demand.server.well_family_house.common.dto.CommentInfo;
 import com.demand.server.well_family_house.common.dto.SongPhoto;
 import com.demand.server.well_family_house.common.dto.SongStoryComment;
 import com.demand.server.well_family_house.common.dto.SongStoryEmotionData;
+import com.demand.server.well_family_house.common.dto.SongStoryInfoForNotification;
 
 @Repository
 public interface SongStoryMapper {
@@ -40,5 +41,8 @@ public interface SongStoryMapper {
 	ArrayList<SongStoryEmotionData> selectSongStoryEmotionData(int song_story_id) throws Exception;
 
 	int selectUser(int story_id) throws Exception;
+	
+	SongStoryInfoForNotification selectSongStoryInfo(int song_story_id) throws Exception;
+
 
 }
