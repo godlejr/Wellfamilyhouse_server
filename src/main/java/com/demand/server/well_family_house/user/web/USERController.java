@@ -29,7 +29,6 @@ public class USERController {
 	@Autowired
 	private UserServiceImpl userServiceImpl;
 
-
 	@RequestMapping(value = "/{user_id}", method = RequestMethod.GET)
 	public User user_Info(@PathVariable int user_id) throws Exception {
 		return userServiceImpl.selectUserInfo(user_id);
@@ -42,12 +41,14 @@ public class USERController {
 	}
 
 	@RequestMapping(value = "/{user_id}/deviceids/{device_id}", method = RequestMethod.GET)
-	public int check_device_id(HttpServletRequest request, @PathVariable int user_id, @PathVariable String device_id) throws Exception {
+	public int check_device_id(HttpServletRequest request, @PathVariable int user_id, @PathVariable String device_id)
+			throws Exception {
 		return userServiceImpl.selectDeviceIdCheck(user_id, device_id);
 	}
 
 	@RequestMapping(value = "/{user_id}/tokens/{token}", method = RequestMethod.PUT)
-	public void update_token(HttpServletRequest request, @PathVariable int user_id, @PathVariable String token) throws Exception {
+	public void update_token(HttpServletRequest request, @PathVariable int user_id, @PathVariable String token)
+			throws Exception {
 		userServiceImpl.updateToken(user_id, token);
 	}
 
@@ -58,7 +59,8 @@ public class USERController {
 
 	// user_check from total families
 	@RequestMapping(value = "/{story_user_id}/family_check/{user_id}", method = RequestMethod.GET)
-	public int family_check(HttpServletRequest request, @PathVariable int story_user_id, @PathVariable int user_id) throws Exception {
+	public int family_check(HttpServletRequest request, @PathVariable int story_user_id, @PathVariable int user_id)
+			throws Exception {
 		return userServiceImpl.selectFamiliesUserCheck(user_id, story_user_id);
 	}
 
@@ -83,21 +85,21 @@ public class USERController {
 	}
 
 	@RequestMapping(value = "/{user_id}/find_user", method = RequestMethod.GET)
-	public ArrayList<User> find_user(HttpServletRequest request,@PathVariable int user_id) throws Exception {
+	public ArrayList<User> find_user(HttpServletRequest request, @PathVariable int user_id) throws Exception {
 		return userServiceImpl.selectUserSearchList(request.getParameter("search"));
 	}
 
 	// insert_family
 	@RequestMapping(value = "/{user_id}/families", method = RequestMethod.POST)
-	public int insert_family(HttpServletRequest request, @PathVariable int user_id) throws Exception {		
+	public int insert_family(HttpServletRequest request, @PathVariable int user_id) throws Exception {
 		String family_name = request.getParameter("family_name");
 		String content = request.getParameter("family_content");
-		
+
 		Family family = new Family();
 		family.setName(family_name);
 		family.setContent(content);
 		family.setUser_id(user_id);
-		
+
 		Notification notification = new Notification();
 		notification.setUser_id(user_id);
 		notification.setReceive_category_id(NotificationTOFlag.ME);
@@ -106,14 +108,15 @@ public class USERController {
 		notification.setIntent_flag(NotificationINTENTFlag.FAMILY);
 		notification.setBehavior_id(NotificationBEHAVIORFlag.CREATING_THE_FAMILY);
 
-		return userServiceImpl.insertFamily(family,notification);
+		return userServiceImpl.insertFamily(family, notification);
 	}
 
 	// user_check from particular family
 	@RequestMapping(value = "/{other_user_id}/sole_family_check/{user_id}", method = RequestMethod.GET)
-	public int family_user_check(HttpServletRequest request, @PathVariable int other_user_id,
-			@PathVariable int user_id) throws NumberFormatException, Exception {
-		return userServiceImpl.selectFamilyUserCheck(Integer.parseInt(request.getParameter("family_id")), user_id, other_user_id);
+	public int family_user_check(HttpServletRequest request, @PathVariable int other_user_id, @PathVariable int user_id)
+			throws NumberFormatException, Exception {
+		return userServiceImpl.selectFamilyUserCheck(Integer.parseInt(request.getParameter("family_id")), user_id,
+				other_user_id);
 	}
 
 	// edit profile
@@ -138,7 +141,8 @@ public class USERController {
 	}
 
 	@RequestMapping(value = "/{user_id}/avatars", method = RequestMethod.PUT)
-	public void update_user_avatar(HttpServletRequest request, @PathVariable int user_id) throws IOException, Exception {
+	public void update_user_avatar(HttpServletRequest request, @PathVariable int user_id)
+			throws IOException, Exception {
 		userServiceImpl.updateUserAvatar(request.getInputStream(), user_id);
 	}
 
@@ -148,7 +152,8 @@ public class USERController {
 	}
 
 	@RequestMapping(value = "/{user_id}/favorites", method = RequestMethod.POST)
-	public void insert_favorite(HttpServletRequest request, @PathVariable int user_id) throws NumberFormatException, Exception {
+	public void insert_favorite(HttpServletRequest request, @PathVariable int user_id)
+			throws NumberFormatException, Exception {
 		userServiceImpl.insertFavorite(user_id, Integer.parseInt(request.getParameter("favorite_id")));
 	}
 
@@ -158,7 +163,8 @@ public class USERController {
 	}
 
 	@RequestMapping(value = "/{user_id}/song_categories", method = RequestMethod.POST)
-	public void insert_song_category(HttpServletRequest request, @PathVariable int user_id) throws NumberFormatException, Exception {
+	public void insert_song_category(HttpServletRequest request, @PathVariable int user_id)
+			throws NumberFormatException, Exception {
 		userServiceImpl.insertSongCategory(user_id, Integer.parseInt(request.getParameter("song_category_id")));
 	}
 
@@ -173,7 +179,8 @@ public class USERController {
 	}
 
 	@RequestMapping(value = "/{user_id}/comment_reports", method = RequestMethod.POST)
-	public void insert_comment_report(HttpServletRequest request, @PathVariable int user_id) throws NumberFormatException, Exception {
+	public void insert_comment_report(HttpServletRequest request, @PathVariable int user_id)
+			throws NumberFormatException, Exception {
 		userServiceImpl.insertCommentReport(user_id, Integer.parseInt(request.getParameter("comment_category_id")),
 				Integer.parseInt(request.getParameter("report_category_id")),
 				Integer.parseInt(request.getParameter("comment_id")));

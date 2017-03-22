@@ -24,6 +24,8 @@
 	<security:http pattern="/main/login" security="none" />
 	<security:http pattern="/main/join" security="none" />
 	<security:http pattern="/main/check/**" security="none" />
+	<security:http pattern="/main/find_password" security="none" />
+	<security:http pattern="/main/find_email" security="none" />
 
 	<security:http pattern="/**" create-session="stateless"
 		entry-point-ref="restServicesEntryPoint">

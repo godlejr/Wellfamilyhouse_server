@@ -16,4 +16,8 @@ public interface MainService {
 
 	ArrayList<Category> selectReportCategoryList() throws Exception;
 
+	void updateTemperaryPassword(int user_id, String user_email, String user_name) throws Exception;
+	
+	User selectUserInfoFromEmail(String email)throws Exception;
+
 }

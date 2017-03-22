@@ -20,7 +20,7 @@ import com.demand.server.well_family_house.main.service.impl.MainServiceImpl;
 public class MAINController {
 	@Autowired
 	private MainServiceImpl mainServiceImpl;
-
+	
 	@RequestMapping(value = "/check", method = RequestMethod.GET)
 	public int email_check(HttpServletRequest request) throws Exception {
 		return mainServiceImpl.selectEmailCheck(request.getParameter("email"));
@@ -33,8 +33,8 @@ public class MAINController {
 
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public void join(HttpServletRequest request) throws NumberFormatException, Exception {
-		mainServiceImpl.insertJoin(request.getParameter("email"), request.getParameter("password"), request.getParameter("name"),
-				request.getParameter("birth"), request.getParameter("phone"),
+		mainServiceImpl.insertJoin(request.getParameter("email"), request.getParameter("password"),
+				request.getParameter("name"), request.getParameter("birth"), request.getParameter("phone"),
 				Integer.parseInt(request.getParameter("login_category_id")));
 	}
 
@@ -43,6 +43,19 @@ public class MAINController {
 	@RequestMapping(value = "/report_categories", method = RequestMethod.GET)
 	public ArrayList<Category> report_category_List() throws Exception {
 		return mainServiceImpl.selectReportCategoryList();
+	}
+	
+	@RequestMapping(value = "/find_emil", method = RequestMethod.GET)
+	public User getUserInfromEmail(HttpServletRequest request) throws Exception {
+		return mainServiceImpl.selectUserInfoFromEmail(request.getParameter("email"));
+	}
+
+	@RequestMapping(value = "/find_password", method = RequestMethod.POST)
+	public void getUserInfoToSendEmail(HttpServletRequest request) throws Exception {
+		int user_id = Integer.parseInt(request.getParameter("user_id"));
+		String user_email = request.getParameter("email");
+		String user_name = request.getParameter("name");
+		mainServiceImpl.updateTemperaryPassword(user_id,user_email, user_name);
 	}
 
 }
