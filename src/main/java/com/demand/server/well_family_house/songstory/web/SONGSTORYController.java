@@ -104,7 +104,7 @@ public class SONGSTORYController {
 		notification.setUser_id(user_id);
 		notification.setReceive_category_id(NotificationTOFlag.WRITER);
 		notification.setContent_name("회원님의 추억소리");
-		notification.setIntent_flag(NotificationINTENTFlag.STORY_DETAIL);
+		notification.setIntent_flag(NotificationINTENTFlag.SONG_STORY_DETAIL);
 		notification.setBehavior_id(NotificationBEHAVIORFlag.WRITING_THE_COMMENT);
 		notification.setIntent_id(song_story_id);
 
