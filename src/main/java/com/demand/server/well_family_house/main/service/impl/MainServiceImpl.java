@@ -129,7 +129,7 @@ public class MainServiceImpl implements MainService {
 						+ "<tr><td>"
 						+ "<table cellpadding=\"0\" cellspacing=\"0\" style=\"width: 100%; margin: 0; padding: 0\"> <tbody> <tr> <td width=\"110\" style=\"padding-bottom: 5px; color: #696969; line-height: 23px; font-size: 10pt; vertical-align: top; font-family: '나눔고딕', NanumGothic, '맑은고딕', Malgun Gothic, '돋움', Dotum, Helvetica, 'Apple SD Gothic Neo', Sans-serif;\">"
 						+ "이메일</td><td style=\"padding-bottom: 5px; color: #000; line-height: 23px; vertical-align: top; font-family: '나눔고딕', NanumGothic, '맑은고딕', Malgun Gothic, '돋움', Dotum, Helvetica, 'Apple SD Gothic Neo', Sans-serif;\"><span style=\"color: #542920\">"
-						+ user_email + "</span>" + "</td></tr>"
+						+ email + "</span>" + "</td></tr>"
 
 						+ "<tr><td width=\"110\"style=\"padding-bottom: 5px; color: #696969; line-height: 23px; font-size: 10pt; vertical-align: top; font-family: '나눔고딕', NanumGothic, '맑은고딕', Malgun Gothic, '돋움', Dotum, Helvetica, 'Apple SD Gothic Neo', Sans-serif;\">임시 비밀번호</td>"
 						+ "<td style=\"padding-bottom: 5px; color: #000; line-height: 23px; vertical-align: top; font-family: '나눔고딕', NanumGothic, '맑은고딕', Malgun Gothic, '돋움', Dotum, Helvetica, 'Apple SD Gothic Neo', Sans-serif;\"><span style=\"color: #542920\">"
