@@ -150,7 +150,7 @@
 		<beans:property name="host" value="smtp.gmail.com" />
 		<beans:property name="port" value="587" />
 		<beans:property name="username" value="demand.svc@gmail.com" />
-		<beans:property name="password" value="demand8311!@" />
+		<beans:property name="password" value="demand8312!@" />
 
 		<beans:property name="javaMailProperties">
 			<beans:props>
