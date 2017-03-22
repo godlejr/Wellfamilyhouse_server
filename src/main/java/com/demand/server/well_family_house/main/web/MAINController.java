@@ -45,7 +45,7 @@ public class MAINController {
 		return mainServiceImpl.selectReportCategoryList();
 	}
 	
-	@RequestMapping(value = "/find_emil", method = RequestMethod.GET)
+	@RequestMapping(value = "/find_email", method = RequestMethod.GET)
 	public User getUserInfromEmail(HttpServletRequest request) throws Exception {
 		return mainServiceImpl.selectUserInfoFromEmail(request.getParameter("email"));
 	}
