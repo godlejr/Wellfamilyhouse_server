@@ -100,7 +100,6 @@ public class SONGSTORYController {
 		songStoryComment.setUser_id(user_id);
 		songStoryComment.setSong_story_id(song_story_id);
 		songStoryComment.setContent(request.getParameter("content"));
-
 		Notification notification = new Notification();
 		notification.setUser_id(user_id);
 		notification.setReceive_category_id(NotificationTOFlag.WRITER);
