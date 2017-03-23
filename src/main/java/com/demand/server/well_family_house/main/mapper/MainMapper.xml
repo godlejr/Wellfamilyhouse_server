@@ -43,7 +43,7 @@
 
 	<select id="selectUserInfoFromEmail" resultType="com.demand.server.well_family_house.common.dto.User">
 		select
-		id,email,name,avatar,level from
+		id,email,name,avatar,level,login_category_id from
 		users
 		where
 		email = #{param1};
