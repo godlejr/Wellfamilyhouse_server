@@ -46,6 +46,7 @@
 		id,email,name,avatar,level,login_category_id from
 		users
 		where
-		email = #{param1};
+		email =
+		#{param1};
 	</select>
 </mapper>

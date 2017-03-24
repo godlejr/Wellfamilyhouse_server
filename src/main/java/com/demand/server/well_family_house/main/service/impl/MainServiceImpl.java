@@ -84,11 +84,10 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public void updateTemperaryPassword(int user_id, String user_email, String user_name) throws Exception {
-
+		boolean update_flag = false;
 		String pwd = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 8);
 		String sha256_pwd = encrypt_SHA1(pwd);
-
-		boolean update_flag = false;
+		
 		try {
 			mainMapper.updateTemperaryPassword(user_id, sha256_pwd);
 			update_flag = true;
@@ -100,7 +99,6 @@ public class MainServiceImpl implements MainService {
 			try {
 				MimeMessage message = mailSender.createMimeMessage();
 
-				// user_info
 				Address email = new InternetAddress(user_email);
 
 				message.addRecipient(Message.RecipientType.TO, email);
@@ -156,7 +154,6 @@ public class MainServiceImpl implements MainService {
 						+ "</tbody></table></div>";
 
 				message.setText(content, "utf-8", "html");
-
 				mailSender.send(message);
 
 			} catch (AddressException e) {
@@ -175,7 +172,7 @@ public class MainServiceImpl implements MainService {
 			messageDigest.update(pwd.getBytes(), 0, pwd.length());
 
 		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
+			log(e);
 		}
 
 		return String.format("%064x", new java.math.BigInteger(1, messageDigest.digest()));
@@ -183,7 +180,6 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public User selectUserInfoFromEmail(String email) throws Exception {
-		// TODO Auto-generated method stub
 		return mainMapper.selectUserInfoFromEmail(email);
 	}
 
