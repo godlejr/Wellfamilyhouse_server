@@ -48,4 +48,7 @@ public interface StoryMapper {
 	ArrayList<String> selectPhotoName(int story_id) throws Exception;
 	
 	void deletePhotos(int story_id) throws Exception;
+	
+	void deleteStory(int story_id) throws Exception;
+	
 }

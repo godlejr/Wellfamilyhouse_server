@@ -196,4 +196,34 @@ public class StoryServiceImpl implements StoryService {
 			}
 		}
 	}
+
+	@Override
+	public void deleteStory(int story_id) throws Exception {
+		boolean transaction_flag = true;
+		ArrayList<String> photoList = null;
+		int photoSize =0;
+		
+		try {
+			photoList = storyMapper.selectPhotoName(story_id);
+			photoSize = photoList.size();
+			
+			if (photoSize > 0) {
+				storyMapper.deletePhotos(story_id);
+			}
+		
+			storyMapper.deleteStory(story_id);
+		
+		} catch (Exception e) {
+			transaction_flag = false;
+		}
+		
+		if (transaction_flag) {
+			if (photoSize > 0) {
+				for (int i = 0; i < photoSize; i++) {
+					awsS3Connection.deleteFileFromAWSS3("apps/well_family_house/images/stories", photoList.get(i),
+							"jpg");
+				}
+			}
+		}
+	}
 }

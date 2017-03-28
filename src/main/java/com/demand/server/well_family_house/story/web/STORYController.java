@@ -120,10 +120,16 @@ public class STORYController {
 
 		return storyServiceImpl.insertStory(story, notification);
 	}
+	
 	@RequestMapping(value = "/{story_id}", method = RequestMethod.PUT)
 	public void update_story(HttpServletRequest request,@PathVariable int story_id) throws  Exception {
 		String content = request.getParameter("content");
 		storyServiceImpl.updateStory(story_id,content);
+	}
+	
+	@RequestMapping(value = "/{story_id}", method = RequestMethod.DELETE)
+	public void delete_story(@PathVariable int story_id) throws  Exception {
+		storyServiceImpl.deleteStory(story_id);
 	}
 	
 	@RequestMapping(value = "/{story_id}", method = RequestMethod.GET)

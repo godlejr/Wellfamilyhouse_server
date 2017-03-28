@@ -129,4 +129,8 @@
 		delete from photos where story_id = #{param1};
 	</delete>
 
+	<delete id="deleteStory">
+		delete from stories where id=#{param1};
+	</delete>
+
 </mapper>
