@@ -99,16 +99,34 @@
 		SELECT user_id FROM stories
 		where id = #{param1};
 	</select>
-	
+
 	<select id="selectStoryInfo"
 		resultType="com.demand.server.well_family_house.common.dto.StoryInfoForNotification">
-		SELECT st.id AS id, st.content AS content, st.created_at AS created_at, st.hits AS hits,
-		us.id AS user_id, us.level AS user_level, us.name AS user_name, us.email AS user_email, us.avatar AS user_avatar, us.phone AS user_phone, us.birth AS user_birth
-	
-		FROM	stories st,
-				users	us
-		WHERE	st.user_id = us.id	AND
-				st.id = #{param1};
+		SELECT st.id AS id, st.content AS content, st.created_at AS
+		created_at, st.hits AS hits,
+		us.id AS user_id, us.level AS user_level,
+		us.name AS user_name, us.email AS user_email, us.avatar AS
+		user_avatar, us.phone AS user_phone, us.birth AS user_birth
+
+		FROM
+		stories st,
+		users us
+		WHERE st.user_id = us.id AND
+		st.id = #{param1};
 	</select>
-	
+
+	<update id="updateStory">
+		update stories set content = #{param2} where id =
+		#{param1};
+	</update>
+
+	<select id="selectPhotoName" resultType="String">
+		select name from photos
+		where story_id =#{param1};
+	</select>
+
+	<delete id="deletePhotos">
+		delete from photos where story_id = #{param1};
+	</delete>
+
 </mapper>

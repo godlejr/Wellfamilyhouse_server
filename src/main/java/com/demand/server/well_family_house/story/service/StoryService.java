@@ -34,4 +34,6 @@ public interface StoryService {
 
 	StoryInfoForNotification selectStoryInfo(int story_id) throws Exception;
 
+	void updateStory(int story_id, String content) throws Exception;
+
 }

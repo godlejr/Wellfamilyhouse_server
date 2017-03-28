@@ -42,4 +42,10 @@ public interface StoryMapper {
 	int selectUser(int story_id) throws Exception;
 
 	StoryInfoForNotification selectStoryInfo(int story_id) throws Exception;
+	
+	void updateStory(int story_id, String content) throws Exception;
+	
+	ArrayList<String> selectPhotoName(int story_id) throws Exception;
+	
+	void deletePhotos(int story_id) throws Exception;
 }
