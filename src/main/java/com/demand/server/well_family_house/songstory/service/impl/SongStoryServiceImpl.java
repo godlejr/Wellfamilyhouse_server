@@ -201,4 +201,64 @@ public class SongStoryServiceImpl implements SongStoryService {
 		return songStoryMapper.selectSongStoryInfo(song_story_id);
 	}
 
+	
+	@Override
+	public void updateStory(int song_story_id, String content, String location) throws Exception {
+		boolean transaction_flag = true;
+		ArrayList<String> photoList = null;
+		int photoSize =0;
+		
+		try {
+			songStoryMapper.updateStory(song_story_id, content, location);
+			photoList = songStoryMapper.selectPhotoName(song_story_id);
+			photoSize = photoList.size();
+			
+			if (photoSize > 0) {
+				songStoryMapper.deletePhotos(song_story_id);
+			}
+			
+		} catch (Exception e) {
+			transaction_flag = false;
+		}
+		
+		if (transaction_flag) {
+			if (photoSize > 0) {
+				for (int i = 0; i < photoSize; i++) {
+					awsS3Connection.deleteFileFromAWSS3("apps/well_family_house/images/songstories", photoList.get(i),
+							"jpg");
+				}
+			}
+		}
+	}
+
+	@Override
+	public void deleteStory(int song_story_id) throws Exception {
+		boolean transaction_flag = true;
+		ArrayList<String> photoList = null;
+		int photoSize =0;
+		
+		try {
+			photoList = songStoryMapper.selectPhotoName(song_story_id);
+			photoSize = photoList.size();
+			
+			if (photoSize > 0) {
+				songStoryMapper.deletePhotos(song_story_id);
+			}
+		
+			songStoryMapper.deleteStory(song_story_id);
+		
+		} catch (Exception e) {
+			transaction_flag = false;
+		}
+		
+		if (transaction_flag) {
+			if (photoSize > 0) {
+				for (int i = 0; i < photoSize; i++) {
+					awsS3Connection.deleteFileFromAWSS3("apps/well_family_house/images/songstories", photoList.get(i),
+							"jpg");
+				}
+			}
+		}
+	}
+
 }

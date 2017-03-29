@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -65,6 +66,7 @@ public class SONGSTORYController {
 		notification.setIntent_flag(NotificationINTENTFlag.SONG_STORY_DETAIL);
 		notification.setBehavior_id(NotificationBEHAVIORFlag.LIKE);
 		notification.setIntent_id(song_story_id);
+		
 
 		songStoryServiceImpl.insertSongStoryLikeUp(user_id, song_story_id, notification);
 	}
@@ -127,6 +129,18 @@ public class SONGSTORYController {
 	@RequestMapping(value = "/{song_story_id}", method = RequestMethod.GET)
 	public SongStoryInfoForNotification storyDetailForNotification(@PathVariable int song_story_id) throws Exception {
 		return songStoryServiceImpl.selectSongStoryInfo(song_story_id);
+	}
+	
+	@RequestMapping(value = "/{song_story_id}", method = RequestMethod.PUT)
+	public void update_story(HttpServletRequest request, @PathVariable int song_story_id) throws Exception {
+		String content = request.getParameter("content");
+		String location = request.getParameter("location");
+		songStoryServiceImpl.updateStory(song_story_id,content,location);
+	}
+	
+	@RequestMapping(value = "/{song_story_id}", method = RequestMethod.DELETE)
+	public void delete_story(@PathVariable int song_story_id) throws  Exception {
+		songStoryServiceImpl.deleteStory(song_story_id);
 	}
 
 }

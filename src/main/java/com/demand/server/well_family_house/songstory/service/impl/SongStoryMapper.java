@@ -41,8 +41,15 @@ public interface SongStoryMapper {
 	ArrayList<SongStoryEmotionData> selectSongStoryEmotionData(int song_story_id) throws Exception;
 
 	int selectUser(int story_id) throws Exception;
-	
+
 	SongStoryInfoForNotification selectSongStoryInfo(int song_story_id) throws Exception;
 
+	void updateStory(int song_story_id, String content, String location) throws Exception;
 
+	ArrayList<String> selectPhotoName(int song_story_id) throws Exception;
+
+	void deletePhotos(int song_story_id) throws Exception;
+
+	void deleteStory(int song_story_id) throws Exception;
+	
 }
