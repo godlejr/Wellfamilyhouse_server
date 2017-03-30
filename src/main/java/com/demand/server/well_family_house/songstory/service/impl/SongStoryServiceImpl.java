@@ -225,7 +225,7 @@ public class SongStoryServiceImpl implements SongStoryService {
 			if (photoSize > 0) {
 				for (int i = 0; i < photoSize; i++) {
 					awsS3Connection.deleteFileFromAWSS3("apps/well_family_house/images/songstories", photoList.get(i),
-							"jpg");
+							".jpg");
 				}
 			}
 		}
@@ -255,7 +255,7 @@ public class SongStoryServiceImpl implements SongStoryService {
 			if (photoSize > 0) {
 				for (int i = 0; i < photoSize; i++) {
 					awsS3Connection.deleteFileFromAWSS3("apps/well_family_house/images/songstories", photoList.get(i),
-							"jpg");
+							".jpg");
 				}
 			}
 		}

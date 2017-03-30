@@ -191,7 +191,7 @@ public class StoryServiceImpl implements StoryService {
 			if (photoSize > 0) {
 				for (int i = 0; i < photoSize; i++) {
 					awsS3Connection.deleteFileFromAWSS3("apps/well_family_house/images/stories", photoList.get(i),
-							"jpg");
+							".jpg");
 				}
 			}
 		}
@@ -221,7 +221,7 @@ public class StoryServiceImpl implements StoryService {
 			if (photoSize > 0) {
 				for (int i = 0; i < photoSize; i++) {
 					awsS3Connection.deleteFileFromAWSS3("apps/well_family_house/images/stories", photoList.get(i),
-							"jpg");
+							".jpg");
 				}
 			}
 		}

@@ -155,7 +155,7 @@
 	</select>
 
 	<delete id="deletePhotos">
-		delete from song_photos where story_id = #{param1};
+		delete from song_photos where song_story_id = #{param1};
 	</delete>
 
 	<delete id="deleteStory">
