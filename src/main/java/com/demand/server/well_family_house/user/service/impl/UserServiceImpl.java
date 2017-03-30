@@ -16,6 +16,7 @@ import com.demand.server.well_family_house.common.dto.Family;
 import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.SongStory;
 import com.demand.server.well_family_house.common.dto.User;
+import com.demand.server.well_family_house.common.flag.FamilyJoinFlag;
 import com.demand.server.well_family_house.common.flag.LogFlag;
 import com.demand.server.well_family_house.common.util.AndroidPushConnection;
 import com.demand.server.well_family_house.common.util.AwsS3Connection;
@@ -174,7 +175,7 @@ public class UserServiceImpl implements UserService {
 	public int insertFamily(Family family, Notification notification) throws Exception {
 
 		userMapper.insertFamily(family);
-		userMapper.insertFamilyJoiner(family.getId(), family.getUser_id());
+		userMapper.insertFamilyJoiner(family.getId(), family.getUser_id(),FamilyJoinFlag.FAMILY);
 
 		notification.setIntent_id(family.getId());
 

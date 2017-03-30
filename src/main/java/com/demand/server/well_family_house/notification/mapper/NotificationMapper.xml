@@ -67,27 +67,31 @@
 
 	<select id="selectTokenForFamily"
 		resultType="com.demand.server.well_family_house.common.dto.Token">
-		SELECT us.id as
-		id,us.token as token FROM family_joiners fj
-		,users us
-		where fj.user_id
-		= us.id and
-		fj.family_id = #{param1} and us.id
-		!=#{param2};
+		SELECT us.id as id, us.token as token 
+	
+    	FROM family_joiners fj ,users us
+		
+		where fj.user_id = us.id and
+				fj.family_id = #{param1} and
+	            fj.join_flag =1 and 
+	            us.id !=#{param2};
 	</select>
 
 	<select id="selectTokenForFamiles"
 		resultType="com.demand.server.well_family_house.common.dto.Token">
-		SELECT us.id as id, us.token as token
-		from users us,
-		(SELECT user_id
-		from family_joiners fj
-		,(SELECT family_id
-		FROM wellfamily.family_joiners
-		where user_id =#{param1} ) fm
-		where fj.family_id = fm.family_id AND
-		fj.user_id != #{param1}) fu
+		SELECT distinct us.id as id, us.token as token
+        from users us,
+			(SELECT user_id
+				from family_joiners fj,
+					(SELECT family_id 
+						FROM wellfamily.family_joiners
+						where user_id =35 and
+								join_flag = 1) fm
+				where fj.family_id = fm.family_id AND
+						fj.join_flag = 1 AND
+						fj.user_id != 35) fu
 		where us.id = fu.user_id
+        
 	</select>
 
 	<!-- set token -->

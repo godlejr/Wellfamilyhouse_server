@@ -42,21 +42,18 @@
 		(SELECT
 		family_id as f_id FROM family_joiners where
 		user_id =
-		#{param1}) u
+		#{param1} where join_flag = 1) u
 		where
 		f.id = u.f_id;
 	</select>
 
 	<select id="selectFamiliesUserCheck" resultType="int">
-		select
-		count(a.family_id) as
-		checked from (SELECT family_id FROM
-		wellfamily.family_joiners where
-		user_id =#{param1}) a,
-		(SELECT family_id
-		FROM wellfamily.family_joiners
-		where user_id = #{param2}) b where
-		a.family_id = b.family_id;
+		select count(a.family_id) as checked 
+        
+        from	(SELECT family_id FROM wellfamily.family_joiners where user_id = #{param1} and join_flag=1) a,
+				(SELECT family_id FROM wellfamily.family_joiners where user_id = #{param2} and join_flag=1) b 
+                
+		where a.family_id = b.family_id;
 	</select>
 
 	<select id="selectSongStoryPublicList"
@@ -109,18 +106,19 @@
 
 	<insert id="insertFamilyJoiner">
 		insert into
-		family_joiners(family_id,user_id)
-		values(#{param1},#{param2})
+		family_joiners(family_id,user_id,join_flag)
+		values(#{param1},#{param2},#{param3})
 	</insert>
 
 
 	<select id="selectFamilyUserCheck" resultType="int">
-		SELECT count(id)
-		as
-		checked FROM wellfamily.family_joiners where family_id = #{param1}
-		and
-		user_id
-		!= #{param2} and user_id = #{param3};
+		SELECT count(id) as checked 
+		FROM wellfamily.family_joiners 
+		
+		where family_id = #{param1} and
+				user_id != #{param2} and 
+				user_id = #{param3} and
+				join_flag = 1;
 	</select>
 
 	<!-- profile edit -->

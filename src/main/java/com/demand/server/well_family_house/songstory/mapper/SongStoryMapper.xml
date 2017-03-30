@@ -151,7 +151,7 @@
 	<select id="selectPhotoName" resultType="String">
 		select name from
 		song_photos
-		where story_id =#{param1};
+		where song_story_id =#{param1};
 	</select>
 
 	<delete id="deletePhotos">

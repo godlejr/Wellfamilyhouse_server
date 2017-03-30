@@ -17,11 +17,16 @@
 	<select id="selectFamilyUsersInfo" resultType="com.demand.server.well_family_house.common.dto.User">
 		select u.id as id
 		,u.email as email,u.name as name,u.birth as birth,u.phone as phone,
-		u.avatar as avatar,u.level as level from users u, (SELECT * FROM
+		u.avatar as avatar,u.level as level, f.join_flag as join_flag from users u, (SELECT * FROM
 		family_joiners where
 		family_id = #{param1} and user_id != #{param2}) f
 		where u.id = f.user_id order by name;
 	</select>
+
+	<select id="selectFamilyUserId" resultType="int">
+		SELECT user_id FROM wellfamily.familys where id = #{param1};
+	</select>
+
 
 	<select id="selectContentList"
 		resultType="com.demand.server.well_family_house.common.dto.StoryInfo">
@@ -66,8 +71,8 @@
 
 	<insert id="insertUserIntoFamily">
 		insert into
-		family_joiners(family_id,user_id)
-		values(#{param1},#{param2});
+		family_joiners(family_id,user_id,join_flag)
+		values(#{param1},#{param2},#{param3});
 	</insert>
 
 	<delete id="deleteUserFromFamily">

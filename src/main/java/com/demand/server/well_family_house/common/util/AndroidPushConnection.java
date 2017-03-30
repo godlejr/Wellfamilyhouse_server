@@ -38,12 +38,7 @@ public class AndroidPushConnection {
 		int check = notification.getReceive_category_id();
 		int receiver_ref_id = notification.getReceiver_id();
 
-		if (check == NotificationTOFlag.ME) {
-			ArrayList<Token> token = notificationMapper.selectTokenForUser(receiver_ref_id);
-			insertMessage(notification_id, token);
-		}
-
-		if(check == NotificationTOFlag.WRITER){
+		if (check == NotificationTOFlag.ME || check == NotificationTOFlag.WRITER || check == NotificationTOFlag.INVITEE) {
 			ArrayList<Token> token = notificationMapper.selectTokenForUser(receiver_ref_id);
 			insertMessage(notification_id, token);
 		}

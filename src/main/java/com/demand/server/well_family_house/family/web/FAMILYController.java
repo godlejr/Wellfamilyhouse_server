@@ -13,9 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demand.server.well_family_house.common.dto.Family;
+import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.Photo;
 import com.demand.server.well_family_house.common.dto.StoryInfo;
-import com.demand.server.well_family_house.common.dto.User;
+import com.demand.server.well_family_house.common.dto.UserInfoForFamilyJoin;
+import com.demand.server.well_family_house.common.flag.FamilyJoinFlag;
+import com.demand.server.well_family_house.common.flag.NotificationBEHAVIORFlag;
+import com.demand.server.well_family_house.common.flag.NotificationTOFlag;
 import com.demand.server.well_family_house.family.service.impl.FamilyServiceImpl;
 
 @Secured("ROLE_USER")
@@ -34,7 +38,7 @@ public class FAMILYController {
 
 	// family_main
 	@RequestMapping(value = "/{family_id}/usersBut/{user_id}", method = RequestMethod.GET)
-	public ArrayList<User> family_user_Info(HttpServletRequest request, @PathVariable int family_id,
+	public ArrayList<UserInfoForFamilyJoin> family_user_Info(HttpServletRequest request, @PathVariable int family_id,
 			@PathVariable int user_id) throws Exception {
 		return familyServiceImpl.selectFamilyUsersInfo(family_id, user_id);
 	}
@@ -54,10 +58,18 @@ public class FAMILYController {
 		familyServiceImpl.updateFamilyAvatar(request.getInputStream(),family_id);
 	}
 
-	// insert user to family
+	// insert user to family for invite
 	@RequestMapping(value = "/{family_id}/users", method = RequestMethod.POST)
 	public void insert_user_into_family(HttpServletRequest request, @PathVariable int family_id) throws NumberFormatException, Exception {
-		familyServiceImpl.insertUserIntoFamily(family_id, Integer.parseInt(request.getParameter("user_id")));
+		int user_id = Integer.parseInt(request.getParameter("user_id"));
+		
+		Notification notification = new Notification();
+		notification.setReceive_category_id(NotificationTOFlag.INVITEE);
+		notification.setContent_name("회원");
+		notification.setBehavior_id(NotificationBEHAVIORFlag.INVITED);
+		notification.setReceiver_id(user_id);
+		
+		familyServiceImpl.insertUserIntoFamily(family_id, user_id, FamilyJoinFlag.FAMILY_TO_USER, notification);
 	}
 
 	// delete user from family

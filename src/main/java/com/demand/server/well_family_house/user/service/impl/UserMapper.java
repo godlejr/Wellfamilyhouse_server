@@ -28,7 +28,7 @@ public interface UserMapper {
 
 	void insertFamily(Family family) throws Exception;
 
-	void insertFamilyJoiner(int family_id, int user_id) throws Exception;
+	void insertFamilyJoiner(int family_id, int user_id,int join_flag) throws Exception;
 
 	ArrayList<User> selectUserSearchList(String search) throws Exception;
 

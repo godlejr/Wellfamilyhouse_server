@@ -12,13 +12,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demand.server.well_family_house.common.dto.Family;
+import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.Photo;
 import com.demand.server.well_family_house.common.dto.StoryInfo;
 import com.demand.server.well_family_house.common.dto.User;
+import com.demand.server.well_family_house.common.dto.UserInfoForFamilyJoin;
 import com.demand.server.well_family_house.common.flag.LogFlag;
+import com.demand.server.well_family_house.common.util.AndroidPushConnection;
 import com.demand.server.well_family_house.common.util.AwsS3Connection;
 import com.demand.server.well_family_house.family.service.FamilyService;
 import com.demand.server.well_family_house.family.web.FAMILYController;
+import com.demand.server.well_family_house.notification.service.impl.NotificationMapper;
 
 @Service("familyServiceImpl")
 public class FamilyServiceImpl implements FamilyService{
@@ -26,6 +30,12 @@ public class FamilyServiceImpl implements FamilyService{
 	@Autowired
 	private FamilyMapper familyMapper;
 
+	@Autowired
+	private NotificationMapper notificationMapper;
+
+	@Autowired
+	private AndroidPushConnection androidPushConnection;
+	
 	@Autowired
 	private AwsS3Connection awsS3Connection;
 
@@ -52,7 +62,7 @@ public class FamilyServiceImpl implements FamilyService{
 	}
 
 	@Override
-	public ArrayList<User> selectFamilyUsersInfo(int family_id, int user_id) throws Exception {
+	public ArrayList<UserInfoForFamilyJoin> selectFamilyUsersInfo(int family_id, int user_id) throws Exception {
 		return familyMapper.selectFamilyUsersInfo(family_id, user_id);
 	}
 
@@ -109,8 +119,14 @@ public class FamilyServiceImpl implements FamilyService{
 	}
 
 	@Override
-	public void insertUserIntoFamily(int family_id, int user_id) throws Exception {
-		familyMapper.insertUserIntoFamily(family_id,user_id);
+	public void insertUserIntoFamily(int family_id, int user_id, int join_flag, Notification notification) throws Exception {
+		int invitor_id = familyMapper.selectFamilyUserId(family_id);
+		notification.setUser_id(invitor_id);
+		
+		notificationMapper.insertNotification(notification);
+		androidPushConnection.insertFCM(notification);
+		
+		familyMapper.insertUserIntoFamily(family_id,user_id,join_flag);
 	}
 
 	@Override
