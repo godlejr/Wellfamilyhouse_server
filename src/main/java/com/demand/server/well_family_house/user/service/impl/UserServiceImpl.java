@@ -16,6 +16,7 @@ import com.demand.server.well_family_house.common.dto.Family;
 import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.SongStory;
 import com.demand.server.well_family_house.common.dto.User;
+import com.demand.server.well_family_house.common.dto.UserInfoForFamilyJoin;
 import com.demand.server.well_family_house.common.flag.FamilyJoinFlag;
 import com.demand.server.well_family_house.common.flag.LogFlag;
 import com.demand.server.well_family_house.common.util.AndroidPushConnection;
@@ -106,7 +107,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public ArrayList<User> selectUserSearchList(String search) throws Exception {
+	public ArrayList<UserInfoForFamilyJoin> selectUserSearchList(String search) throws Exception {
 		return userMapper.selectUserSearchList(search);
 	}
 

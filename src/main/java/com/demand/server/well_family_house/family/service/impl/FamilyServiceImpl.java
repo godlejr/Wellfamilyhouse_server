@@ -62,7 +62,7 @@ public class FamilyServiceImpl implements FamilyService{
 	}
 
 	@Override
-	public ArrayList<UserInfoForFamilyJoin> selectFamilyUsersInfo(int family_id, int user_id) throws Exception {
+	public ArrayList<User> selectFamilyUsersInfo(int family_id, int user_id) throws Exception {
 		return familyMapper.selectFamilyUsersInfo(family_id, user_id);
 	}
 

@@ -15,7 +15,7 @@ import com.demand.server.well_family_house.common.dto.UserInfoForFamilyJoin;
 public interface FamilyMapper {
 	Family selectFamily(int family_id) throws Exception;
 
-	ArrayList<UserInfoForFamilyJoin> selectFamilyUsersInfo(int family_id, int user_id) throws Exception;
+	ArrayList<User> selectFamilyUsersInfo(int family_id, int user_id) throws Exception;
 
 	ArrayList<StoryInfo> selectContentList(int family_id) throws Exception;
 

@@ -17,6 +17,7 @@ import com.demand.server.well_family_house.common.dto.Family;
 import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.SongStory;
 import com.demand.server.well_family_house.common.dto.User;
+import com.demand.server.well_family_house.common.dto.UserInfoForFamilyJoin;
 import com.demand.server.well_family_house.common.flag.NotificationBEHAVIORFlag;
 import com.demand.server.well_family_house.common.flag.NotificationINTENTFlag;
 import com.demand.server.well_family_house.common.flag.NotificationTOFlag;
@@ -85,7 +86,7 @@ public class USERController {
 	}
 
 	@RequestMapping(value = "/{user_id}/find_user", method = RequestMethod.GET)
-	public ArrayList<User> find_user(HttpServletRequest request, @PathVariable int user_id) throws Exception {
+	public ArrayList<UserInfoForFamilyJoin> find_user(HttpServletRequest request, @PathVariable int user_id) throws Exception {
 		return userServiceImpl.selectUserSearchList(request.getParameter("search"));
 	}
 

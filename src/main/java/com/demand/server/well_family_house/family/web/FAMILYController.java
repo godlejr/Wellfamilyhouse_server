@@ -16,6 +16,7 @@ import com.demand.server.well_family_house.common.dto.Family;
 import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.Photo;
 import com.demand.server.well_family_house.common.dto.StoryInfo;
+import com.demand.server.well_family_house.common.dto.User;
 import com.demand.server.well_family_house.common.dto.UserInfoForFamilyJoin;
 import com.demand.server.well_family_house.common.flag.FamilyJoinFlag;
 import com.demand.server.well_family_house.common.flag.NotificationBEHAVIORFlag;
@@ -38,7 +39,7 @@ public class FAMILYController {
 
 	// family_main
 	@RequestMapping(value = "/{family_id}/usersBut/{user_id}", method = RequestMethod.GET)
-	public ArrayList<UserInfoForFamilyJoin> family_user_Info(HttpServletRequest request, @PathVariable int family_id,
+	public ArrayList<User> family_user_Info(HttpServletRequest request, @PathVariable int family_id,
 			@PathVariable int user_id) throws Exception {
 		return familyServiceImpl.selectFamilyUsersInfo(family_id, user_id);
 	}

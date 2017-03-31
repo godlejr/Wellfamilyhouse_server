@@ -15,7 +15,7 @@ public interface FamilyService {
 
 	Family selectFamily(int family_id) throws Exception;
 
-	ArrayList<UserInfoForFamilyJoin> selectFamilyUsersInfo(int family_id, int user_id) throws Exception;
+	ArrayList<User> selectFamilyUsersInfo(int family_id, int user_id) throws Exception;
 
 	ArrayList<StoryInfo> selectContentList(int family_id) throws Exception;
 

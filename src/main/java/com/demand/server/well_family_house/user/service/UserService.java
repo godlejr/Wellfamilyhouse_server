@@ -9,6 +9,7 @@ import com.demand.server.well_family_house.common.dto.Family;
 import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.SongStory;
 import com.demand.server.well_family_house.common.dto.User;
+import com.demand.server.well_family_house.common.dto.UserInfoForFamilyJoin;
 
 public interface UserService {
 
@@ -32,7 +33,7 @@ public interface UserService {
 
 	ArrayList<Family> selectFamilySearchList(String family_name) throws Exception;
 
-	ArrayList<User> selectUserSearchList(String search) throws Exception;
+	ArrayList<UserInfoForFamilyJoin> selectUserSearchList(String search) throws Exception;
 
 	int selectFamilyUserCheck(int family_id, int user_id, int other_user_id) throws Exception;
 
