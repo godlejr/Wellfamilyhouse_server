@@ -29,4 +29,6 @@ public interface FamilyService {
 
 	void updateFamilyInfo(int family_id, String name, String content) throws Exception;
 
+	ArrayList<UserInfoForFamilyJoin> selectUserSearchList(int family_id,String search) throws Exception;
+
 }

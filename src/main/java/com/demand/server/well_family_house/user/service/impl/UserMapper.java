@@ -29,9 +29,7 @@ public interface UserMapper {
 
 	void insertFamily(Family family) throws Exception;
 
-	void insertFamilyJoiner(int family_id, int user_id,int join_flag) throws Exception;
-
-	ArrayList<UserInfoForFamilyJoin> selectUserSearchList(String search) throws Exception;
+	void insertFamilyJoiner(int family_id, int user_id, int join_flag) throws Exception;
 
 	int selectFamilyUserCheck(int family_id, int user_id, int other_user_id) throws Exception;
 
@@ -67,5 +65,5 @@ public interface UserMapper {
 
 	void insertCommentReport(int user_id, int comment_category_id, int report_category_id, int comment_id)
 			throws Exception;
-	
+
 }

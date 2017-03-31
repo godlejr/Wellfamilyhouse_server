@@ -59,6 +59,14 @@ public class FAMILYController {
 		familyServiceImpl.updateFamilyAvatar(request.getInputStream(),family_id);
 	}
 
+	//find user info for invitation
+	@RequestMapping(value = "/{family_id}/find_user", method = RequestMethod.GET)
+	public ArrayList<UserInfoForFamilyJoin> find_user(HttpServletRequest request, @PathVariable int family_id) throws Exception {
+		String search = request.getParameter("search");
+		
+		return familyServiceImpl.selectUserSearchList(family_id,search);
+	}
+	
 	// insert user to family for invite
 	@RequestMapping(value = "/{family_id}/users", method = RequestMethod.POST)
 	public void insert_user_into_family(HttpServletRequest request, @PathVariable int family_id) throws NumberFormatException, Exception {

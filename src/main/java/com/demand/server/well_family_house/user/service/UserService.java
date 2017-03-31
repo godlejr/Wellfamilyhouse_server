@@ -33,7 +33,6 @@ public interface UserService {
 
 	ArrayList<Family> selectFamilySearchList(String family_name) throws Exception;
 
-	ArrayList<UserInfoForFamilyJoin> selectUserSearchList(String search) throws Exception;
 
 	int selectFamilyUserCheck(int family_id, int user_id, int other_user_id) throws Exception;
 

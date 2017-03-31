@@ -25,8 +25,8 @@ import com.demand.server.well_family_house.family.web.FAMILYController;
 import com.demand.server.well_family_house.notification.service.impl.NotificationMapper;
 
 @Service("familyServiceImpl")
-public class FamilyServiceImpl implements FamilyService{
-	
+public class FamilyServiceImpl implements FamilyService {
+
 	@Autowired
 	private FamilyMapper familyMapper;
 
@@ -35,7 +35,7 @@ public class FamilyServiceImpl implements FamilyService{
 
 	@Autowired
 	private AndroidPushConnection androidPushConnection;
-	
+
 	@Autowired
 	private AwsS3Connection awsS3Connection;
 
@@ -55,7 +55,7 @@ public class FamilyServiceImpl implements FamilyService{
 			}
 		}
 	}
-	
+
 	@Override
 	public Family selectFamily(int family_id) throws Exception {
 		return familyMapper.selectFamily(family_id);
@@ -77,7 +77,7 @@ public class FamilyServiceImpl implements FamilyService{
 	}
 
 	@Override
-	public void updateFamilyAvatar(InputStream base64InputStream, int family_id)throws IOException, Exception {
+	public void updateFamilyAvatar(InputStream base64InputStream, int family_id) throws IOException, Exception {
 		String file_name = null;
 		StringBuilder stringBuilder = null;
 
@@ -115,18 +115,19 @@ public class FamilyServiceImpl implements FamilyService{
 			log(e);
 		}
 
-		familyMapper.updateFamilyAvatar(family_id, file_name + ".jpg");		
+		familyMapper.updateFamilyAvatar(family_id, file_name + ".jpg");
 	}
 
 	@Override
-	public void insertUserIntoFamily(int family_id, int user_id, int join_flag, Notification notification) throws Exception {
+	public void insertUserIntoFamily(int family_id, int user_id, int join_flag, Notification notification)
+			throws Exception {
 		int invitor_id = familyMapper.selectFamilyUserId(family_id);
 		notification.setUser_id(invitor_id);
-		
+
 		notificationMapper.insertNotification(notification);
 		androidPushConnection.insertFCM(notification);
-		
-		familyMapper.insertUserIntoFamily(family_id,user_id,join_flag);
+
+		familyMapper.insertUserIntoFamily(family_id, user_id, join_flag);
 	}
 
 	@Override
@@ -139,5 +140,9 @@ public class FamilyServiceImpl implements FamilyService{
 		familyMapper.updateFamilyInfo(family_id, name, content);
 	}
 
-	
+	@Override
+	public ArrayList<UserInfoForFamilyJoin> selectUserSearchList(int family_id, String search) throws Exception {
+		return familyMapper.selectUserSearchList(family_id, search);
+	}
+
 }

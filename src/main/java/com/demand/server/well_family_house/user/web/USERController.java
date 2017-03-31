@@ -85,11 +85,6 @@ public class USERController {
 		return userServiceImpl.selectFamilySearchList(search);
 	}
 
-	@RequestMapping(value = "/{user_id}/find_user", method = RequestMethod.GET)
-	public ArrayList<UserInfoForFamilyJoin> find_user(HttpServletRequest request, @PathVariable int user_id) throws Exception {
-		return userServiceImpl.selectUserSearchList(request.getParameter("search"));
-	}
-
 	// insert_family
 	@RequestMapping(value = "/{user_id}/families", method = RequestMethod.POST)
 	public int insert_family(HttpServletRequest request, @PathVariable int user_id) throws Exception {

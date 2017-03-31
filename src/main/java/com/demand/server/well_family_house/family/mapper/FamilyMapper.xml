@@ -34,6 +34,21 @@
 		SELECT user_id FROM wellfamily.familys where id = #{param1};
 	</select>
 
+	<!-- find user name -->
+	<select id="selectUserSearchList" resultType="com.demand.server.well_family_house.common.dto.UserInfoForFamilyJoin">
+	SELECT distinct  uf.id as id , uf.email as email, uf.name as name, uf.birth as birth , uf.phone as phone, uf.avatar as avatar, uf.level as level, uf.join_flag as join_flag 
+		FROM	(SELECT distinct us.id as id , us.email as email, us.name as name, us.birth as birth , us.phone as phone, us.avatar as avatar, us.level as level, fj.join_flag as join_flag 
+					FROM	users us Left Join 
+							(SELECT user_id, join_flag 
+								FROM	family_joiners
+                                WHERE	family_id =  #{param1}) fj 
+
+					on	us.id = fj.user_id) uf
+			
+         where	uf.name like CONCAT('%', #{param2},'%') or 
+				uf.email like CONCAT('%', #{param2},'%') 
+	</select>
+
 
 	<select id="selectContentList"
 		resultType="com.demand.server.well_family_house.common.dto.StoryInfo">

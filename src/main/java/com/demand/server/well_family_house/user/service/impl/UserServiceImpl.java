@@ -106,10 +106,7 @@ public class UserServiceImpl implements UserService {
 		return userMapper.selectFamilySearchList(family_name);
 	}
 
-	@Override
-	public ArrayList<UserInfoForFamilyJoin> selectUserSearchList(String search) throws Exception {
-		return userMapper.selectUserSearchList(search);
-	}
+
 
 	@Override
 	public int selectFamilyUserCheck(int family_id, int user_id, int other_user_id) throws Exception {
