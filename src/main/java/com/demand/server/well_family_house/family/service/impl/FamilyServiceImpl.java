@@ -21,7 +21,6 @@ import com.demand.server.well_family_house.common.flag.LogFlag;
 import com.demand.server.well_family_house.common.util.AndroidPushConnection;
 import com.demand.server.well_family_house.common.util.AwsS3Connection;
 import com.demand.server.well_family_house.family.service.FamilyService;
-import com.demand.server.well_family_house.family.web.FAMILYController;
 import com.demand.server.well_family_house.notification.service.impl.NotificationMapper;
 
 @Service("familyServiceImpl")
@@ -143,6 +142,11 @@ public class FamilyServiceImpl implements FamilyService {
 	@Override
 	public ArrayList<UserInfoForFamilyJoin> selectUserSearchList(int family_id, String search) throws Exception {
 		return familyMapper.selectUserSearchList(family_id, search);
+	}
+
+	@Override
+	public void updateUserForFamilyJoin(int family_id, int user_id) throws Exception {
+		familyMapper.updateUserForFamilyJoin(family_id, user_id);
 	}
 
 }

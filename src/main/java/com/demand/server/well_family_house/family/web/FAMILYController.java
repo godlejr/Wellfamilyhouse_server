@@ -55,35 +55,46 @@ public class FAMILYController {
 	}
 
 	@RequestMapping(value = "/{family_id}/avatars", method = RequestMethod.PUT)
-	public void update_family_avatar(HttpServletRequest request, @PathVariable int family_id) throws IOException, Exception {	
-		familyServiceImpl.updateFamilyAvatar(request.getInputStream(),family_id);
+	public void update_family_avatar(HttpServletRequest request, @PathVariable int family_id)
+			throws IOException, Exception {
+		familyServiceImpl.updateFamilyAvatar(request.getInputStream(), family_id);
 	}
 
-	//find user info for invitation
+	// find user info for invitation
 	@RequestMapping(value = "/{family_id}/find_user", method = RequestMethod.GET)
-	public ArrayList<UserInfoForFamilyJoin> find_user(HttpServletRequest request, @PathVariable int family_id) throws Exception {
+	public ArrayList<UserInfoForFamilyJoin> find_user(HttpServletRequest request, @PathVariable int family_id)
+			throws Exception {
 		String search = request.getParameter("search");
-		
-		return familyServiceImpl.selectUserSearchList(family_id,search);
+
+		return familyServiceImpl.selectUserSearchList(family_id, search);
 	}
-	
+
+	// delete user from family
+	@RequestMapping(value = "/{family_id}/users/{user_id}", method = RequestMethod.PUT)
+	public void update_user_for_familyjoin(@PathVariable int family_id,@PathVariable int user_id)
+			throws NumberFormatException, Exception {
+		familyServiceImpl.updateUserForFamilyJoin(family_id, user_id);
+	}
+
 	// insert user to family for invite
 	@RequestMapping(value = "/{family_id}/users", method = RequestMethod.POST)
-	public void insert_user_into_family(HttpServletRequest request, @PathVariable int family_id) throws NumberFormatException, Exception {
+	public void insert_user_into_family(HttpServletRequest request, @PathVariable int family_id)
+			throws NumberFormatException, Exception {
 		int user_id = Integer.parseInt(request.getParameter("user_id"));
-		
+
 		Notification notification = new Notification();
 		notification.setReceive_category_id(NotificationTOFlag.INVITEE);
 		notification.setContent_name("회원");
 		notification.setBehavior_id(NotificationBEHAVIORFlag.INVITED);
 		notification.setReceiver_id(user_id);
-		
+
 		familyServiceImpl.insertUserIntoFamily(family_id, user_id, FamilyJoinFlag.FAMILY_TO_USER, notification);
 	}
 
 	// delete user from family
 	@RequestMapping(value = "/{family_id}/users", method = RequestMethod.DELETE)
-	public void delete_user_from_family(HttpServletRequest request, @PathVariable int family_id) throws NumberFormatException, Exception {
+	public void delete_user_from_family(HttpServletRequest request, @PathVariable int family_id)
+			throws NumberFormatException, Exception {
 		familyServiceImpl.deleteUserFromFamily(family_id, Integer.parseInt(request.getParameter("user_id")));
 	}
 

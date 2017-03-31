@@ -48,6 +48,10 @@
          where	uf.name like CONCAT('%', #{param2},'%') or 
 				uf.email like CONCAT('%', #{param2},'%') 
 	</select>
+	
+	<update id="updateUserForFamilyJoin">
+		update family_joiners set join_flag = 1 where family_id = #{param1} and user_id = #{param2}
+	</update>
 
 
 	<select id="selectContentList"
