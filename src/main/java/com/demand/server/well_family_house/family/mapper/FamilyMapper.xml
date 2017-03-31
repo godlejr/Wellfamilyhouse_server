@@ -14,13 +14,17 @@
 		where id = #{param1};
 	</select>
 
-	<select id="selectFamilyUsersInfo" resultType="com.demand.server.well_family_house.common.dto.User">
-		select u.id as id
-		,u.email as email,u.name as name,u.birth as birth,u.phone as phone,
-		u.avatar as avatar,u.level as level, f.join_flag as join_flag from users u, (SELECT * FROM
-		family_joiners where
-		family_id = #{param1} and user_id != #{param2}) f
-		where u.id = f.user_id order by name;
+	<select id="selectFamilyUsersInfo" resultType="com.demand.server.well_family_house.common.dto.UserInfoForFamilyJoin">
+		select u.id as id, u.email as email,u.name as name,u.birth as birth,u.phone as phone,
+				u.avatar as avatar,u.level as level, f.join_flag as join_flag 
+		
+			from users u, 
+				(SELECT * 
+					FROM	family_joiners 
+					where family_id = #{param1} and 
+							user_id != #{param2}) f
+			
+			where u.id = f.user_id order by name;
 	</select>
 
 	<select id="selectFamilyUserId" resultType="int">
