@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.demand.server.well_family_house.common.dto.Category;
 import com.demand.server.well_family_house.common.dto.Family;
+import com.demand.server.well_family_house.common.dto.FamilyInfoForFamilyJoin;
 import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.SongStory;
 import com.demand.server.well_family_house.common.dto.User;
@@ -58,6 +59,16 @@ public class USERController {
 		return userServiceImpl.selectFamiliesInfo(user_id);
 	}
 
+	@RequestMapping(value = "/{user_id}/manage_families", method = RequestMethod.GET)
+	public ArrayList<Family> manage_families(@PathVariable int user_id) throws Exception {
+		return userServiceImpl.selectManageFamilies(user_id);
+	}
+	
+	@RequestMapping(value = "/{user_id}/join_families", method = RequestMethod.GET)
+	public ArrayList<FamilyInfoForFamilyJoin> join_families(@PathVariable int user_id) throws Exception {
+		return userServiceImpl.selectJoinFamilies(user_id);
+	}
+	
 	// user_check from total families
 	@RequestMapping(value = "/{story_user_id}/family_check/{user_id}", method = RequestMethod.GET)
 	public int family_check(HttpServletRequest request, @PathVariable int story_user_id, @PathVariable int user_id)

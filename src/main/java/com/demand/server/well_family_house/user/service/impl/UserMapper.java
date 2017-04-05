@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.demand.server.well_family_house.common.dto.Category;
 import com.demand.server.well_family_house.common.dto.Family;
+import com.demand.server.well_family_house.common.dto.FamilyInfoForFamilyJoin;
 import com.demand.server.well_family_house.common.dto.SongStory;
 import com.demand.server.well_family_house.common.dto.User;
 import com.demand.server.well_family_house.common.dto.UserInfoForFamilyJoin;
@@ -65,5 +66,9 @@ public interface UserMapper {
 
 	void insertCommentReport(int user_id, int comment_category_id, int report_category_id, int comment_id)
 			throws Exception;
+
+	ArrayList<Family> selectManageFamilies(int user_id) throws Exception;
+
+	ArrayList<FamilyInfoForFamilyJoin> selectJoinFamilies(int user_id) throws Exception;
 
 }

@@ -183,5 +183,20 @@
 		values(#{param1},#{param2},#{param3},#{param4});
 	</insert>
 
+	<select id="selectManageFamilies">
+		SELECT id, name, content, avatar, user_id, created_at 
+			FROM familys where user_id = #{param1};
+	</select>
+
+	<select id="selectJoinFamilies">
+		SELECT fm.id as id, fm.name as name, fm.content as content, fm.avatar as avatar, fm.user_id as user_id, fj.created_at as created_at, fj.join_flag
+	
+	    FROM	familys fm,
+				(select	family_id ,join_flag, created_at
+					from family_joiners 
+	                where user_id = #{param1} )	fj
+			
+		where fm.id  = fj.family_id
+	</select>
 
 </mapper>

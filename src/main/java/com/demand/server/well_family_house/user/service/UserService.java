@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.demand.server.well_family_house.common.dto.Category;
 import com.demand.server.well_family_house.common.dto.Family;
+import com.demand.server.well_family_house.common.dto.FamilyInfoForFamilyJoin;
 import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.SongStory;
 import com.demand.server.well_family_house.common.dto.User;
@@ -62,4 +63,9 @@ public interface UserService {
 	int insertFamily(Family family, Notification notification) throws Exception;
 
 	void updateUserAvatar(InputStream base64InputStream, int user_id) throws IOException, Exception;
+	
+	ArrayList<Family> selectManageFamilies(int user_id) throws Exception;
+	
+	ArrayList<FamilyInfoForFamilyJoin> selectJoinFamilies(int user_id) throws Exception;
+
 }

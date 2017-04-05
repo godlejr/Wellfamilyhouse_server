@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.demand.server.well_family_house.common.dto.Category;
 import com.demand.server.well_family_house.common.dto.Family;
+import com.demand.server.well_family_house.common.dto.FamilyInfoForFamilyJoin;
 import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.SongStory;
 import com.demand.server.well_family_house.common.dto.User;
@@ -223,6 +224,17 @@ public class UserServiceImpl implements UserService {
 		}
 
 		userMapper.updateUserAvatar(user_id, file_name + ".jpg");
+	}
+
+	@Override
+	public ArrayList<Family> selectManageFamilies(int user_id) throws Exception {
+		return userMapper.selectManageFamilies(user_id);
+	}
+
+	@Override
+	public ArrayList<FamilyInfoForFamilyJoin> selectJoinFamilies(int user_id) throws Exception {
+		// TODO Auto-generated method stub
+		return userMapper.selectJoinFamilies(user_id);
 	}
 
 }
