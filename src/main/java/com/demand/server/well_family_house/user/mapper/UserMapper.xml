@@ -196,7 +196,8 @@
 					from family_joiners 
 	                where user_id = #{param1} )	fj
 			
-		where fm.id  = fj.family_id
+		where fm.id  = fj.family_id and
+			fm.user_id != #{param1}
 	</select>
 
 </mapper>
