@@ -97,10 +97,10 @@ public class FAMILYController {
 	}
 
 	// delete user from family
-	@RequestMapping(value = "/{family_id}/users", method = RequestMethod.DELETE)
-	public void delete_user_from_family(HttpServletRequest request, @PathVariable int family_id)
+	@RequestMapping(value = "/{family_id}/users/{user_id}", method = RequestMethod.DELETE)
+	public void delete_user_from_family( @PathVariable int family_id,@PathVariable int user_id)
 			throws NumberFormatException, Exception {
-		familyServiceImpl.deleteUserFromFamily(family_id, Integer.parseInt(request.getParameter("user_id")));
+		familyServiceImpl.deleteUserFromFamily(family_id, user_id);
 	}
 
 	// family_edit
