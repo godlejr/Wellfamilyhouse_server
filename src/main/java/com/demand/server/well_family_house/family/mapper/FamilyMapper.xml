@@ -88,6 +88,11 @@
 		SELECT avatar FROM
 		wellfamily.familys where id =#{param1};
 	</select>
+	
+	<select id="selectFamilyName" resultType="String">
+		SELECT name FROM
+		wellfamily.familys where id =#{param1};
+	</select>
 
 	<update id="updateFamilyAvatar">
 		update familys set avatar = #{param2} where id =

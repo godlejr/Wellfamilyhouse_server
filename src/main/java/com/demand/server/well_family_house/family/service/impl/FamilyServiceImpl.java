@@ -145,7 +145,13 @@ public class FamilyServiceImpl implements FamilyService {
 	}
 
 	@Override
-	public void updateUserForFamilyJoin(int family_id, int user_id) throws Exception {
+	public void updateUserForFamilyJoin(int family_id, int user_id, Notification notification) throws Exception {
+		String name = familyMapper.selectFamilyName(family_id);
+		notification.setContent_name(name);
+
+		notificationMapper.insertNotification(notification);
+		androidPushConnection.insertFCM(notification);
+		
 		familyMapper.updateUserForFamilyJoin(family_id, user_id);
 	}
 

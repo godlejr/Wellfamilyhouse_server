@@ -69,11 +69,16 @@ public class FAMILYController {
 		return familyServiceImpl.selectUserSearchList(family_id, search);
 	}
 
-	// delete user from family
 	@RequestMapping(value = "/{family_id}/users/{user_id}", method = RequestMethod.PUT)
 	public void update_user_for_familyjoin(@PathVariable int family_id,@PathVariable int user_id)
 			throws NumberFormatException, Exception {
-		familyServiceImpl.updateUserForFamilyJoin(family_id, user_id);
+		Notification notification = new Notification();
+		notification.setUser_id(user_id);
+		notification.setReceive_category_id(NotificationTOFlag.FAMILY);
+		notification.setBehavior_id(NotificationBEHAVIORFlag.JOIN);
+		notification.setReceiver_id(family_id);
+		
+		familyServiceImpl.updateUserForFamilyJoin(family_id, user_id, notification);
 	}
 
 	// insert user to family for invite

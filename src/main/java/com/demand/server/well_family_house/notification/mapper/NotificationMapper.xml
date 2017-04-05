@@ -85,11 +85,11 @@
 				from family_joiners fj,
 					(SELECT family_id 
 						FROM wellfamily.family_joiners
-						where user_id =35 and
+						where user_id =#{param1} and
 								join_flag = 1) fm
 				where fj.family_id = fm.family_id AND
 						fj.join_flag = 1 AND
-						fj.user_id != 35) fu
+						fj.user_id != #{param1}) fu
 		where us.id = fu.user_id
         
 	</select>
