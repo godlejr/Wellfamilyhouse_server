@@ -183,12 +183,12 @@
 		values(#{param1},#{param2},#{param3},#{param4});
 	</insert>
 
-	<select id="selectManageFamilies">
+	<select id="selectManageFamilies" resultType="com.demand.server.well_family_house.common.dto.Family">
 		SELECT id, name, content, avatar, user_id, created_at 
 			FROM familys where user_id = #{param1};
 	</select>
 
-	<select id="selectJoinFamilies">
+	<select id="selectJoinFamilies" resultType="com.demand.server.well_family_house.common.dto.FamilyInfoForFamilyJoin">
 		SELECT fm.id as id, fm.name as name, fm.content as content, fm.avatar as avatar, fm.user_id as user_id, fj.created_at as created_at, fj.join_flag
 	
 	    FROM	familys fm,
