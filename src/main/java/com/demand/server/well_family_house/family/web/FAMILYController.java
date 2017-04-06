@@ -20,6 +20,7 @@ import com.demand.server.well_family_house.common.dto.User;
 import com.demand.server.well_family_house.common.dto.UserInfoForFamilyJoin;
 import com.demand.server.well_family_house.common.flag.FamilyJoinFlag;
 import com.demand.server.well_family_house.common.flag.NotificationBEHAVIORFlag;
+import com.demand.server.well_family_house.common.flag.NotificationINTENTFlag;
 import com.demand.server.well_family_house.common.flag.NotificationTOFlag;
 import com.demand.server.well_family_house.family.service.impl.FamilyServiceImpl;
 
@@ -77,7 +78,8 @@ public class FAMILYController {
 		notification.setReceive_category_id(NotificationTOFlag.FAMILY);
 		notification.setBehavior_id(NotificationBEHAVIORFlag.JOIN);
 		notification.setReceiver_id(family_id);
-		
+		notification.setIntent_id(family_id);
+		notification.setIntent_flag(NotificationINTENTFlag.FAMILY);
 		familyServiceImpl.updateUserForFamilyJoin(family_id, user_id, notification);
 	}
 
@@ -92,6 +94,8 @@ public class FAMILYController {
 		notification.setContent_name("회원");
 		notification.setBehavior_id(NotificationBEHAVIORFlag.INVITED);
 		notification.setReceiver_id(user_id);
+		notification.setIntent_id(family_id);
+		notification.setIntent_flag(NotificationINTENTFlag.MANAGE_FAMILY);
 
 		familyServiceImpl.insertUserIntoFamily(family_id, user_id, FamilyJoinFlag.FAMILY_TO_USER, notification);
 	}

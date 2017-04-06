@@ -110,9 +110,10 @@ public class USERController {
 		notification.setReceive_category_id(NotificationTOFlag.FAMILY_OWNER);
 		notification.setReceiver_id(creator_id);
 		notification.setContent_name(family_name);
-		notification.setIntent_flag(NotificationINTENTFlag.FAMILY);
+		notification.setIntent_flag(NotificationINTENTFlag.MANAGE_FAMILY_DETAIL);
 		notification.setBehavior_id(NotificationBEHAVIORFlag.WANT_TO_JOIN);
 		notification.setIntent_id(family_id);
+
 		
 		userServiceImpl.insertFamilyJoiner(user_id,family_id, notification);
 	}
