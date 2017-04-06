@@ -14,7 +14,7 @@
 		values(#{user_id},#{receive_category_id},#{receiver_id},#{content_name},#{intent_flag},#{intent_id},#{behavior_id});
 	</insert>
 
-	<select id="selectNotificationForCreatingFamily"
+	<select id="selectNotificationForCreatingFamilyAndJoinAndWantToJoin"
 		resultType="com.demand.server.well_family_house.common.dto.NotificationInfo">
 		SELECT us.id as id, us.avatar as avatar, us.name as name,
 		nt.content_name as content, fm.avatar as photo from notifications nt,

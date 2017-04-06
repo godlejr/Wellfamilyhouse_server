@@ -20,7 +20,7 @@ public interface NotificationMapper {
 	String selectBodyForNotification(int notification_id) throws Exception;
 	
 	// notify for android
-	NotificationInfo selectNotificationForCreatingFamily(int notification_id) throws Exception;
+	NotificationInfo selectNotificationForCreatingFamilyAndJoinAndWantToJoin(int notification_id) throws Exception;
 
 	NotificationInfo selectNotificationForWritingStory(int notification_id) throws Exception;
 

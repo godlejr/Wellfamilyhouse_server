@@ -17,8 +17,8 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 
 	@Override
-	public NotificationInfo selectNotificationForCreatingFamily(int notification_id) throws Exception {
-		return notificationMapper.selectNotificationForCreatingFamily(notification_id);
+	public NotificationInfo selectNotificationForCreatingFamilyAndJoinAndWantToJoin(int notification_id) throws Exception {
+		return notificationMapper.selectNotificationForCreatingFamilyAndJoinAndWantToJoin(notification_id);
 	}
 
 	@Override

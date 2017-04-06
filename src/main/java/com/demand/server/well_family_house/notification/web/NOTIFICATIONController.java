@@ -19,7 +19,7 @@ public class NOTIFICATIONController {
 
 	@RequestMapping(value = "/{notification_id}/families", method = RequestMethod.GET)
 	public NotificationInfo NotificationForCreatingFamily(@PathVariable int notification_id) throws Exception {
-		return notificationServiceImpl.selectNotificationForCreatingFamily(notification_id);
+		return notificationServiceImpl.selectNotificationForCreatingFamilyAndJoinAndWantToJoin(notification_id);
 	}
 	
 	@RequestMapping(value = "/{notification_id}/comments", method = RequestMethod.GET)
