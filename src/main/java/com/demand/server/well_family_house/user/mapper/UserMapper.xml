@@ -78,7 +78,7 @@
 
 	<!-- find family name -->
 	<select id="selectFamilySearchList"
-		resultType="com.demand.server.well_family_house.common.dto.Family">
+		resultType="com.demand.server.well_family_house.common.dto.FamilyInfoForFamilyJoin">
 		SELECT distinct	fm.id as id, fm.name as name, fm.content as content, fm.avatar as avatar, fm.user_id as user_id , fj.join_flag as join_flag ,fj.created_at as created_at
 		FROM	(select id,name,content,avatar,user_id
 					from familys 
