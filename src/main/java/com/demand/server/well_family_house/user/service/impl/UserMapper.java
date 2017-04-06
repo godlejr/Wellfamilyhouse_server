@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.demand.server.well_family_house.common.dto.Category;
 import com.demand.server.well_family_house.common.dto.Family;
 import com.demand.server.well_family_house.common.dto.FamilyInfoForFamilyJoin;
+import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.SongStory;
 import com.demand.server.well_family_house.common.dto.User;
 import com.demand.server.well_family_house.common.dto.UserInfoForFamilyJoin;
@@ -26,7 +27,7 @@ public interface UserMapper {
 
 	ArrayList<SongStory> selectSongStoryMeList(int story_user_id) throws Exception;
 
-	ArrayList<Family> selectFamilySearchList(String family_name) throws Exception;
+	ArrayList<FamilyInfoForFamilyJoin> selectFamilySearchList(int user_id, String search) throws Exception;
 
 	void insertFamily(Family family) throws Exception;
 

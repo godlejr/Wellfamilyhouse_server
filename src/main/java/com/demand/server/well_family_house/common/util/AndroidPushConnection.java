@@ -38,7 +38,8 @@ public class AndroidPushConnection {
 		int check = notification.getReceive_category_id();
 		int receiver_ref_id = notification.getReceiver_id();
 
-		if (check == NotificationTOFlag.ME || check == NotificationTOFlag.WRITER || check == NotificationTOFlag.INVITEE) {
+		if (check == NotificationTOFlag.ME || check == NotificationTOFlag.WRITER || check == NotificationTOFlag.INVITEE
+				|| check == NotificationTOFlag.FAMILY_OWNER) {
 			ArrayList<Token> token = notificationMapper.selectTokenForUser(receiver_ref_id);
 			insertMessage(notification_id, token);
 		}
@@ -47,12 +48,12 @@ public class AndroidPushConnection {
 			ArrayList<Token> token = notificationMapper.selectTokenForFamily(receiver_ref_id, user_id);
 			insertMessage(notification_id, token);
 		}
-		
+
 		if (check == NotificationTOFlag.FAMILIES) {
 			ArrayList<Token> token = notificationMapper.selectTokenForFamiles(receiver_ref_id);
 			insertMessage(notification_id, token);
 		}
-		
+
 	}
 
 	public void insertMessage(int notification_id, ArrayList<Token> token) throws Exception {

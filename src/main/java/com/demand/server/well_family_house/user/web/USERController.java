@@ -63,12 +63,12 @@ public class USERController {
 	public ArrayList<Family> manage_families(@PathVariable int user_id) throws Exception {
 		return userServiceImpl.selectManageFamilies(user_id);
 	}
-	
+
 	@RequestMapping(value = "/{user_id}/join_families", method = RequestMethod.GET)
 	public ArrayList<FamilyInfoForFamilyJoin> join_families(@PathVariable int user_id) throws Exception {
 		return userServiceImpl.selectJoinFamilies(user_id);
 	}
-	
+
 	// user_check from total families
 	@RequestMapping(value = "/{story_user_id}/family_check/{user_id}", method = RequestMethod.GET)
 	public int family_check(HttpServletRequest request, @PathVariable int story_user_id, @PathVariable int user_id)
@@ -91,9 +91,30 @@ public class USERController {
 		return userServiceImpl.selectSongStoryMeList(story_user_id);
 	}
 
-	@RequestMapping(value = "/{user_id}/find_family/{search}", method = RequestMethod.GET)
-	public ArrayList<Family> find_family(@PathVariable int user_id, @PathVariable String search) throws Exception {
-		return userServiceImpl.selectFamilySearchList(search);
+	@RequestMapping(value = "/{user_id}/find_family", method = RequestMethod.GET)
+	public ArrayList<FamilyInfoForFamilyJoin> find_family(@PathVariable int user_id, HttpServletRequest request)
+			throws Exception {
+		return userServiceImpl.selectFamilySearchList(user_id, request.getParameter("search"));
+	}
+
+	// like to join the family
+	@RequestMapping(value = "/{user_id}/join_family", method = RequestMethod.POST)
+	public void join_family(HttpServletRequest request, @PathVariable int user_id) throws Exception {
+		int family_id  = Integer.parseInt(request.getParameter("family_id"));
+		int creator_id = Integer.parseInt(request.getParameter("creator_id"));
+		String family_name = request.getParameter("family_name");
+		
+
+		Notification notification = new Notification();
+		notification.setUser_id(user_id);
+		notification.setReceive_category_id(NotificationTOFlag.FAMILY_OWNER);
+		notification.setReceiver_id(creator_id);
+		notification.setContent_name(family_name);
+		notification.setIntent_flag(NotificationINTENTFlag.FAMILY);
+		notification.setBehavior_id(NotificationBEHAVIORFlag.WANT_TO_JOIN);
+		notification.setIntent_id(family_id);
+		
+		userServiceImpl.insertFamilyJoiner(user_id,family_id, notification);
 	}
 
 	// insert_family

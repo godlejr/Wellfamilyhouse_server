@@ -79,9 +79,15 @@
 	<!-- find family name -->
 	<select id="selectFamilySearchList"
 		resultType="com.demand.server.well_family_house.common.dto.Family">
-		SELECT * FROM
-		wellfamily.familys where name like
-		CONCAT('%',#{param1},'%')
+		SELECT distinct	fm.id as id, fm.name as name, fm.content as content, fm.avatar as avatar, fm.user_id as user_id , fj.join_flag as join_flag ,fj.created_at as created_at
+		FROM	(select id,name,content,avatar,user_id
+					from familys 
+	                where	name	like CONCAT('%',#{param2},'%')) fm	
+	                Left join
+				(select family_id, join_flag, created_at 
+					from family_joiners 
+	                where	user_id	= #{param1} ) fj
+	    on fm.id = fj.family_id
 	</select>
 	
 	<insert id="insertFamily"

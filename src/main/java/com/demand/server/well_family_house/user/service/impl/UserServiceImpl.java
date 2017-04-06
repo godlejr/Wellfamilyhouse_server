@@ -103,11 +103,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public ArrayList<Family> selectFamilySearchList(String family_name) throws Exception {
-		return userMapper.selectFamilySearchList(family_name);
+	public ArrayList<FamilyInfoForFamilyJoin> selectFamilySearchList(int user_id,String search) throws Exception {
+		return userMapper.selectFamilySearchList(user_id,search);
 	}
-
-
 
 	@Override
 	public int selectFamilyUserCheck(int family_id, int user_id, int other_user_id) throws Exception {
@@ -233,8 +231,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public ArrayList<FamilyInfoForFamilyJoin> selectJoinFamilies(int user_id) throws Exception {
-		// TODO Auto-generated method stub
 		return userMapper.selectJoinFamilies(user_id);
+	}
+
+	public void insertFamilyJoiner(int user_id, int family_id, Notification notification) throws Exception {
+		userMapper.insertFamilyJoiner(family_id, user_id,FamilyJoinFlag.USER_TO_FAMILY);
+		notificationMapper.insertNotification(notification);
+		androidPushConnection.insertFCM(notification);
 	}
 
 }

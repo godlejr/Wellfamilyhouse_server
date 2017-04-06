@@ -32,7 +32,7 @@ public interface UserService {
 
 	ArrayList<SongStory> selectSongStoryMeList(int story_user_id) throws Exception;
 
-	ArrayList<Family> selectFamilySearchList(String family_name) throws Exception;
+	ArrayList<FamilyInfoForFamilyJoin> selectFamilySearchList(int user_id,String search) throws Exception;
 
 
 	int selectFamilyUserCheck(int family_id, int user_id, int other_user_id) throws Exception;
