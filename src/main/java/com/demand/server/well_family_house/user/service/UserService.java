@@ -68,4 +68,5 @@ public interface UserService {
 	
 	ArrayList<FamilyInfoForFamilyJoin> selectJoinFamilies(int user_id) throws Exception;
 
+	void insertFamilyJoiner(int user_id, int family_id, Notification notification) throws Exception;
 }
