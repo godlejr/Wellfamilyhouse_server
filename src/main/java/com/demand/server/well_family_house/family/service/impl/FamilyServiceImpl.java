@@ -155,4 +155,9 @@ public class FamilyServiceImpl implements FamilyService {
 		familyMapper.updateUserForFamilyJoin(family_id, user_id);
 	}
 
+	@Override
+	public ArrayList<UserInfoForFamilyJoin> selectFamilyJoinerList(int family_id) throws Exception {
+		return familyMapper.selectFamilyJoinerList(family_id);
+	}
+
 }

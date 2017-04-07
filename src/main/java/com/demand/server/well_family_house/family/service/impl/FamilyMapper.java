@@ -38,4 +38,6 @@ public interface FamilyMapper {
 	
 	String selectFamilyName(int family_id) throws Exception;
 
+	ArrayList<UserInfoForFamilyJoin> selectFamilyJoinerList(int family_id) throws Exception;
+
 }

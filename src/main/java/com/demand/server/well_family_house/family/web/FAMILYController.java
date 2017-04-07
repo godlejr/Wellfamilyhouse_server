@@ -54,6 +54,11 @@ public class FAMILYController {
 	public ArrayList<Photo> family_photo_List(@PathVariable int family_id) throws Exception {
 		return familyServiceImpl.selectPhotoList(family_id);
 	}
+	
+	@RequestMapping(value = "/{family_id}/family_joiners", method = RequestMethod.GET)
+	public ArrayList<UserInfoForFamilyJoin> family_joiners(@PathVariable int family_id) throws Exception {
+		return familyServiceImpl.selectFamilyJoinerList(family_id);
+	}
 
 	@RequestMapping(value = "/{family_id}/avatars", method = RequestMethod.PUT)
 	public void update_family_avatar(HttpServletRequest request, @PathVariable int family_id)
@@ -80,6 +85,7 @@ public class FAMILYController {
 		notification.setReceiver_id(family_id);
 		notification.setIntent_id(family_id);
 		notification.setIntent_flag(NotificationINTENTFlag.FAMILY);
+		
 		familyServiceImpl.updateUserForFamilyJoin(family_id, user_id, notification);
 	}
 

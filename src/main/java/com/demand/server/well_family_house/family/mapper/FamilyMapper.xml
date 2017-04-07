@@ -53,6 +53,20 @@
 		update family_joiners set join_flag = 1 where family_id = #{param1} and user_id = #{param2}
 	</update>
 
+	<select id="selectFamilyJoinerList" resultType="com.demand.server.well_family_house.common.dto.UserInfoForFamilyJoin">
+	SELECT distinct us.id as id, us.email as email, us.name as name, us.birth as birth, us.phone as phone, 
+			us.avatar as avatar, us.level as level, fj.join_flag 
+	
+		FROM	(SELECT user_id, join_flag
+					FROM	family_joiners 
+					WHERE	family_id = #{param1}	AND
+							join_flag != 1)	fj,
+				familys fm,
+	            users	us
+	            
+		WHERE	us.id = fj.user_id	AND
+				us.id != fm.user_id	
+	</select>
 
 	<select id="selectContentList"
 		resultType="com.demand.server.well_family_house.common.dto.StoryInfo">
