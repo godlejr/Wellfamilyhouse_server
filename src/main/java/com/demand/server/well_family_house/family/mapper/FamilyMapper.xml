@@ -36,17 +36,17 @@
 
 	<!-- find user name -->
 	<select id="selectUserSearchList" resultType="com.demand.server.well_family_house.common.dto.UserInfoForFamilyJoin">
-	SELECT distinct  uf.id as id , uf.email as email, uf.name as name, uf.birth as birth , uf.phone as phone, uf.avatar as avatar, uf.level as level, uf.join_flag as join_flag 
-		FROM	(SELECT distinct us.id as id , us.email as email, us.name as name, us.birth as birth , us.phone as phone, us.avatar as avatar, us.level as level, fj.join_flag as join_flag 
-					FROM	users us Left Join 
-							(SELECT user_id, join_flag 
-								FROM	family_joiners
-                                WHERE	family_id =  #{param1}) fj 
-
-					on	us.id = fj.user_id) uf
-			
-         where	uf.name like CONCAT('%', #{param2},'%') or 
-				uf.email like CONCAT('%', #{param2},'%') 
+		SELECT distinct  uf.id as id , uf.email as email, uf.name as name, uf.birth as birth , uf.phone as phone, uf.avatar as avatar, uf.level as level, uf.join_flag as join_flag 
+			FROM	(SELECT distinct us.id as id , us.email as email, us.name as name, us.birth as birth , us.phone as phone, us.avatar as avatar, us.level as level, fj.join_flag as join_flag 
+						FROM	users us Left Join 
+								(SELECT user_id, join_flag 
+									FROM	family_joiners
+	                                WHERE	family_id =  #{param1}) fj 
+	
+						on	us.id = fj.user_id) uf
+				
+	         where	uf.name like CONCAT('%', #{param2},'%') or 
+					uf.email like CONCAT('%', #{param2},'%') 
 	</select>
 	
 	<update id="updateUserForFamilyJoin">
@@ -54,18 +54,18 @@
 	</update>
 
 	<select id="selectFamilyJoinerList" resultType="com.demand.server.well_family_house.common.dto.UserInfoForFamilyJoin">
-	SELECT distinct us.id as id, us.email as email, us.name as name, us.birth as birth, us.phone as phone, 
-			us.avatar as avatar, us.level as level, fj.join_flag 
-	
-		FROM	(SELECT user_id, join_flag
-					FROM	family_joiners 
-					WHERE	family_id = #{param1}	AND
-							join_flag != 1)	fj,
-				familys fm,
-	            users	us
-	            
-		WHERE	us.id = fj.user_id	AND
-				us.id != fm.user_id	
+		SELECT distinct us.id as id, us.email as email, us.name as name, us.birth as birth, us.phone as phone, 
+				us.avatar as avatar, us.level as level, fj.join_flag 
+		
+			FROM	(SELECT user_id, join_flag
+						FROM	family_joiners 
+						WHERE	family_id = #{param1}	AND
+								join_flag != 1)	fj,
+					familys fm,
+		            users	us
+		            
+			WHERE	us.id = fj.user_id	AND
+					us.id != fm.user_id	
 	</select>
 
 	<select id="selectContentList"
@@ -89,13 +89,27 @@
 
 	<select id="selectPhotoList"
 		resultType="com.demand.server.well_family_house.common.dto.Photo">
-		select p.id as id,
-		p.story_id as story_id, p.type as type,
-		p.name as name, p.ext as ext
-		from photos p, (SELECT id FROM stories
-		where family_id =#{param1}) s
-		where p.story_id = s.id order by
-		p.updated_at desc;
+		select	p.id as id, p.story_id as story_id, p.type as type, p.name as name, p.ext as ext
+	
+		    from	photos p, 
+					(SELECT	id 
+						FROM	stories
+						where	family_id =#{param1}) s
+			
+		    where	p.story_id = s.id 
+		    
+		    order by p.updated_at desc;
+	</select>
+	
+	<select id="selectPhotoNameList" resultType="String">
+		select	p.name as name
+		
+		    from	photos p, 
+					(SELECT	id 
+						FROM	stories
+						where	family_id =#{param1}) s
+			
+		    where	p.story_id = s.id 
 	</select>
 
 	<select id="selectFamilyAvatar" resultType="String">
@@ -119,6 +133,11 @@
 		family_joiners(family_id,user_id,join_flag)
 		values(#{param1},#{param2},#{param3});
 	</insert>
+
+	<delete id="deleteFamily">
+		delete from familys
+			where id = #{param1};
+	</delete>
 
 	<delete id="deleteUserFromFamily">
 		delete from family_joiners where family_id

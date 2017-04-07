@@ -34,4 +34,6 @@ public interface FamilyService {
 	void updateUserForFamilyJoin(int family_id,int user_id, Notification notification) throws Exception;
 	
 	ArrayList<UserInfoForFamilyJoin> selectFamilyJoinerList(int family_id) throws Exception;
+	
+	void deleteFamily(int family_id) throws Exception; 
 }

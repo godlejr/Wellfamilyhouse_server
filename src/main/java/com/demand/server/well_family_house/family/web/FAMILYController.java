@@ -38,6 +38,18 @@ public class FAMILYController {
 		return familyServiceImpl.selectFamily(family_id);
 	}
 
+	// family_edit
+	@RequestMapping(value = "/{family_id}", method = RequestMethod.PUT)
+	public void update_family_info(HttpServletRequest request, @PathVariable int family_id) throws Exception {
+		familyServiceImpl.updateFamilyInfo(family_id, request.getParameter("name"), request.getParameter("content"));
+	}
+
+	// family_delete
+	@RequestMapping(value = "/{family_id}", method = RequestMethod.DELETE)
+	public void delete_family(HttpServletRequest request, @PathVariable int family_id) throws Exception {
+		familyServiceImpl.deleteFamily(family_id);
+	}
+
 	// family_main
 	@RequestMapping(value = "/{family_id}/usersBut/{user_id}", method = RequestMethod.GET)
 	public ArrayList<User> family_user_Info(HttpServletRequest request, @PathVariable int family_id,
@@ -54,7 +66,7 @@ public class FAMILYController {
 	public ArrayList<Photo> family_photo_List(@PathVariable int family_id) throws Exception {
 		return familyServiceImpl.selectPhotoList(family_id);
 	}
-	
+
 	@RequestMapping(value = "/{family_id}/family_joiners", method = RequestMethod.GET)
 	public ArrayList<UserInfoForFamilyJoin> family_joiners(@PathVariable int family_id) throws Exception {
 		return familyServiceImpl.selectFamilyJoinerList(family_id);
@@ -76,7 +88,7 @@ public class FAMILYController {
 	}
 
 	@RequestMapping(value = "/{family_id}/users/{user_id}", method = RequestMethod.PUT)
-	public void update_user_for_familyjoin(@PathVariable int family_id,@PathVariable int user_id)
+	public void update_user_for_familyjoin(@PathVariable int family_id, @PathVariable int user_id)
 			throws NumberFormatException, Exception {
 		Notification notification = new Notification();
 		notification.setUser_id(user_id);
@@ -85,7 +97,7 @@ public class FAMILYController {
 		notification.setReceiver_id(family_id);
 		notification.setIntent_id(family_id);
 		notification.setIntent_flag(NotificationINTENTFlag.FAMILY);
-		
+
 		familyServiceImpl.updateUserForFamilyJoin(family_id, user_id, notification);
 	}
 
@@ -108,14 +120,9 @@ public class FAMILYController {
 
 	// delete user from family
 	@RequestMapping(value = "/{family_id}/users/{user_id}", method = RequestMethod.DELETE)
-	public void delete_user_from_family( @PathVariable int family_id,@PathVariable int user_id)
+	public void delete_user_from_family(@PathVariable int family_id, @PathVariable int user_id)
 			throws NumberFormatException, Exception {
 		familyServiceImpl.deleteUserFromFamily(family_id, user_id);
 	}
 
-	// family_edit
-	@RequestMapping(value = "/{family_id}", method = RequestMethod.PUT)
-	public void update_family_info(HttpServletRequest request, @PathVariable int family_id) throws Exception {
-		familyServiceImpl.updateFamilyInfo(family_id, request.getParameter("name"), request.getParameter("content"));
-	}
 }

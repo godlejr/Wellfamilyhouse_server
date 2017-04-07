@@ -160,4 +160,37 @@ public class FamilyServiceImpl implements FamilyService {
 		return familyMapper.selectFamilyJoinerList(family_id);
 	}
 
+	@Override
+	public void deleteFamily(int family_id) throws Exception {
+		
+		boolean transaction_flag = true;
+		ArrayList<String> photoList = null;
+		String avatar = null;
+		int photoSize =0;
+		
+		try {
+			avatar = familyMapper.selectFamilyAvatar(family_id);
+			photoList = familyMapper.selectPhotoNameList(family_id);
+			familyMapper.deleteFamily(family_id);
+			photoSize = photoList.size();
+			
+		} catch (Exception e) {
+			transaction_flag = false;
+		}
+		
+		if (transaction_flag) {
+			if(!avatar.equals("family_avatar.jpg")){
+				awsS3Connection.deleteFileFromAWSS3("apps/well_family_house/images/avatars/familys", avatar, "");
+			}
+			
+			if (photoSize > 0) {
+				for (int i = 0; i < photoSize; i++) {
+					awsS3Connection.deleteFileFromAWSS3("apps/well_family_house/images/stories", photoList.get(i),
+							".jpg");
+				}
+			}
+		}
+		
+	}
+
 }

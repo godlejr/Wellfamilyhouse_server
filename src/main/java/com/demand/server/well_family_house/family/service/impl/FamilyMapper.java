@@ -35,9 +35,14 @@ public interface FamilyMapper {
 	ArrayList<UserInfoForFamilyJoin> selectUserSearchList(int family_id, String search) throws Exception;
 
 	void updateUserForFamilyJoin(int family_id, int user_id) throws Exception;
-	
+
 	String selectFamilyName(int family_id) throws Exception;
 
 	ArrayList<UserInfoForFamilyJoin> selectFamilyJoinerList(int family_id) throws Exception;
+
+	void deleteFamily(int family_id) throws Exception;
+	
+	ArrayList<String> selectPhotoNameList(int family_id) throws Exception;
+
 
 }
