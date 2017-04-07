@@ -17,7 +17,9 @@ import com.demand.server.well_family_house.common.dto.SongPhoto;
 import com.demand.server.well_family_house.common.dto.SongStoryComment;
 import com.demand.server.well_family_house.common.dto.SongStoryEmotionData;
 import com.demand.server.well_family_house.common.dto.SongStoryInfoForNotification;
+import com.demand.server.well_family_house.common.flag.AwsS3Flag;
 import com.demand.server.well_family_house.common.flag.LogFlag;
+import com.demand.server.well_family_house.common.flag.NotificationINTENTFlag;
 import com.demand.server.well_family_house.common.util.AndroidPushConnection;
 import com.demand.server.well_family_house.common.util.AwsS3Connection;
 import com.demand.server.well_family_house.notification.service.impl.NotificationMapper;
@@ -33,7 +35,7 @@ public class SongStoryServiceImpl implements SongStoryService {
 
 	@Autowired
 	private AndroidPushConnection androidPushConnection;
-	
+
 	@Autowired
 	private AwsS3Connection awsS3Connection;
 
@@ -65,8 +67,8 @@ public class SongStoryServiceImpl implements SongStoryService {
 	}
 
 	@Override
-	public void insertSongStoryLikeUp(int user_id, int song_story_id,Notification notification) throws Exception {
-		
+	public void insertSongStoryLikeUp(int user_id, int song_story_id, Notification notification) throws Exception {
+
 		int song_story_user_id = songStoryMapper.selectUser(notification.getIntent_id());
 
 		if (user_id != song_story_user_id) {
@@ -132,8 +134,8 @@ public class SongStoryServiceImpl implements SongStoryService {
 		}
 
 		try {
-			file_name = awsS3Connection.uploadFileToAWSS3(stringBuilder.toString(),
-					"apps/well_family_house/images/songstories", ".jpg");
+			file_name = awsS3Connection.uploadFileToAWSS3(stringBuilder.toString(), AwsS3Flag.SONG_STORY_IMAGE_ENDPOINT,
+					AwsS3Flag.IMAGE_EXT);
 		} catch (IllegalStateException e) {
 			log(e);
 		} catch (IOException e) {
@@ -174,17 +176,18 @@ public class SongStoryServiceImpl implements SongStoryService {
 
 		try {
 			file_name = awsS3Connection.uploadFileToAWSS3(stringBuilder.toString(),
-					"apps/well_family_house/songs/records", ".mp3");
+					AwsS3Flag.SONG_STORY_RECORD_ENDPOINT, AwsS3Flag.RECORD_EXT);
 		} catch (IllegalStateException e) {
 			log(e);
 		} catch (IOException e) {
 			log(e);
 		}
-		songStoryMapper.updateAudio(song_story_id, file_name + ".mp3");
+		songStoryMapper.updateAudio(song_story_id, file_name + AwsS3Flag.RECORD_EXT);
 	}
 
 	@Override
-	public SongStoryComment insertSongStoryComment(SongStoryComment songStoryComment, Notification notification) throws Exception {
+	public SongStoryComment insertSongStoryComment(SongStoryComment songStoryComment, Notification notification)
+			throws Exception {
 		int song_story_user_id = songStoryMapper.selectUser(notification.getIntent_id());
 
 		if (song_story_user_id != songStoryComment.getUser_id()) {
@@ -201,31 +204,30 @@ public class SongStoryServiceImpl implements SongStoryService {
 		return songStoryMapper.selectSongStoryInfo(song_story_id);
 	}
 
-	
 	@Override
 	public void updateStory(int song_story_id, String content, String location) throws Exception {
 		boolean transaction_flag = true;
 		ArrayList<String> photoList = null;
-		int photoSize =0;
-		
+		int photoSize = 0;
+
 		try {
 			songStoryMapper.updateStory(song_story_id, content, location);
 			photoList = songStoryMapper.selectPhotoName(song_story_id);
 			photoSize = photoList.size();
-			
+
 			if (photoSize > 0) {
 				songStoryMapper.deletePhotos(song_story_id);
 			}
-			
+
 		} catch (Exception e) {
 			transaction_flag = false;
 		}
-		
+
 		if (transaction_flag) {
 			if (photoSize > 0) {
 				for (int i = 0; i < photoSize; i++) {
-					awsS3Connection.deleteFileFromAWSS3("apps/well_family_house/images/songstories", photoList.get(i),
-							".jpg");
+					awsS3Connection.deleteFileFromAWSS3(AwsS3Flag.SONG_STORY_IMAGE_ENDPOINT, photoList.get(i),
+							AwsS3Flag.IMAGE_EXT);
 				}
 			}
 		}
@@ -234,28 +236,30 @@ public class SongStoryServiceImpl implements SongStoryService {
 	@Override
 	public void deleteStory(int song_story_id) throws Exception {
 		boolean transaction_flag = true;
+		String record_file = null;
 		ArrayList<String> photoList = null;
-		int photoSize =0;
-		
+		int photoSize = 0;
+
 		try {
+			record_file = songStoryMapper.selectRecordFileName(song_story_id);
 			photoList = songStoryMapper.selectPhotoName(song_story_id);
 			photoSize = photoList.size();
-			
-			if (photoSize > 0) {
-				songStoryMapper.deletePhotos(song_story_id);
-			}
-		
+					
 			songStoryMapper.deleteStory(song_story_id);
-		
+			notificationMapper.deleteNotificationForDeleteCascade(NotificationINTENTFlag.SONG_STORY_DETAIL, song_story_id);	
 		} catch (Exception e) {
 			transaction_flag = false;
 		}
-		
+
 		if (transaction_flag) {
+			if (record_file != null && record_file.length() != 0) {
+				awsS3Connection.deleteFileFromAWSS3(AwsS3Flag.SONG_STORY_RECORD_ENDPOINT, record_file, "");
+			}
+
 			if (photoSize > 0) {
 				for (int i = 0; i < photoSize; i++) {
-					awsS3Connection.deleteFileFromAWSS3("apps/well_family_house/images/songstories", photoList.get(i),
-							".jpg");
+					awsS3Connection.deleteFileFromAWSS3(AwsS3Flag.SONG_STORY_IMAGE_ENDPOINT, photoList.get(i),
+							AwsS3Flag.IMAGE_EXT);
 				}
 			}
 		}

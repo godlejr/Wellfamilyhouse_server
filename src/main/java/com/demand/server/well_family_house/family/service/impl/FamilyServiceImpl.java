@@ -17,7 +17,9 @@ import com.demand.server.well_family_house.common.dto.Photo;
 import com.demand.server.well_family_house.common.dto.StoryInfo;
 import com.demand.server.well_family_house.common.dto.User;
 import com.demand.server.well_family_house.common.dto.UserInfoForFamilyJoin;
+import com.demand.server.well_family_house.common.flag.AwsS3Flag;
 import com.demand.server.well_family_house.common.flag.LogFlag;
+import com.demand.server.well_family_house.common.flag.NotificationINTENTFlag;
 import com.demand.server.well_family_house.common.util.AndroidPushConnection;
 import com.demand.server.well_family_house.common.util.AwsS3Connection;
 import com.demand.server.well_family_house.family.service.FamilyService;
@@ -101,20 +103,20 @@ public class FamilyServiceImpl implements FamilyService {
 
 		// delete prior avatar
 		String fileName = familyMapper.selectFamilyAvatar(family_id);
-		if (!fileName.equals("family_avatar.jpg")) {
-			awsS3Connection.deleteFileFromAWSS3("apps/well_family_house/images/avatars/familys", fileName, "");
+		if (!fileName.equals(AwsS3Flag.FAMILY_AVATAR_DEFAULT)) {
+			awsS3Connection.deleteFileFromAWSS3(AwsS3Flag.FAMILY_AVATAR_ENDPOINT, fileName, "");
 		}
 
 		try {
-			file_name = awsS3Connection.uploadFileToAWSS3(stringBuilder.toString(),
-					"apps/well_family_house/images/avatars/familys", ".jpg");
+			file_name = awsS3Connection.uploadFileToAWSS3(stringBuilder.toString(), AwsS3Flag.FAMILY_AVATAR_ENDPOINT,
+					AwsS3Flag.IMAGE_EXT);
 		} catch (IllegalStateException e) {
 			log(e);
 		} catch (IOException e) {
 			log(e);
 		}
 
-		familyMapper.updateFamilyAvatar(family_id, file_name + ".jpg");
+		familyMapper.updateFamilyAvatar(family_id, file_name + AwsS3Flag.IMAGE_EXT);
 	}
 
 	@Override
@@ -151,7 +153,7 @@ public class FamilyServiceImpl implements FamilyService {
 
 		notificationMapper.insertNotification(notification);
 		androidPushConnection.insertFCM(notification);
-		
+
 		familyMapper.updateUserForFamilyJoin(family_id, user_id);
 	}
 
@@ -162,35 +164,39 @@ public class FamilyServiceImpl implements FamilyService {
 
 	@Override
 	public void deleteFamily(int family_id) throws Exception {
-		
+
 		boolean transaction_flag = true;
 		ArrayList<String> photoList = null;
 		String avatar = null;
-		int photoSize =0;
-		
+		int photoSize = 0;
+
 		try {
 			avatar = familyMapper.selectFamilyAvatar(family_id);
 			photoList = familyMapper.selectPhotoNameList(family_id);
 			familyMapper.deleteFamily(family_id);
 			photoSize = photoList.size();
-			
+
+			notificationMapper.deleteNotificationForDeleteCascade(NotificationINTENTFlag.FAMILY, family_id);
+			notificationMapper.deleteNotificationForDeleteCascade(NotificationINTENTFlag.MANAGE_FAMILY, family_id);
+			notificationMapper.deleteNotificationForDeleteCascade(NotificationINTENTFlag.MANAGE_FAMILY_DETAIL, family_id);
+
 		} catch (Exception e) {
 			transaction_flag = false;
 		}
-		
+
 		if (transaction_flag) {
-			if(!avatar.equals("family_avatar.jpg")){
-				awsS3Connection.deleteFileFromAWSS3("apps/well_family_house/images/avatars/familys", avatar, "");
+			if (!avatar.equals(AwsS3Flag.FAMILY_AVATAR_DEFAULT)) {
+				awsS3Connection.deleteFileFromAWSS3(AwsS3Flag.FAMILY_AVATAR_ENDPOINT, avatar, "");
 			}
-			
+
 			if (photoSize > 0) {
 				for (int i = 0; i < photoSize; i++) {
-					awsS3Connection.deleteFileFromAWSS3("apps/well_family_house/images/stories", photoList.get(i),
-							".jpg");
+					awsS3Connection.deleteFileFromAWSS3(AwsS3Flag.STORY_IMAGE_ENDPOINT, photoList.get(i),
+							AwsS3Flag.IMAGE_EXT);
 				}
 			}
 		}
-		
+
 	}
 
 }

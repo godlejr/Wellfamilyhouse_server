@@ -17,7 +17,9 @@ import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.Photo;
 import com.demand.server.well_family_house.common.dto.Story;
 import com.demand.server.well_family_house.common.dto.StoryInfoForNotification;
+import com.demand.server.well_family_house.common.flag.AwsS3Flag;
 import com.demand.server.well_family_house.common.flag.LogFlag;
+import com.demand.server.well_family_house.common.flag.NotificationINTENTFlag;
 import com.demand.server.well_family_house.common.util.AndroidPushConnection;
 import com.demand.server.well_family_house.common.util.AwsS3Connection;
 import com.demand.server.well_family_house.notification.service.impl.NotificationMapper;
@@ -147,8 +149,8 @@ public class StoryServiceImpl implements StoryService {
 		}
 
 		try {
-			file_name = awsS3Connection.uploadFileToAWSS3(stringBuilder.toString(),
-					"apps/well_family_house/images/stories", ".jpg");
+			file_name = awsS3Connection.uploadFileToAWSS3(stringBuilder.toString(), AwsS3Flag.STORY_IMAGE_ENDPOINT,
+					AwsS3Flag.IMAGE_EXT);
 		} catch (IllegalStateException e) {
 			log(e);
 		} catch (IOException e) {
@@ -172,26 +174,26 @@ public class StoryServiceImpl implements StoryService {
 	public void updateStory(int story_id, String content) throws Exception {
 		boolean transaction_flag = true;
 		ArrayList<String> photoList = null;
-		int photoSize =0;
-		
+		int photoSize = 0;
+
 		try {
 			storyMapper.updateStory(story_id, content);
 			photoList = storyMapper.selectPhotoName(story_id);
 			photoSize = photoList.size();
-			
+
 			if (photoSize > 0) {
 				storyMapper.deletePhotos(story_id);
 			}
-			
+
 		} catch (Exception e) {
 			transaction_flag = false;
 		}
-		
+
 		if (transaction_flag) {
 			if (photoSize > 0) {
 				for (int i = 0; i < photoSize; i++) {
-					awsS3Connection.deleteFileFromAWSS3("apps/well_family_house/images/stories", photoList.get(i),
-							".jpg");
+					awsS3Connection.deleteFileFromAWSS3(AwsS3Flag.STORY_IMAGE_ENDPOINT, photoList.get(i),
+							AwsS3Flag.IMAGE_EXT);
 				}
 			}
 		}
@@ -201,27 +203,24 @@ public class StoryServiceImpl implements StoryService {
 	public void deleteStory(int story_id) throws Exception {
 		boolean transaction_flag = true;
 		ArrayList<String> photoList = null;
-		int photoSize =0;
-		
+		int photoSize = 0;
+
 		try {
 			photoList = storyMapper.selectPhotoName(story_id);
 			photoSize = photoList.size();
-			
-			if (photoSize > 0) {
-				storyMapper.deletePhotos(story_id);
-			}
-		
+
 			storyMapper.deleteStory(story_id);
-		
+			notificationMapper.deleteNotificationForDeleteCascade(NotificationINTENTFlag.STORY_DETAIL, story_id);	
+			
 		} catch (Exception e) {
 			transaction_flag = false;
 		}
-		
+
 		if (transaction_flag) {
 			if (photoSize > 0) {
 				for (int i = 0; i < photoSize; i++) {
-					awsS3Connection.deleteFileFromAWSS3("apps/well_family_house/images/stories", photoList.get(i),
-							".jpg");
+					awsS3Connection.deleteFileFromAWSS3(AwsS3Flag.STORY_IMAGE_ENDPOINT, photoList.get(i),
+							AwsS3Flag.IMAGE_EXT);
 				}
 			}
 		}

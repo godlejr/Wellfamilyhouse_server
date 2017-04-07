@@ -18,6 +18,7 @@ import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.SongStory;
 import com.demand.server.well_family_house.common.dto.User;
 import com.demand.server.well_family_house.common.dto.UserInfoForFamilyJoin;
+import com.demand.server.well_family_house.common.flag.AwsS3Flag;
 import com.demand.server.well_family_house.common.flag.FamilyJoinFlag;
 import com.demand.server.well_family_house.common.flag.LogFlag;
 import com.demand.server.well_family_house.common.util.AndroidPushConnection;
@@ -208,20 +209,20 @@ public class UserServiceImpl implements UserService {
 
 		// delete prior avatar
 		String fileName = userMapper.selectUserAvatar(user_id);
-		if (!fileName.equals("avatar.jpg")) {
-			awsS3Connection.deleteFileFromAWSS3("apps/well_family_house/images/avatars/users", fileName, "");
+		if (!fileName.equals(AwsS3Flag.USER_AVATAR_DEFAULT)) {
+			awsS3Connection.deleteFileFromAWSS3(AwsS3Flag.USER_AVATAR_ENDPOINT, fileName, "");
 		}
 
 		try {
 			file_name = awsS3Connection.uploadFileToAWSS3(stringBuilder.toString(),
-					"apps/well_family_house/images/avatars/users", ".jpg");
+					AwsS3Flag.USER_AVATAR_ENDPOINT, AwsS3Flag.IMAGE_EXT);
 		} catch (IllegalStateException e) {
 			log(e);
 		} catch (IOException e) {
 			log(e);
 		}
 
-		userMapper.updateUserAvatar(user_id, file_name + ".jpg");
+		userMapper.updateUserAvatar(user_id, file_name + AwsS3Flag.IMAGE_EXT);
 	}
 
 	@Override

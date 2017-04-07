@@ -38,5 +38,7 @@ public interface NotificationMapper {
 
 	ArrayList<Token> selectTokenForFamiles(int receiver_ref_id);
 	
+	//delete notification
+	void deleteNotificationForDeleteCascade(int intent_flag,int intent_id) throws Exception;
 
 }

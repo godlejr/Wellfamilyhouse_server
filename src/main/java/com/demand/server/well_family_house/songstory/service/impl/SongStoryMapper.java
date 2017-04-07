@@ -52,4 +52,6 @@ public interface SongStoryMapper {
 
 	void deleteStory(int song_story_id) throws Exception;
 	
+	String selectRecordFileName(int song_story_id) throws Exception;
+	
 }
