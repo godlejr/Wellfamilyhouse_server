@@ -11,6 +11,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import com.demand.server.well_family_house.common.flag.UserLevelFlag;
 import com.demand.server.well_family_house.common.util.JwtUtil;
 
 import io.jsonwebtoken.MalformedJwtException;
@@ -32,7 +33,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
 		List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
 
-		if (user_level == 9) {
+		if (user_level == UserLevelFlag.ROLE_ADMIN) {
 			grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 		} else {
 			grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
