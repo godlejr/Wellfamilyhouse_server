@@ -12,7 +12,7 @@ public class AwsS3Flag {
 	
 	public static final String STORY_IMAGE_ENDPOINT = "apps/well_family_house/images/stories";
 	public static final String SONG_STORY_IMAGE_ENDPOINT = "apps/well_family_house/images/songstories";
-	public static final String SONG_STORY_RECORD_ENDPOINT = "apps/well_family_house/images/songstories";
+	public static final String SONG_STORY_RECORD_ENDPOINT = "apps/well_family_house/songs/records";
 
 
 }
