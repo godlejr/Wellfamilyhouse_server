@@ -13,7 +13,7 @@
 	</select>
 
 	<select id="selectLogin" resultType="com.demand.server.well_family_house.common.dto.User">
-		select id, email, name, birth, phone, avatar, level 
+		select id, email, name, birth, phone, avatar, level, login_category_id 
 			from	users
 			where	email = #{param1} and 
 					password = #{param2};
