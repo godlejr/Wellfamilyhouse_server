@@ -1,4 +1,4 @@
-**웰 패밀리 하우스, PPG web application server (skeleton)
+**웰 패밀리 하우스, PPG Web Application Server (skeleton)
 **
 
 **서버 환경**
@@ -12,6 +12,6 @@
 * Language: java
 
 **구성**
-* Framework: Spring MVC (RESTful API)
-* DB mapping framework: MyBatis
+* Framework: Spring MVC (RESTful API),
+* DB mapping framework: MyBatis,
 * security: Spring Security(JWT)
