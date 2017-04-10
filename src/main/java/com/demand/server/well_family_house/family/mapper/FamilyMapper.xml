@@ -8,30 +8,31 @@
 
 	<select id="selectFamily"
 		resultType="com.demand.server.well_family_house.common.dto.Family">
-		SELECT
-		id,name,content,avatar,user_id,created_at FROM
-		wellfamily.familys
-		where id = #{param1};
+		SELECT	id, name, content, avatar, user_id, created_at 
+			FROM	familys
+			where	id = #{param1};
 	</select>
 
 	<select id="selectFamilyUsersInfo" resultType="com.demand.server.well_family_house.common.dto.User">
-		select u.id as id, u.email as email,u.name as name,u.birth as birth,u.phone as phone,
+		select	u.id as id, u.email as email,u.name as name,u.birth as birth,u.phone as phone,
 				u.avatar as avatar,u.level as level
 		
-			from users u, 
-				(SELECT * 
-					FROM	family_joiners 
-					where family_id = #{param1} and 
-							user_id != #{param2} and
-							join_flag = 1 ) f
-			
-			where u.id = f.user_id  
+			from	users u, 
+					(SELECT * 
+						FROM	family_joiners 
+						where family_id = #{param1} and 
+								user_id != #{param2} and
+								join_flag = 1 ) f
+				
+			where	u.id = f.user_id  
 			
 			order by name;
 	</select>
 
 	<select id="selectFamilyUserId" resultType="int">
-		SELECT user_id FROM wellfamily.familys where id = #{param1};
+		SELECT	user_id 
+			FROM	familys 
+			where	id = #{param1};
 	</select>
 
 	<!-- find user name -->
@@ -50,7 +51,10 @@
 	</select>
 	
 	<update id="updateUserForFamilyJoin">
-		update family_joiners set join_flag = 1 where family_id = #{param1} and user_id = #{param2}
+		update	family_joiners 
+			set	join_flag = 1 
+			where	family_id = #{param1}	and 
+					user_id = #{param2}
 	</update>
 
 	<select id="selectFamilyJoinerList" resultType="com.demand.server.well_family_house.common.dto.UserInfoForFamilyJoin">
@@ -70,21 +74,12 @@
 
 	<select id="selectContentList"
 		resultType="com.demand.server.well_family_house.common.dto.StoryInfo">
-		SELECT u.id as
-		user_id,
-		u.name as name,u.avatar as avatar,
-		s.id as story_id,
-		s.created_at as
-		created_at
-		, s.content
-		as content
-		FROM
-		users u, stories s
-		where u.id =
-		s.user_id and
-		s.family_id=#{param1} order
-		by s.created_at
-		desc;
+		SELECT	u.id as user_id, u.name as name, u.avatar as avatar, s.id as story_id, s.created_at as created_at, s.content as content
+			FROM	users u,
+					stories s
+			where	u.id = s.user_id	and
+					s.family_id=#{param1} 
+			order by s.created_at desc;
 	</select>
 
 	<select id="selectPhotoList"
@@ -113,43 +108,47 @@
 	</select>
 
 	<select id="selectFamilyAvatar" resultType="String">
-		SELECT avatar FROM
-		wellfamily.familys where id =#{param1};
+		SELECT	avatar 
+			FROM	familys 
+		    where	id = #{param1};
 	</select>
 	
 	<select id="selectFamilyName" resultType="String">
-		SELECT name FROM
-		wellfamily.familys where id =#{param1};
+		SELECT	name 
+			FROM	familys 
+		    where	id = #{param1};
 	</select>
 
 	<update id="updateFamilyAvatar">
-		update familys set avatar = #{param2} where id =
-		#{param1};
+		update	familys 
+			set		avatar = #{param2} 
+		    where	id = #{param1};
 	</update>
 
 
 	<insert id="insertUserIntoFamily">
-		insert into
-		family_joiners(family_id,user_id,join_flag)
-		values(#{param1},#{param2},#{param3});
+		insert	into	family_joiners(family_id, user_id, join_flag)
+			values(#{param1}, #{param2}, #{param3});
 	</insert>
 
 	<delete id="deleteFamily">
-		delete from familys
-			where id = #{param1};
+		delete 
+			from	familys
+			where	id = #{param1};
 	</delete>
 
 	<delete id="deleteUserFromFamily">
-		delete from family_joiners where family_id
-		=#{param1}
-		and user_id = #{param2};
+		delete 
+			from	family_joiners 
+			where	family_id = #{param1}	and 
+					user_id = #{param2};
 	</delete>
 
 	<!-- family edit -->
 	<update id="updateFamilyInfo">
-		update familys set name = #{param2}, content =
-		#{param3} where id =
-		#{param1};
+		update	familys 
+			set		name = #{param2}, content = #{param3} 
+			where 	id =#{param1};
 	</update>
 
 </mapper>

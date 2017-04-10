@@ -7,46 +7,39 @@
 	namespace="com.demand.server.well_family_house.main.service.impl.MainMapper">
 
 	<select id="selectEmailCheck" resultType="int">
-		select count(email)
-		from
-		users where
-		email = #{param1};
+		select	count(email)
+			from	users 
+		    where	email = #{param1};
 	</select>
 
 	<select id="selectLogin" resultType="com.demand.server.well_family_house.common.dto.User">
-		select
-		id,email,name,birth,phone,avatar,level from
-		users
-		where
-		email = #{param1}
-		and password = #{param2};
+		select id, email, name, birth, phone, avatar, level 
+			from	users
+			where	email = #{param1} and 
+					password = #{param2};
 	</select>
 
 	<insert id="insertJoin">
-		insert into
-		users(email,password,name,birth,phone,login_category_id)
-		values(#{param1},#{param2},#{param3},#{param4},#{param5},#{param6});
+		insert	into	users(email, password, name, birth, phone, login_category_id)
+			values(#{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6});
 	</insert>
 
 	<select id="selectReportCategoryList"
 		resultType="com.demand.server.well_family_house.common.dto.Category">
-		SELECT
-		id,name,created_at,updated_at FROM
-		report_categories;
+		SELECT	id, name, created_at, updated_at 
+			FROM	report_categories;  
 	</select>
 
 	<update id="updateTemperaryPassword">
-		update users set password = #{param2}
-		where id =
-		#{param1};
+		update	users 
+			set	password = #{param2}
+			where	id = #{param1};
 	</update>
 
 	<select id="selectUserInfoFromEmail" resultType="com.demand.server.well_family_house.common.dto.User">
-		select
-		id,email,name,avatar,level,login_category_id from
-		users
-		where
-		email =
-		#{param1};
+		select	id, email, name, avatar, level, login_category_id 
+			from	users
+			where	email = #{param1} AND
+					login_category_id = 1;
 	</select>
 </mapper>

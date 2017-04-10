@@ -8,21 +8,20 @@
 
 	<select id="selectSongCategoryList"
 		resultType="com.demand.server.well_family_house.common.dto.SongCategory">
-		SELECT id,name,avatar,created_at FROM song_categories;
+		SELECT	id, name, avatar, created_at 
+			FROM	song_categories;
 	</select>
 
 	<select id="selectSongCommentCount" resultType="int">
-		SELECT
-		count(user_id) as comment_count
-		FROM song_comments
-		where
-		song_id =
-		#{param1};
+		SELECT	count(user_id) as comment_count
+			FROM	song_comments
+			where	song_id = #{param1};
 	</select>
 
 	<select id="selectSongAvatar" resultType="String">
-		SELECT avatar FROM
-		wellfamily.songs where id = #{param1};
+		SELECT	avatar 
+			FROM	songs 
+		    where	id = #{param1};
 	</select>
 
 	<select id="selectSongLikeCount" resultType="int">
