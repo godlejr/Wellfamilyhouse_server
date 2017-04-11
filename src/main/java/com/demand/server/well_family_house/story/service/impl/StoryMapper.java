@@ -51,4 +51,7 @@ public interface StoryMapper {
 	
 	void deleteStory(int story_id) throws Exception;
 	
+	void updateStoryHit(int story_id) throws Exception;
+
+	
 }

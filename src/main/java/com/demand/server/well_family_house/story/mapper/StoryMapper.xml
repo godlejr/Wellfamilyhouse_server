@@ -7,55 +7,58 @@
 	namespace="com.demand.server.well_family_house.story.service.impl.StoryMapper">
 
 	<select id="selectCommentCount" resultType="int">
-		SELECT count(user_id)
-		as comment_count
-		FROM comments where
-		story_id = #{param1};
+		SELECT	count(user_id) as comment_count
+			FROM	comments 
+		    where	story_id = #{param1};
 	</select>
 
 	<select id="selectLikeCount" resultType="int">
-		select count(user_id) as
-		like_count from story_likes where
-		story_id = #{param1};
+		select	count(user_id) as like_count 
+			from	story_likes 
+			where	story_id = #{param1};
 	</select>
 
 	<select id="selectContentPhotoList"
 		resultType="com.demand.server.well_family_house.common.dto.Photo">
-		SELECT id, story_id
-		, type
-		, name, ext FROM photos
-		where
-		story_id= #{param1};
+		SELECT	id, story_id, type, name, ext 
+			FROM	photos
+			where	story_id = #{param1};
 	</select>
 
 	<insert id="insertLikeUp">
-		insert into story_likes(user_id,story_id)
-		values(#{param1},#{param2});
+		insert into	story_likes(user_id, story_id)
+			values(#{param1}, #{param2});
 	</insert>
 
 	<delete id="deleteLikeDown">
-		delete from story_likes where user_id = #{param1} and
-		story_id =#{param2};
+		delete 
+			from	story_likes 
+		    where	user_id = #{param1} and
+					story_id = #{param2};
 	</delete>
 
 	<select id="selectLikeCheck" resultType="int">
-		SELECT count(id) as
-		checked
-		FROM story_likes where user_id = #{param1} and story_id =
-		#{param2};
+		SELECT	count(id) as checked
+			FROM	story_likes 
+		    where	user_id = #{param1}	and 
+					story_id = #{param2};
 	</select>
 
 	<select id="selectCommentList"
 		resultType="com.demand.server.well_family_house.common.dto.CommentInfo">
-		select c.id as
-		comment_id, c.user_id as user_id, u.name as
-		user_name ,u.avatar as
-		avatar,c.content as content, c.created_at as
-		created_at, c.deleted as
-		deleted FROM comments c,users u where
-		c.user_id = u.id and c.story_id
-		=#{param1} order by c.created_at;
+		select	c.id as comment_id, c.user_id as user_id, u.name as user_name ,u.avatar as avatar,c.content as content, c.created_at as created_at, c.deleted as deleted 
+			FROM	comments c,
+					users u 
+			where	c.user_id = u.id	and 
+					c.story_id = #{param1} 
+			order by	c.created_at;
 	</select>
+
+	<update id="updateStoryHit">
+		update	stories 
+			set	hits = hits+1 
+		    where	id = #{param1};
+	</update>
 
 	<insert id="insertComment"
 		parameterType="com.demand.server.well_family_house.common.dto.Comment"

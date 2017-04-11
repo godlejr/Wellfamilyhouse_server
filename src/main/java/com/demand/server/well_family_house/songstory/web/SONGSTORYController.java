@@ -70,6 +70,11 @@ public class SONGSTORYController {
 
 		songStoryServiceImpl.insertSongStoryLikeUp(user_id, song_story_id, notification);
 	}
+	
+	@RequestMapping(value = "/{song_story_id}/hits", method = RequestMethod.PUT)
+	public void insert_song_story_hit(@PathVariable int song_story_id) throws Exception {
+		songStoryServiceImpl.updateSongStoryHit(song_story_id);
+	}
 
 	@RequestMapping(value = "/{song_story_id}/likes/{user_id}", method = RequestMethod.DELETE)
 	public void song_story_like_down(HttpServletRequest request, @PathVariable int user_id,

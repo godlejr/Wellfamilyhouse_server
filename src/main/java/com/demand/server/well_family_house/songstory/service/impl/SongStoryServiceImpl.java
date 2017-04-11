@@ -265,4 +265,9 @@ public class SongStoryServiceImpl implements SongStoryService {
 		}
 	}
 
+	@Override
+	public void updateSongStoryHit( int song_story_id) throws Exception {
+		songStoryMapper.updateSongStoryHit(song_story_id);		
+	}
+
 }

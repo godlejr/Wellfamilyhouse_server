@@ -37,4 +37,6 @@ public interface StoryService {
 	void updateStory(int story_id, String content) throws Exception;
 
 	void deleteStory(int story_id) throws Exception;
+
+	void updateStoryHit(int story_id) throws Exception;
 }

@@ -72,6 +72,11 @@ public class STORYController {
 			@PathVariable int user_id) throws Exception {
 		return storyServiceImpl.selectLikeCheck(user_id, story_id);
 	}
+	
+	@RequestMapping(value = "/{story_id}/hits", method = RequestMethod.PUT)
+	public void insert_song_story_hit(@PathVariable int story_id) throws Exception {
+		storyServiceImpl.updateStoryHit(story_id);
+	}
 
 	@RequestMapping(value = "/{story_id}/comments", method = RequestMethod.GET)
 	public ArrayList<CommentInfo> family_detail_comment_List(@PathVariable int story_id) throws Exception {

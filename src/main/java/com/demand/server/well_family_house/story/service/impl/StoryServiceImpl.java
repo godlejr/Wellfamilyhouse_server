@@ -225,4 +225,9 @@ public class StoryServiceImpl implements StoryService {
 			}
 		}
 	}
+
+	@Override
+	public void updateStoryHit(int story_id) throws Exception {
+		storyMapper.updateStoryHit(story_id);		
+	}
 }

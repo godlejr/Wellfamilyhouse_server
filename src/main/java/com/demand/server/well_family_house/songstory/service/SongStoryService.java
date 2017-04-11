@@ -43,4 +43,6 @@ public interface SongStoryService {
 	
 	void deleteStory(int song_story_id) throws Exception;
 
+	void updateSongStoryHit( int song_story_id) throws Exception;
+
 }
