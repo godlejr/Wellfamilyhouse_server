@@ -66,7 +66,6 @@ public class STORYController {
 			@PathVariable int story_id) throws Exception {
 		storyServiceImpl.deleteLikeDown(user_id, story_id);
 	}
-	
 
 	@RequestMapping(value = "/{story_id}/like_check/{user_id}", method = RequestMethod.GET)
 	public int family_content_like_check(HttpServletRequest request, @PathVariable int story_id,
