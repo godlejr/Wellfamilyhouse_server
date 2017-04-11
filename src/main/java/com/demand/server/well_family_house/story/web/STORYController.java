@@ -49,7 +49,7 @@ public class STORYController {
 	public void family_content_like_up(HttpServletRequest request, @PathVariable int story_id)
 			throws NumberFormatException, Exception {
 		int user_id = Integer.parseInt(request.getParameter("user_id"));
-		
+
 		Notification notification = new Notification();
 		notification.setUser_id(user_id);
 		notification.setReceive_category_id(NotificationTOFlag.WRITER);
@@ -57,8 +57,8 @@ public class STORYController {
 		notification.setIntent_flag(NotificationINTENTFlag.STORY_DETAIL);
 		notification.setBehavior_id(NotificationBEHAVIORFlag.LIKE);
 		notification.setIntent_id(story_id);
-		
-		storyServiceImpl.insertLikeUp(user_id, story_id,notification);
+
+		storyServiceImpl.insertLikeUp(user_id, story_id, notification);
 	}
 
 	@RequestMapping(value = "/{story_id}/likes/{user_id}", method = RequestMethod.DELETE)
@@ -72,7 +72,7 @@ public class STORYController {
 			@PathVariable int user_id) throws Exception {
 		return storyServiceImpl.selectLikeCheck(user_id, story_id);
 	}
-	
+
 	@RequestMapping(value = "/{story_id}/hits", method = RequestMethod.PUT)
 	public void insert_song_story_hit(@PathVariable int story_id) throws Exception {
 		storyServiceImpl.updateStoryHit(story_id);
@@ -86,12 +86,12 @@ public class STORYController {
 	@RequestMapping(value = "/{story_id}/comments", method = RequestMethod.POST)
 	public Comment insert_comment(HttpServletRequest request, @PathVariable int story_id) throws Exception {
 		int user_id = Integer.parseInt(request.getParameter("user_id"));
-		
+
 		Comment comment = new Comment();
 		comment.setUser_id(user_id);
 		comment.setStory_id(story_id);
 		comment.setContent(request.getParameter("content"));
-		
+
 		Notification notification = new Notification();
 		notification.setUser_id(user_id);
 		notification.setReceive_category_id(NotificationTOFlag.WRITER);
@@ -100,7 +100,7 @@ public class STORYController {
 		notification.setBehavior_id(NotificationBEHAVIORFlag.WRITING_THE_COMMENT);
 		notification.setIntent_id(story_id);
 
-		return storyServiceImpl.insertComment(comment,notification);
+		return storyServiceImpl.insertComment(comment, notification);
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
@@ -125,20 +125,21 @@ public class STORYController {
 
 		return storyServiceImpl.insertStory(story, notification);
 	}
-	
+
 	@RequestMapping(value = "/{story_id}", method = RequestMethod.PUT)
-	public void update_story(HttpServletRequest request,@PathVariable int story_id) throws  Exception {
+	public void update_story(HttpServletRequest request, @PathVariable int story_id) throws Exception {
 		String content = request.getParameter("content");
-		storyServiceImpl.updateStory(story_id,content);
+		storyServiceImpl.updateStory(story_id, content);
 	}
-	
+
 	@RequestMapping(value = "/{story_id}", method = RequestMethod.DELETE)
-	public void delete_story(@PathVariable int story_id) throws  Exception {
+	public void delete_story(@PathVariable int story_id) throws Exception {
 		storyServiceImpl.deleteStory(story_id);
 	}
-	
+
 	@RequestMapping(value = "/{story_id}", method = RequestMethod.GET)
-	public StoryInfoForNotification storyDetailForNotification(@PathVariable int story_id) throws IOException, Exception {
+	public StoryInfoForNotification storyDetailForNotification(@PathVariable int story_id)
+			throws IOException, Exception {
 		return storyServiceImpl.selectStoryInfo(story_id);
 	}
 
