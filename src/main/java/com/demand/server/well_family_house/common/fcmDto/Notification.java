@@ -1,13 +1,13 @@
-package com.demand.server.well_family_house.common.dto;
+package com.demand.server.well_family_house.common.fcmDto;
 
-public class Data {
+public class Notification {
 	private String body;
 
-	public Data() {
+	public Notification() {
 		super();
 	}
 
-	public Data(String body) {
+	public Notification(String body) {
 		super();
 		this.body = body;
 	}

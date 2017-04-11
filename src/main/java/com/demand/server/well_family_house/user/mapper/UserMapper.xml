@@ -12,6 +12,18 @@
 		where
 		id = #{param1};
 	</select>
+	
+	<select id="selectToken" resultType="String">
+		select	token 
+			from	users 
+			where	id = #{param1}
+	</select>
+	
+	<select id="selectDeviceId" resultType="String">
+		select	device_id 
+			from	users 
+			where	id = #{param1}
+	</select>
 
 	<update id="updateDeviceIdToken">
 		update users set device_id = #{param2}, token =

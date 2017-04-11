@@ -1,15 +1,15 @@
-package com.demand.server.well_family_house.common.dto;
+package com.demand.server.well_family_house.common.fcmDto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_NULL)
-public class Message {
+public class DataMessage {
 	private String to;
 	private String priority;
 	private Data data;
 
-	public Message() {
+	public DataMessage() {
 		super();
 		this.priority = "high";
 	}
@@ -38,7 +38,7 @@ public class Message {
 		this.data = data;
 	}
 
-	public Message(String to, String priority, Data data) {
+	public DataMessage(String to, String priority, Data data) {
 		super();
 		this.to = to;
 		this.priority = priority;

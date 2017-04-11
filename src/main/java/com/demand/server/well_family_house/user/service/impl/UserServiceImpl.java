@@ -16,11 +16,13 @@ import com.demand.server.well_family_house.common.dto.Family;
 import com.demand.server.well_family_house.common.dto.FamilyInfoForFamilyJoin;
 import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.SongStory;
+import com.demand.server.well_family_house.common.dto.Token;
 import com.demand.server.well_family_house.common.dto.User;
 import com.demand.server.well_family_house.common.dto.UserInfoForFamilyJoin;
 import com.demand.server.well_family_house.common.flag.AwsS3Flag;
 import com.demand.server.well_family_house.common.flag.FamilyJoinFlag;
 import com.demand.server.well_family_house.common.flag.LogFlag;
+import com.demand.server.well_family_house.common.flag.NotificationMessageFlag;
 import com.demand.server.well_family_house.common.util.AndroidPushConnection;
 import com.demand.server.well_family_house.common.util.AwsS3Connection;
 import com.demand.server.well_family_house.notification.service.impl.NotificationMapper;
@@ -65,6 +67,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void updateDeviceIdToken(int user_id, String device_id, String token) throws Exception {
+		String pre_deviceId = userMapper.selectDeviceId(user_id);
+		ArrayList<Token> tokenList = notificationMapper.selectTokenForUser(user_id);
+
+		if (!device_id.equals(pre_deviceId)) {
+			androidPushConnection.insertNoficationMessage(tokenList, NotificationMessageFlag.CONCURRENT_ACCESS_MESSAGE);
+		}
+
 		userMapper.updateDeviceIdToken(user_id, device_id, token);
 	}
 
@@ -104,8 +113,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public ArrayList<FamilyInfoForFamilyJoin> selectFamilySearchList(int user_id,String search) throws Exception {
-		return userMapper.selectFamilySearchList(user_id,search);
+	public ArrayList<FamilyInfoForFamilyJoin> selectFamilySearchList(int user_id, String search) throws Exception {
+		return userMapper.selectFamilySearchList(user_id, search);
 	}
 
 	@Override
@@ -173,7 +182,7 @@ public class UserServiceImpl implements UserService {
 	public int insertFamily(Family family, Notification notification) throws Exception {
 
 		userMapper.insertFamily(family);
-		userMapper.insertFamilyJoiner(family.getId(), family.getUser_id(),FamilyJoinFlag.FAMILY);
+		userMapper.insertFamilyJoiner(family.getId(), family.getUser_id(), FamilyJoinFlag.FAMILY);
 
 		notification.setIntent_id(family.getId());
 
@@ -214,8 +223,8 @@ public class UserServiceImpl implements UserService {
 		}
 
 		try {
-			file_name = awsS3Connection.uploadFileToAWSS3(stringBuilder.toString(),
-					AwsS3Flag.USER_AVATAR_ENDPOINT, AwsS3Flag.IMAGE_EXT);
+			file_name = awsS3Connection.uploadFileToAWSS3(stringBuilder.toString(), AwsS3Flag.USER_AVATAR_ENDPOINT,
+					AwsS3Flag.IMAGE_EXT);
 		} catch (IllegalStateException e) {
 			log(e);
 		} catch (IOException e) {
@@ -236,7 +245,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public void insertFamilyJoiner(int user_id, int family_id, Notification notification) throws Exception {
-		userMapper.insertFamilyJoiner(family_id, user_id,FamilyJoinFlag.USER_TO_FAMILY);
+		userMapper.insertFamilyJoiner(family_id, user_id, FamilyJoinFlag.USER_TO_FAMILY);
 		notificationMapper.insertNotification(notification);
 		androidPushConnection.insertFCM(notification);
 	}

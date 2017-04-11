@@ -71,5 +71,10 @@ public interface UserMapper {
 	ArrayList<Family> selectManageFamilies(int user_id) throws Exception;
 
 	ArrayList<FamilyInfoForFamilyJoin> selectJoinFamilies(int user_id) throws Exception;
+	
+	String selectToken(int user_id) throws Exception;
+	
+	String selectDeviceId(int user_id) throws Exception;
+
 
 }
