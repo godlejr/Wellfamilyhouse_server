@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
 		String pre_deviceId = userMapper.selectDeviceId(user_id);
 		ArrayList<Token> tokenList = notificationMapper.selectTokenForUser(user_id);
 
-		if (!device_id.equals(pre_deviceId)) {
+		if (!device_id.equals(pre_deviceId)&& pre_deviceId != null && pre_deviceId.length() !=0) {
 			androidPushConnection.insertNoficationMessage(tokenList, NotificationMessageFlag.CONCURRENT_ACCESS_MESSAGE);
 		}
 
