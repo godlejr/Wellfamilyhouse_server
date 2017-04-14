@@ -36,15 +36,18 @@ public class USERController {
 		return userServiceImpl.selectUserInfo(user_id);
 	}
 
-	@RequestMapping(value = "/{user_id}/tokens/{token}/deviceids/{device_id}", method = RequestMethod.PUT)
-	public void update_deviceId_token(HttpServletRequest request, @PathVariable int user_id, @PathVariable String token,
-			@PathVariable String device_id) throws Exception {
+	@RequestMapping(value = "/{user_id}/tokenAndDeviceid", method = RequestMethod.PUT)
+	public void update_deviceId_token(HttpServletRequest request, @PathVariable int user_id) throws Exception {
+		String device_id = request.getParameter("device_id");
+		String token = request.getParameter("token");
+		
 		userServiceImpl.updateDeviceIdToken(user_id, device_id, token);
 	}
 
-	@RequestMapping(value = "/{user_id}/deviceids/{device_id}", method = RequestMethod.GET)
-	public int check_device_id(HttpServletRequest request, @PathVariable int user_id, @PathVariable String device_id)
+	@RequestMapping(value = "/{user_id}/deviceids", method = RequestMethod.GET)
+	public int check_device_id(HttpServletRequest request, @PathVariable int user_id)
 			throws Exception {
+		String device_id = request.getParameter("device_id");
 		return userServiceImpl.selectDeviceIdCheck(user_id, device_id);
 	}
 
