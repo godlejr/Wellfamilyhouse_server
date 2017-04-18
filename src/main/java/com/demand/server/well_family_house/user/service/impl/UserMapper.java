@@ -76,5 +76,6 @@ public interface UserMapper {
 	
 	String selectDeviceId(int user_id) throws Exception;
 
+	void updatePassword(int user_id,String password) throws Exception;
 
 }

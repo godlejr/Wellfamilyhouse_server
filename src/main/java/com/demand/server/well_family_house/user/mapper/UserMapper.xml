@@ -43,6 +43,11 @@
 		update users set token = #{param2} where id =
 		#{param1};
 	</update>
+	
+	<update id="updatePassword">
+		update users set password = #{param2} where id =
+		#{param1};
+	</update>
 
 	<select id="selectFamiliesInfo"
 		resultType="com.demand.server.well_family_house.common.dto.Family">

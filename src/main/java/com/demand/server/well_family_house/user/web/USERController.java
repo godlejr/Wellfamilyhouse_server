@@ -43,6 +43,14 @@ public class USERController {
 		
 		userServiceImpl.updateDeviceIdToken(user_id, device_id, token);
 	}
+	
+	@RequestMapping(value = "/{user_id}/password", method = RequestMethod.PUT)
+	public void updatePassword(HttpServletRequest request, @PathVariable int user_id)
+			throws Exception {
+		String password = request.getParameter("password");
+		userServiceImpl.updatePassword(user_id,password);
+	}
+
 
 	@RequestMapping(value = "/{user_id}/deviceids", method = RequestMethod.GET)
 	public int check_device_id(HttpServletRequest request, @PathVariable int user_id)

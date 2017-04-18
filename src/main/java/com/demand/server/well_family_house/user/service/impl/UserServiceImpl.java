@@ -250,4 +250,9 @@ public class UserServiceImpl implements UserService {
 		androidPushConnection.insertFCM(notification);
 	}
 
+	@Override
+	public void updatePassword(int user_id, String password) throws Exception {
+		userMapper.updatePassword(user_id, password);		
+	}
+
 }
