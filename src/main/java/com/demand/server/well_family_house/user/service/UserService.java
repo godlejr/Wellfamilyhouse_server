@@ -58,6 +58,9 @@ public interface UserService {
 	void insertCommentReport(int user_id, int comment_category_id, int report_category_id, int comment_id)
 			throws Exception;
 
+	void insertStoryReport(int user_id, int story_category_id, int report_category_id, int story_id)
+			throws Exception;
+	
 	ArrayList<Notification> selectNotification(int user_id) throws Exception;
 
 	int insertFamily(Family family, Notification notification) throws Exception;

@@ -198,12 +198,17 @@
 		#{param3},phone = #{param4},gender = #{param5} where id =
 		#{param1};
 	</update>
-
+	<insert id="insertStoryReport">
+		insert into
+			story_reports(user_id,story_category_id,report_category_id,story_id)
+			values(#{param1},#{param2},#{param3},#{param4});
+	
+	</insert>
 
 	<insert id="insertCommentReport">
 		insert into
-		comment_reports(user_id,comment_category_id,report_category_id,comment_id)
-		values(#{param1},#{param2},#{param3},#{param4});
+			comment_reports(user_id,comment_category_id,report_category_id,comment_id)
+			values(#{param1},#{param2},#{param3},#{param4});
 	</insert>
 
 	<select id="selectManageFamilies" resultType="com.demand.server.well_family_house.common.dto.Family">

@@ -255,4 +255,10 @@ public class UserServiceImpl implements UserService {
 		userMapper.updatePassword(user_id, password);		
 	}
 
+	@Override
+	public void insertStoryReport(int user_id, int story_category_id, int report_category_id, int story_id)
+			throws Exception {
+		userMapper.insertStoryReport(user_id, story_category_id, report_category_id, story_id);	
+	}
+
 }

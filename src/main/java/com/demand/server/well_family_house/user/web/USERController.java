@@ -225,6 +225,15 @@ public class USERController {
 				Integer.parseInt(request.getParameter("report_category_id")),
 				Integer.parseInt(request.getParameter("comment_id")));
 	}
+	
+	@RequestMapping(value = "/{user_id}/story_reports", method = RequestMethod.POST)
+	public void insert_story_report(HttpServletRequest request, @PathVariable int user_id)
+			throws NumberFormatException, Exception {
+		userServiceImpl.insertStoryReport(user_id, Integer.parseInt(request.getParameter("story_category_id")),
+				Integer.parseInt(request.getParameter("report_category_id")),
+				Integer.parseInt(request.getParameter("story_id")));
+	}
+
 
 	// notification
 	@RequestMapping(value = "/{user_id}/notifications", method = RequestMethod.GET)

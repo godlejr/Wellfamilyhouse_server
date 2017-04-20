@@ -67,6 +67,9 @@ public interface UserMapper {
 
 	void insertCommentReport(int user_id, int comment_category_id, int report_category_id, int comment_id)
 			throws Exception;
+	
+	void insertStoryReport(int user_id, int story_category_id, int report_category_id, int story_id)
+			throws Exception;
 
 	ArrayList<Family> selectManageFamilies(int user_id) throws Exception;
 
