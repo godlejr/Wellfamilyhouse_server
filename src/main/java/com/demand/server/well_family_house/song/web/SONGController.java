@@ -23,6 +23,7 @@ import com.demand.server.well_family_house.common.flag.NotificationBEHAVIORFlag;
 import com.demand.server.well_family_house.common.flag.NotificationINTENTFlag;
 import com.demand.server.well_family_house.common.flag.NotificationTOFlag;
 import com.demand.server.well_family_house.common.flag.SongStoryRANGEFlag;
+import com.demand.server.well_family_house.song.service.SongService;
 import com.demand.server.well_family_house.song.service.impl.SongServiceImpl;
 
 @RestController
@@ -31,7 +32,7 @@ import com.demand.server.well_family_house.song.service.impl.SongServiceImpl;
 public class SONGController {
 
 	@Autowired
-	private SongServiceImpl songServiceImpl;
+	private SongService songService;
 
 	public static int randomRange(int n1, int n2) {
 		return (int) (Math.random() * (n2 - n1 + 1)) + n1;
@@ -39,70 +40,70 @@ public class SONGController {
 
 	@RequestMapping(value = "/categories", method = RequestMethod.GET)
 	public ArrayList<SongCategory> song_category_List() throws Exception {
-		return songServiceImpl.selectSongCategoryList();
+		return songService.selectSongCategoryList();
 	}
 
 	@RequestMapping(value = "/{song_id}/comment_count", method = RequestMethod.GET)
 	public int song_comment_Count(@PathVariable int song_id) throws Exception {
-		return songServiceImpl.selectSongCommentCount(song_id);
+		return songService.selectSongCommentCount(song_id);
 	}
 
 	@RequestMapping(value = "/{song_id}/like_count", method = RequestMethod.GET)
 	public int song_like_Count(@PathVariable int song_id) throws Exception {
-		return songServiceImpl.selectSongLikeCount(song_id);
+		return songService.selectSongLikeCount(song_id);
 	}
 
 	@RequestMapping(value = "/charts", method = RequestMethod.GET)
 	public ArrayList<Song> song_list_by_Hits() throws Exception {
-		return songServiceImpl.selectSongListByHits();
+		return songService.selectSongListByHits();
 	}
 
 	@RequestMapping(value = "/randoms", method = RequestMethod.GET)
 	public Song song_random() throws Exception {
-		return songServiceImpl.selectRandomSong(randomRange(149, 295));
+		return songService.selectRandomSong(randomRange(149, 295));
 	}
 
 	@RequestMapping(value = "/categories/{category_id}", method = RequestMethod.GET)
 	public ArrayList<Song> song_list_by_Category(@PathVariable int category_id) throws Exception {
-		return songServiceImpl.selectSongListByCategory(category_id);
+		return songService.selectSongListByCategory(category_id);
 	}
 
 	@RequestMapping(value = "/{song_id}/hits", method = RequestMethod.PUT)
 	public void Insert_Song_hit(@PathVariable int song_id) throws Exception {
-		songServiceImpl.updateSongHit(song_id);
+		songService.updateSongHit(song_id);
 	}
 
 	@RequestMapping(value = "/{song_id}/comments", method = RequestMethod.GET)
 	public ArrayList<CommentInfo> song_comment_List(@PathVariable int song_id) throws Exception {
-		return songServiceImpl.selectSongCommentList(song_id);
+		return songService.selectSongCommentList(song_id);
 	}
 
 	@RequestMapping(value = "/{song_id}/likes", method = RequestMethod.POST)
 	public void song_like_up(HttpServletRequest request, @PathVariable int song_id)
 			throws NumberFormatException, Exception {
-		songServiceImpl.insertSongLikeUp(Integer.parseInt(request.getParameter("user_id")), song_id);
+		songService.insertSongLikeUp(Integer.parseInt(request.getParameter("user_id")), song_id);
 	}
 
 	@RequestMapping(value = "/{song_id}/likes/{user_id}", method = RequestMethod.DELETE)
 	public void song_like_down(HttpServletRequest request, @PathVariable int song_id, @PathVariable int user_id)
 			throws Exception {
-		songServiceImpl.deleteSongLikeDown(user_id, song_id);
+		songService.deleteSongLikeDown(user_id, song_id);
 	}
 
 	@RequestMapping(value = "/{song_id}/like_check/{user_id}", method = RequestMethod.GET)
 	public int song_like_check(HttpServletRequest request, @PathVariable int song_id, @PathVariable int user_id)
 			throws Exception {
-		return songServiceImpl.selectSongLikeCheck(user_id, song_id);
+		return songService.selectSongLikeCheck(user_id, song_id);
 	}
 
 	@RequestMapping(value = "/ranges", method = RequestMethod.GET)
 	public ArrayList<Range> song_range_List() throws Exception {
-		return songServiceImpl.selectSongRangeList();
+		return songService.selectSongRangeList();
 	}
 
 	@RequestMapping(value = "/emotions", method = RequestMethod.GET)
 	public ArrayList<SongStoryEmotionInfo> song_story_emotion_List() throws Exception {
-		return songServiceImpl.selectEmotionList();
+		return songService.selectEmotionList();
 	}
 
 	@RequestMapping(value = "/{song_id}/comments", method = RequestMethod.POST)
@@ -112,7 +113,7 @@ public class SONGController {
 		songComment.setSong_id(song_id);
 		songComment.setContent(request.getParameter("content"));
 
-		return songServiceImpl.insertSongComment(songComment);
+		return songService.insertSongComment(songComment);
 	}
 
 	@RequestMapping(value = "/stories", method = RequestMethod.POST)
@@ -138,14 +139,14 @@ public class SONGController {
 			notification.setIntent_flag(NotificationINTENTFlag.SONG_STORY_DETAIL);
 			notification.setBehavior_id(NotificationBEHAVIORFlag.WRITING_THE_STORY);
 
-			return songServiceImpl.insertSongStory(songStory, notification);
+			return songService.insertSongStory(songStory, notification);
 		} else {
-			return songServiceImpl.insertSongStory(songStory);
+			return songService.insertSongStory(songStory);
 		}
 	}
 
 	@RequestMapping(value = "/{song_id}/avatars", method = RequestMethod.GET)
 	public String song_story_avatar(@PathVariable int song_id) throws NumberFormatException, Exception {
-		return songServiceImpl.selectSongAvatar(song_id);
+		return songService.selectSongAvatar(song_id);
 	}
 }

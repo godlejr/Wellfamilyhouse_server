@@ -21,6 +21,7 @@ import com.demand.server.well_family_house.common.dto.StoryInfoForNotification;
 import com.demand.server.well_family_house.common.flag.NotificationBEHAVIORFlag;
 import com.demand.server.well_family_house.common.flag.NotificationINTENTFlag;
 import com.demand.server.well_family_house.common.flag.NotificationTOFlag;
+import com.demand.server.well_family_house.story.service.StoryService;
 import com.demand.server.well_family_house.story.service.impl.StoryServiceImpl;
 
 @Secured("ROLE_USER")
@@ -28,21 +29,21 @@ import com.demand.server.well_family_house.story.service.impl.StoryServiceImpl;
 @RequestMapping("/stories")
 public class STORYController {
 	@Autowired
-	private StoryServiceImpl storyServiceImpl;
+	private StoryService storyService;
 
 	@RequestMapping(value = "/{story_id}/comment_count", method = RequestMethod.GET)
 	public int family_comment_Count(@PathVariable int story_id) throws Exception {
-		return storyServiceImpl.selectCommentCount(story_id);
+		return storyService.selectCommentCount(story_id);
 	}
 
 	@RequestMapping(value = "/{story_id}/like_count", method = RequestMethod.GET)
 	public int family_like_Count(@PathVariable int story_id) throws Exception {
-		return storyServiceImpl.selectLikeCount(story_id);
+		return storyService.selectLikeCount(story_id);
 	}
 
 	@RequestMapping(value = "/{story_id}/photos", method = RequestMethod.GET)
 	public ArrayList<Photo> family_content_photo_List(@PathVariable int story_id) throws Exception {
-		return storyServiceImpl.selectContentPhotoList(story_id);
+		return storyService.selectContentPhotoList(story_id);
 	}
 
 	@RequestMapping(value = "/{story_id}/likes", method = RequestMethod.POST)
@@ -58,29 +59,29 @@ public class STORYController {
 		notification.setBehavior_id(NotificationBEHAVIORFlag.LIKE);
 		notification.setIntent_id(story_id);
 
-		storyServiceImpl.insertLikeUp(user_id, story_id, notification);
+		storyService.insertLikeUp(user_id, story_id, notification);
 	}
 
 	@RequestMapping(value = "/{story_id}/likes/{user_id}", method = RequestMethod.DELETE)
 	public void family_content_like_down(HttpServletRequest request, @PathVariable int user_id,
 			@PathVariable int story_id) throws Exception {
-		storyServiceImpl.deleteLikeDown(user_id, story_id);
+		storyService.deleteLikeDown(user_id, story_id);
 	}
 
 	@RequestMapping(value = "/{story_id}/like_check/{user_id}", method = RequestMethod.GET)
 	public int family_content_like_check(HttpServletRequest request, @PathVariable int story_id,
 			@PathVariable int user_id) throws Exception {
-		return storyServiceImpl.selectLikeCheck(user_id, story_id);
+		return storyService.selectLikeCheck(user_id, story_id);
 	}
 
 	@RequestMapping(value = "/{story_id}/hits", method = RequestMethod.PUT)
 	public void insert_song_story_hit(@PathVariable int story_id) throws Exception {
-		storyServiceImpl.updateStoryHit(story_id);
+		storyService.updateStoryHit(story_id);
 	}
 
 	@RequestMapping(value = "/{story_id}/comments", method = RequestMethod.GET)
 	public ArrayList<CommentInfo> family_detail_comment_List(@PathVariable int story_id) throws Exception {
-		return storyServiceImpl.selectCommentList(story_id);
+		return storyService.selectCommentList(story_id);
 	}
 
 	@RequestMapping(value = "/{story_id}/comments", method = RequestMethod.POST)
@@ -100,7 +101,7 @@ public class STORYController {
 		notification.setBehavior_id(NotificationBEHAVIORFlag.WRITING_THE_COMMENT);
 		notification.setIntent_id(story_id);
 
-		return storyServiceImpl.insertComment(comment, notification);
+		return storyService.insertComment(comment, notification);
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
@@ -123,28 +124,28 @@ public class STORYController {
 		notification.setIntent_flag(NotificationINTENTFlag.STORY_DETAIL);
 		notification.setBehavior_id(NotificationBEHAVIORFlag.WRITING_THE_STORY);
 
-		return storyServiceImpl.insertStory(story, notification);
+		return storyService.insertStory(story, notification);
 	}
 
 	@RequestMapping(value = "/{story_id}", method = RequestMethod.PUT)
 	public void update_story(HttpServletRequest request, @PathVariable int story_id) throws Exception {
 		String content = request.getParameter("content");
-		storyServiceImpl.updateStory(story_id, content);
+		storyService.updateStory(story_id, content);
 	}
 
 	@RequestMapping(value = "/{story_id}", method = RequestMethod.DELETE)
 	public void delete_story(@PathVariable int story_id) throws Exception {
-		storyServiceImpl.deleteStory(story_id);
+		storyService.deleteStory(story_id);
 	}
 
 	@RequestMapping(value = "/{story_id}", method = RequestMethod.GET)
 	public StoryInfoForNotification storyDetailForNotification(@PathVariable int story_id)
 			throws IOException, Exception {
-		return storyServiceImpl.selectStoryInfo(story_id);
+		return storyService.selectStoryInfo(story_id);
 	}
 
 	@RequestMapping(value = "/{story_id}/photos", method = RequestMethod.POST)
 	public void insert_photos(HttpServletRequest request, @PathVariable int story_id) throws IOException, Exception {
-		storyServiceImpl.insertPhoto(request.getInputStream(), story_id);
+		storyService.insertPhoto(request.getInputStream(), story_id);
 	}
 }

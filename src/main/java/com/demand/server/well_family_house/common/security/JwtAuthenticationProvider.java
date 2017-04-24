@@ -26,7 +26,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
 		try {
 			user_level = jwtUtil.getUser_level(token);
-		} catch (MalformedJwtException e) {
+		} catch (Exception e) {
 			throw new AuthenticationServiceException(
 					"웰패밀리하우스  by the developer 'DongJoo KIM' of Demand corporation.");
 		}

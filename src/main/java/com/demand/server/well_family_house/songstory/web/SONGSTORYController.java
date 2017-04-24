@@ -22,6 +22,7 @@ import com.demand.server.well_family_house.common.dto.SongStoryInfoForNotificati
 import com.demand.server.well_family_house.common.flag.NotificationBEHAVIORFlag;
 import com.demand.server.well_family_house.common.flag.NotificationINTENTFlag;
 import com.demand.server.well_family_house.common.flag.NotificationTOFlag;
+import com.demand.server.well_family_house.songstory.service.SongStoryService;
 import com.demand.server.well_family_house.songstory.service.impl.SongStoryServiceImpl;
 
 @Secured("ROLE_USER")
@@ -30,28 +31,28 @@ import com.demand.server.well_family_house.songstory.service.impl.SongStoryServi
 public class SONGSTORYController {
 
 	@Autowired
-	private SongStoryServiceImpl songStoryServiceImpl;
+	private SongStoryService songStoryService;
 
 	@RequestMapping(value = "/{song_story_id}/photos", method = RequestMethod.POST)
 	public void insert_song_photos(HttpServletRequest request, @PathVariable int song_story_id)
 			throws IOException, Exception {
-		songStoryServiceImpl.insertSongStoryPhoto(request.getInputStream(), song_story_id);
+		songStoryService.insertSongStoryPhoto(request.getInputStream(), song_story_id);
 	}
 
 	@RequestMapping(value = "/{song_story_id}/audios", method = RequestMethod.PUT)
 	public void insert_song_audio(HttpServletRequest request, @PathVariable int song_story_id)
 			throws IOException, Exception {
-		songStoryServiceImpl.insertSongStoryAudio(request.getInputStream(), song_story_id);
+		songStoryService.insertSongStoryAudio(request.getInputStream(), song_story_id);
 	}
 
 	@RequestMapping(value = "/{song_story_id}/comment_count", method = RequestMethod.GET)
 	public int song_story_comment_Count(@PathVariable int song_story_id) throws Exception {
-		return songStoryServiceImpl.selectSongStoryCommentCount(song_story_id);
+		return songStoryService.selectSongStoryCommentCount(song_story_id);
 	}
 
 	@RequestMapping(value = "/{song_story_id}/like_count", method = RequestMethod.GET)
 	public int song_story_like_Count(@PathVariable int song_story_id) throws Exception {
-		return songStoryServiceImpl.selectSongStoryLikeCount(song_story_id);
+		return songStoryService.selectSongStoryLikeCount(song_story_id);
 	}
 
 	@RequestMapping(value = "/{song_story_id}/likes", method = RequestMethod.POST)
@@ -68,34 +69,34 @@ public class SONGSTORYController {
 		notification.setIntent_id(song_story_id);
 		
 
-		songStoryServiceImpl.insertSongStoryLikeUp(user_id, song_story_id, notification);
+		songStoryService.insertSongStoryLikeUp(user_id, song_story_id, notification);
 	}
 	
 	@RequestMapping(value = "/{song_story_id}/hits", method = RequestMethod.PUT)
 	public void insert_song_story_hit(@PathVariable int song_story_id) throws Exception {
-		songStoryServiceImpl.updateSongStoryHit(song_story_id);
+		songStoryService.updateSongStoryHit(song_story_id);
 	}
 
 	@RequestMapping(value = "/{song_story_id}/likes/{user_id}", method = RequestMethod.DELETE)
 	public void song_story_like_down(HttpServletRequest request, @PathVariable int user_id,
 			@PathVariable int song_story_id) throws Exception {
-		songStoryServiceImpl.deleteSongStoryLikeDown(user_id, song_story_id);
+		songStoryService.deleteSongStoryLikeDown(user_id, song_story_id);
 	}
 
 	@RequestMapping(value = "/{song_story_id}/like_check/{user_id}", method = RequestMethod.GET)
 	public int song_story_like_check(HttpServletRequest request, @PathVariable int user_id,
 			@PathVariable int song_story_id) throws Exception {
-		return songStoryServiceImpl.selectSongStoryLikeCheck(user_id, song_story_id);
+		return songStoryService.selectSongStoryLikeCheck(user_id, song_story_id);
 	}
 
 	@RequestMapping(value = "/{song_story_id}/photos", method = RequestMethod.GET)
 	public ArrayList<SongPhoto> song_story_photo_List(@PathVariable int song_story_id) throws Exception {
-		return songStoryServiceImpl.selectSongStoryPhotoList(song_story_id);
+		return songStoryService.selectSongStoryPhotoList(song_story_id);
 	}
 
 	@RequestMapping(value = "/{song_story_id}/comments", method = RequestMethod.GET)
 	public ArrayList<CommentInfo> song_story_comment_List(@PathVariable int song_story_id) throws Exception {
-		return songStoryServiceImpl.selectSongStoryCommentList(song_story_id);
+		return songStoryService.selectSongStoryCommentList(song_story_id);
 	}
 
 	@RequestMapping(value = "/{song_story_id}/comments", method = RequestMethod.POST)
@@ -115,37 +116,37 @@ public class SONGSTORYController {
 		notification.setBehavior_id(NotificationBEHAVIORFlag.WRITING_THE_COMMENT);
 		notification.setIntent_id(song_story_id);
 
-		return songStoryServiceImpl.insertSongStoryComment(songStoryComment, notification);
+		return songStoryService.insertSongStoryComment(songStoryComment, notification);
 	}
 
 	@RequestMapping(value = "/{song_story_id}/emotions", method = RequestMethod.POST)
 	public void insert_emotion_into_song_story(HttpServletRequest request, @PathVariable int song_story_id)
 			throws NumberFormatException, Exception {
-		songStoryServiceImpl.insertEmotionIntoSongStory(song_story_id,
+		songStoryService.insertEmotionIntoSongStory(song_story_id,
 				Integer.parseInt(request.getParameter("song_story_emotion_id")));
 	}
 
 	@RequestMapping(value = "/{song_story_id}/emotions", method = RequestMethod.GET)
 	public ArrayList<SongStoryEmotionData> song_story_emotion_data_List(@PathVariable int song_story_id)
 			throws Exception {
-		return songStoryServiceImpl.selectSongStoryEmotionData(song_story_id);
+		return songStoryService.selectSongStoryEmotionData(song_story_id);
 	}
 
 	@RequestMapping(value = "/{song_story_id}", method = RequestMethod.GET)
 	public SongStoryInfoForNotification storyDetailForNotification(@PathVariable int song_story_id) throws Exception {
-		return songStoryServiceImpl.selectSongStoryInfo(song_story_id);
+		return songStoryService.selectSongStoryInfo(song_story_id);
 	}
 	
 	@RequestMapping(value = "/{song_story_id}", method = RequestMethod.PUT)
 	public void update_story(HttpServletRequest request, @PathVariable int song_story_id) throws Exception {
 		String content = request.getParameter("content");
 		String location = request.getParameter("location");
-		songStoryServiceImpl.updateStory(song_story_id,content,location);
+		songStoryService.updateStory(song_story_id,content,location);
 	}
 	
 	@RequestMapping(value = "/{song_story_id}", method = RequestMethod.DELETE)
 	public void delete_story(@PathVariable int song_story_id) throws  Exception {
-		songStoryServiceImpl.deleteStory(song_story_id);
+		songStoryService.deleteStory(song_story_id);
 	}
 
 }

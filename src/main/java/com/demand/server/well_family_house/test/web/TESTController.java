@@ -5,6 +5,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.demand.server.well_family_house.test.service.TestService;
 import com.demand.server.well_family_house.test.service.impl.TestServiceImpl;
 
 @Secured("ROLE_USER")
@@ -13,10 +14,10 @@ import com.demand.server.well_family_house.test.service.impl.TestServiceImpl;
 	
 public class TESTController {
 	@Autowired
-	TestServiceImpl testServiceImpl;
+	TestService testService;
 	
 	@RequestMapping("/")
 	public void insert() throws Exception{
-		testServiceImpl.insertTest("동주");
+		testService.insertTest("동주");
 	}
 }
