@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.demand.server.well_family_house.family.service.impl.FamilyMapper">
+
+	<select id="selectFamily"
+		resultType="Family">
+		SELECT	id, name, content, avatar, user_id, created_at 
+			FROM	familys
+			where	id = #{param1};
+	</select>
+
+	<select id="selectFamilyUsersInfo" resultType="User">
+		select	u.id as id, u.email as email,u.name as name,u.birth as birth,u.phone as phone,
+				u.avatar as avatar,u.level as level
+		
+			from	users u, 
+					(SELECT * 
+						FROM	family_joiners 
+						where family_id = #{param1} and 
+								user_id != #{param2} and
+								join_flag = 1 ) f
+				
+			where	u.id = f.user_id  
+			
+			order by name;
+	</select>
+
+	<select id="selectFamilyUserId" resultType="int">
+		SELECT	user_id 
+			FROM	familys 
+			where	id = #{param1};
+	</select>
+
+	<!-- find user name -->
+	<select id="selectUserSearchList" resultType="UserInfoForFamilyJoin">
+		SELECT distinct  uf.id as id , uf.email as email, uf.name as name, uf.birth as birth , uf.phone as phone, uf.avatar as avatar, uf.level as level, uf.join_flag as join_flag 
+			FROM	(SELECT distinct us.id as id , us.email as email, us.name as name, us.birth as birth , us.phone as phone, us.avatar as avatar, us.level as level, fj.join_flag as join_flag 
+						FROM	users us Left Join 
+								(SELECT user_id, join_flag 
+									FROM	family_joiners
+	                                WHERE	family_id =  #{param1}) fj 
+	
+						on	us.id = fj.user_id) uf
+				
+	         where	uf.name like CONCAT('%', #{param2},'%') or 
+					uf.email like CONCAT('%', #{param2},'%') 
+	</select>
+	
+	<update id="updateUserForFamilyJoin">
+		update	family_joiners 
+			set	join_flag = 1 
+			where	family_id = #{param1}	and 
+					user_id = #{param2}
+	</update>
+
+	<select id="selectFamilyJoinerList" resultType="UserInfoForFamilyJoin">
+		SELECT distinct us.id as id, us.email as email, us.name as name, us.birth as birth, us.phone as phone, 
+				us.avatar as avatar, us.level as level, fj.join_flag 
+		
+			FROM	(SELECT user_id, join_flag
+						FROM	family_joiners 
+						WHERE	family_id = #{param1}	AND
+								join_flag != 1)	fj,
+					familys fm,
+		            users	us
+		            
+			WHERE	us.id = fj.user_id	AND
+					us.id != fm.user_id	
+	</select>
+
+	<select id="selectContentList"
+		resultType="StoryInfo">
+		SELECT	u.id as user_id, u.name as name, u.avatar as avatar, s.id as story_id, s.created_at as created_at, s.content as content
+			FROM	users u,
+					stories s
+			where	u.id = s.user_id	and
+					s.family_id=#{param1} 
+			order by s.created_at desc;
+	</select>
+
+	<select id="selectPhotoList"
+		resultType="Photo">
+		select	p.id as id, p.story_id as story_id, p.type as type, p.name as name, p.ext as ext
+	
+		    from	photos p, 
+					(SELECT	id 
+						FROM	stories
+						where	family_id =#{param1}) s
+			
+		    where	p.story_id = s.id 
+		    
+		    order by p.updated_at desc;
+	</select>
+	
+	<select id="selectPhotoNameList" resultType="String">
+		select	p.name as name
+		
+		    from	photos p, 
+					(SELECT	id 
+						FROM	stories
+						where	family_id =#{param1}) s
+			
+		    where	p.story_id = s.id 
+	</select>
+
+	<select id="selectFamilyAvatar" resultType="String">
+		SELECT	avatar 
+			FROM	familys 
+		    where	id = #{param1};
+	</select>
+	
+	<select id="selectFamilyName" resultType="String">
+		SELECT	name 
+			FROM	familys 
+		    where	id = #{param1};
+	</select>
+
+	<update id="updateFamilyAvatar">
+		update	familys 
+			set		avatar = #{param2} 
+		    where	id = #{param1};
+	</update>
+
+
+	<insert id="insertUserIntoFamily">
+		insert	into	family_joiners(family_id, user_id, join_flag)
+			values(#{param1}, #{param2}, #{param3});
+	</insert>
+
+	<delete id="deleteFamily">
+		delete 
+			from	familys
+			where	id = #{param1};
+	</delete>
+
+	<delete id="deleteUserFromFamily">
+		delete 
+			from	family_joiners 
+			where	family_id = #{param1}	and 
+					user_id = #{param2};
+	</delete>
+
+	<!-- family edit -->
+	<update id="updateFamilyInfo">
+		update	familys 
+			set		name = #{param2}, content = #{param3} 
+			where 	id =#{param1};
+	</update>
+
+</mapper>

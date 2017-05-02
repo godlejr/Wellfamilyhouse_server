@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.demand.server.well_family_house.story.service.impl.StoryMapper">
+
+	<select id="selectCommentCount" resultType="int">
+		SELECT	count(user_id) as comment_count
+			FROM	comments 
+		    where	story_id = #{param1};
+	</select>
+
+	<select id="selectLikeCount" resultType="int">
+		select	count(user_id) as like_count 
+			from	story_likes 
+			where	story_id = #{param1};
+	</select>
+
+	<select id="selectContentPhotoList"
+		resultType="Photo">
+		SELECT	id, story_id, type, name, ext 
+			FROM	photos
+			where	story_id = #{param1};
+	</select>
+
+	<insert id="insertLikeUp">
+		insert into	story_likes(user_id, story_id)
+			values(#{param1}, #{param2});
+	</insert>
+
+	<delete id="deleteLikeDown">
+		delete 
+			from	story_likes 
+		    where	user_id = #{param1} and
+					story_id = #{param2};
+	</delete>
+
+	<select id="selectLikeCheck" resultType="int">
+		SELECT	count(id) as checked
+			FROM	story_likes 
+		    where	user_id = #{param1}	and 
+					story_id = #{param2};
+	</select>
+
+	<select id="selectCommentList"
+		resultType="CommentInfo">
+		select	c.id as comment_id, c.user_id as user_id, u.name as user_name ,u.avatar as avatar,c.content as content, c.created_at as created_at, c.deleted as deleted 
+			FROM	comments c,
+					users u 
+			where	c.user_id = u.id	and 
+					c.story_id = #{param1} 
+			order by	c.created_at;
+	</select>
+
+	<update id="updateStoryHit">
+		update	stories 
+			set	hits = hits+1 
+		    where	id = #{param1};
+	</update>
+
+	<insert id="insertComment"
+		parameterType="Comment"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		comments(user_id,story_id,content)
+		values(#{user_id},#{story_id},#{content});
+	</insert>
+
+
+	<select id="selectComment"
+		resultType="Comment">
+		select * from comments where
+		id = #{param1};
+	</select>
+
+	<insert id="insertStory"
+		parameterType="Story"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		stories(user_id,family_id,content)
+		values(#{user_id},#{family_id},#{content});
+	</insert>
+
+	<select id="selectStory"
+		resultType="Story">
+		select id,
+		user_id,family_id,content,created_at from stories
+		where id =
+		#{param1};
+	</select>
+
+	<insert id="insertPhoto"
+		parameterType="Photo">
+		insert into
+		photos(story_id,type,name,ext)
+		values(#{story_id},#{type},#{name},#{ext});
+	</insert>
+
+	<select id="selectUser" resultType="int">
+		SELECT user_id FROM stories
+		where id = #{param1};
+	</select>
+
+	<select id="selectStoryInfo"
+		resultType="StoryInfoForNotification">
+		SELECT st.id AS id, st.content AS content, st.created_at AS
+		created_at, st.hits AS hits,
+		us.id AS user_id, us.level AS user_level,
+		us.name AS user_name, us.email AS user_email, us.avatar AS
+		user_avatar, us.phone AS user_phone, us.birth AS user_birth
+
+		FROM
+		stories st,
+		users us
+		WHERE st.user_id = us.id AND
+		st.id = #{param1};
+	</select>
+
+	<update id="updateStory">
+		update stories set content = #{param2} where id =
+		#{param1};
+	</update>
+
+	<select id="selectPhotoName" resultType="String">
+		select name from photos
+		where story_id =#{param1};
+	</select>
+
+	<delete id="deletePhotos">
+		delete from photos where story_id = #{param1};
+	</delete>
+
+	<delete id="deleteStory">
+		delete from stories where id=#{param1};
+	</delete>
+
+</mapper>

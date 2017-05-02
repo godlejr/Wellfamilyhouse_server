@@ -7,13 +7,13 @@
 	namespace="com.demand.server.well_family_house.family.service.impl.FamilyMapper">
 
 	<select id="selectFamily"
-		resultType="com.demand.server.well_family_house.common.dto.Family">
+		resultType="Family">
 		SELECT	id, name, content, avatar, user_id, created_at 
 			FROM	familys
 			where	id = #{param1};
 	</select>
 
-	<select id="selectFamilyUsersInfo" resultType="com.demand.server.well_family_house.common.dto.User">
+	<select id="selectFamilyUsersInfo" resultType="User">
 		select	u.id as id, u.email as email,u.name as name,u.birth as birth,u.phone as phone,
 				u.avatar as avatar,u.level as level
 		
@@ -36,7 +36,7 @@
 	</select>
 
 	<!-- find user name -->
-	<select id="selectUserSearchList" resultType="com.demand.server.well_family_house.common.dto.UserInfoForFamilyJoin">
+	<select id="selectUserSearchList" resultType="UserInfoForFamilyJoin">
 		SELECT distinct  uf.id as id , uf.email as email, uf.name as name, uf.birth as birth , uf.phone as phone, uf.avatar as avatar, uf.level as level, uf.join_flag as join_flag 
 			FROM	(SELECT distinct us.id as id , us.email as email, us.name as name, us.birth as birth , us.phone as phone, us.avatar as avatar, us.level as level, fj.join_flag as join_flag 
 						FROM	users us Left Join 
@@ -57,7 +57,7 @@
 					user_id = #{param2}
 	</update>
 
-	<select id="selectFamilyJoinerList" resultType="com.demand.server.well_family_house.common.dto.UserInfoForFamilyJoin">
+	<select id="selectFamilyJoinerList" resultType="UserInfoForFamilyJoin">
 		SELECT distinct us.id as id, us.email as email, us.name as name, us.birth as birth, us.phone as phone, 
 				us.avatar as avatar, us.level as level, fj.join_flag 
 		
@@ -73,7 +73,7 @@
 	</select>
 
 	<select id="selectContentList"
-		resultType="com.demand.server.well_family_house.common.dto.StoryInfo">
+		resultType="StoryInfo">
 		SELECT	u.id as user_id, u.name as name, u.avatar as avatar, s.id as story_id, s.created_at as created_at, s.content as content
 			FROM	users u,
 					stories s
@@ -83,7 +83,7 @@
 	</select>
 
 	<select id="selectPhotoList"
-		resultType="com.demand.server.well_family_house.common.dto.Photo">
+		resultType="Photo">
 		select	p.id as id, p.story_id as story_id, p.type as type, p.name as name, p.ext as ext
 	
 		    from	photos p, 

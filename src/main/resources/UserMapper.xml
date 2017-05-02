@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.demand.server.well_family_house.user.service.impl.UserMapper">
+	<select id="selectUserInfo" resultType="User">
+		select
+		id,email,name,birth,phone,avatar,level from
+		users
+		where
+		id = #{param1};
+	</select>
+	
+	<select id="selectToken" resultType="String">
+		select	token 
+			from	users 
+			where	id = #{param1}
+	</select>
+	
+	<select id="selectDeviceId" resultType="String">
+		select	device_id 
+			from	users 
+			where	id = #{param1}
+	</select>
+
+	<update id="updateDeviceIdToken">
+		update users set device_id = #{param2}, token =
+		#{param3} where id =
+		#{param1};
+	</update>
+
+	<select id="selectDeviceIdCheck" resultType="int">
+		SELECT
+		count(device_id) as
+		checked FROM wellfamily.users where id=#{param1}
+		and device_id =
+		#{param2};
+	</select>
+
+	<update id="updateToken">
+		update users set token = #{param2} where id =
+		#{param1};
+	</update>
+	
+	<update id="updatePassword">
+		update users set password = #{param2} where id =
+		#{param1};
+	</update>
+
+	<select id="selectFamiliesInfo"
+		resultType="Family">
+		select f.id as id, f.name as name, f.content as content, f.avatar as avatar, f.user_id as user_id
+        from familys f ,
+			(SELECT family_id as f_id 
+				FROM family_joiners 
+                where user_id = #{param1} AND 
+					join_flag = 1) u
+		where f.id = u.f_id;
+	</select>
+
+	<select id="selectFamiliesUserCheck" resultType="int">
+		select count(a.family_id) as checked 
+        
+        from	(SELECT family_id FROM wellfamily.family_joiners where user_id = #{param1} and join_flag=1) a,
+				(SELECT family_id FROM wellfamily.family_joiners where user_id = #{param2} and join_flag=1) b 
+                
+		where a.family_id = b.family_id;
+	</select>
+
+	<select id="selectSongStoryPublicList"
+		resultType="SongStory">
+		SELECT * FROM
+		wellfamily.song_stories where user_id
+		=#{param1} and range_id!=2 and
+		range_id!=3 order by created_at desc;
+	</select>
+
+	<select id="selectSongStoryFamilyList"
+		resultType="SongStory">
+		SELECT * FROM
+		wellfamily.song_stories where user_id
+		=#{param1} and range_id!=3 order
+		by created_at desc;
+	</select>
+
+	<select id="selectSongStoryMeList"
+		resultType="SongStory">
+		SELECT * FROM
+		wellfamily.song_stories where user_id
+		=#{param1} order by created_at
+		desc;
+	</select>
+
+	<!-- find family name -->
+	<select id="selectFamilySearchList"
+		resultType="FamilyInfoForFamilyJoin">
+		SELECT distinct	fm.id as id, fm.name as name, fm.content as content, fm.avatar as avatar, fm.user_id as user_id , fj.join_flag as join_flag ,fj.created_at as created_at
+		FROM	(select id,name,content,avatar,user_id
+					from familys 
+	                where	name	like CONCAT('%',#{param2},'%')) fm	
+	                Left join
+				(select family_id, join_flag, created_at 
+					from family_joiners 
+	                where	user_id	= #{param1} ) fj
+	    on fm.id = fj.family_id
+	</select>
+	
+	<insert id="insertFamily"
+		parameterType="Family"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		familys(name,content,user_id)
+		values(#{name},#{content},#{user_id})
+	</insert>
+
+	<insert id="insertFamilyJoiner">
+		insert into
+		family_joiners(family_id,user_id,join_flag)
+		values(#{param1},#{param2},#{param3})
+	</insert>
+
+
+	<select id="selectFamilyUserCheck" resultType="int">
+		SELECT count(id) as checked 
+		FROM wellfamily.family_joiners 
+		
+		where family_id = #{param1} and
+				user_id != #{param2} and 
+				user_id = #{param3} and
+				join_flag = 1;
+	</select>
+
+	<!-- profile edit -->
+	<select id="selectFavoriteCategoryList"
+		resultType="Category">
+		SELECT
+		id,name,created_at,updated_at FROM
+		favorite_categories;
+	</select>
+
+	<select id="selectGenderCheck" resultType="int">
+		SELECT gender as
+		checked
+		FROM wellfamily.users where id = #{param1};
+	</select>
+
+	<select id="selectFavoriteCheck" resultType="int">
+		SELECT count(*) as
+		checked FROM wellfamily.user_favorite_joiners where user_id =
+		#{param1} and
+		favorite_category_id= #{param2};
+	</select>
+
+	<select id="selectSongCategoryCheck" resultType="int">
+		SELECT count(*)
+		as
+		checked FROM wellfamily.user_song_category_joiners where user_id =
+		#{param1} and
+		song_category_id= #{param2};
+	</select>
+
+	<select id="selectUserAvatar" resultType="String">
+		SELECT avatar FROM
+		wellfamily.users where id =#{param1};
+	</select>
+
+	<update id="updateUserAvatar">
+		update users set avatar = #{param2} where id =
+		#{param1};
+	</update>
+
+	<delete id="deleteFavorite">
+		delete FROM wellfamily.user_favorite_joiners where
+		user_id=#{param1};
+	</delete>
+
+	<delete id="deleteSongCategory">
+		delete FROM wellfamily.user_song_category_joiners
+		where user_id=#{param1}
+	</delete>
+
+	<insert id="insertFavorite">
+		insert into
+		user_favorite_joiners(user_id,favorite_category_id)
+		values(#{param1},#{param2});
+	</insert>
+
+	<insert id="insertSongCategory">
+		insert into
+		user_song_category_joiners(user_id,song_category_id)
+		values(#{param1},#{param2});
+	</insert>
+
+	<update id="updateUserInfo">
+		update users set name = #{param2},birth =
+		#{param3},phone = #{param4},gender = #{param5} where id =
+		#{param1};
+	</update>
+	<insert id="insertStoryReport">
+		insert into
+			story_reports(user_id,story_category_id,report_category_id,story_id)
+			values(#{param1},#{param2},#{param3},#{param4});
+	
+	</insert>
+
+	<insert id="insertCommentReport">
+		insert into
+			comment_reports(user_id,comment_category_id,report_category_id,comment_id)
+			values(#{param1},#{param2},#{param3},#{param4});
+	</insert>
+
+	<select id="selectManageFamilies" resultType="Family">
+		SELECT id, name, content, avatar, user_id, created_at 
+			FROM familys where user_id = #{param1};
+	</select>
+
+	<select id="selectJoinFamilies" resultType="FamilyInfoForFamilyJoin">
+		SELECT fm.id as id, fm.name as name, fm.content as content, fm.avatar as avatar, fm.user_id as user_id, fj.created_at as created_at, fj.join_flag
+	
+	    FROM	familys fm,
+				(select	family_id ,join_flag, created_at
+					from family_joiners 
+	                where user_id = #{param1} )	fj
+			
+		where fm.id  = fj.family_id and
+			fm.user_id != #{param1}
+	</select>
+
+</mapper>

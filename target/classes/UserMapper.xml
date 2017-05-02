@@ -5,7 +5,7 @@
 
 <mapper
 	namespace="com.demand.server.well_family_house.user.service.impl.UserMapper">
-	<select id="selectUserInfo" resultType="com.demand.server.well_family_house.common.dto.User">
+	<select id="selectUserInfo" resultType="User">
 		select
 		id,email,name,birth,phone,avatar,level from
 		users
@@ -50,7 +50,7 @@
 	</update>
 
 	<select id="selectFamiliesInfo"
-		resultType="com.demand.server.well_family_house.common.dto.Family">
+		resultType="Family">
 		select f.id as id, f.name as name, f.content as content, f.avatar as avatar, f.user_id as user_id
         from familys f ,
 			(SELECT family_id as f_id 
@@ -70,7 +70,7 @@
 	</select>
 
 	<select id="selectSongStoryPublicList"
-		resultType="com.demand.server.well_family_house.common.dto.SongStory">
+		resultType="SongStory">
 		SELECT * FROM
 		wellfamily.song_stories where user_id
 		=#{param1} and range_id!=2 and
@@ -78,7 +78,7 @@
 	</select>
 
 	<select id="selectSongStoryFamilyList"
-		resultType="com.demand.server.well_family_house.common.dto.SongStory">
+		resultType="SongStory">
 		SELECT * FROM
 		wellfamily.song_stories where user_id
 		=#{param1} and range_id!=3 order
@@ -86,7 +86,7 @@
 	</select>
 
 	<select id="selectSongStoryMeList"
-		resultType="com.demand.server.well_family_house.common.dto.SongStory">
+		resultType="SongStory">
 		SELECT * FROM
 		wellfamily.song_stories where user_id
 		=#{param1} order by created_at
@@ -95,7 +95,7 @@
 
 	<!-- find family name -->
 	<select id="selectFamilySearchList"
-		resultType="com.demand.server.well_family_house.common.dto.FamilyInfoForFamilyJoin">
+		resultType="FamilyInfoForFamilyJoin">
 		SELECT distinct	fm.id as id, fm.name as name, fm.content as content, fm.avatar as avatar, fm.user_id as user_id , fj.join_flag as join_flag ,fj.created_at as created_at
 		FROM	(select id,name,content,avatar,user_id
 					from familys 
@@ -108,7 +108,7 @@
 	</select>
 	
 	<insert id="insertFamily"
-		parameterType="com.demand.server.well_family_house.common.dto.Family"
+		parameterType="Family"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into
 		familys(name,content,user_id)
@@ -134,7 +134,7 @@
 
 	<!-- profile edit -->
 	<select id="selectFavoriteCategoryList"
-		resultType="com.demand.server.well_family_house.common.dto.Category">
+		resultType="Category">
 		SELECT
 		id,name,created_at,updated_at FROM
 		favorite_categories;
@@ -211,12 +211,12 @@
 			values(#{param1},#{param2},#{param3},#{param4});
 	</insert>
 
-	<select id="selectManageFamilies" resultType="com.demand.server.well_family_house.common.dto.Family">
+	<select id="selectManageFamilies" resultType="Family">
 		SELECT id, name, content, avatar, user_id, created_at 
 			FROM familys where user_id = #{param1};
 	</select>
 
-	<select id="selectJoinFamilies" resultType="com.demand.server.well_family_house.common.dto.FamilyInfoForFamilyJoin">
+	<select id="selectJoinFamilies" resultType="FamilyInfoForFamilyJoin">
 		SELECT fm.id as id, fm.name as name, fm.content as content, fm.avatar as avatar, fm.user_id as user_id, fj.created_at as created_at, fj.join_flag
 	
 	    FROM	familys fm,

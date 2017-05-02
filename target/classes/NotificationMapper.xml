@@ -7,14 +7,14 @@
 	namespace="com.demand.server.well_family_house.notification.service.impl.NotificationMapper">
 
 	<insert id="insertNotification"
-		parameterType="com.demand.server.well_family_house.common.dto.Notification"
+		parameterType="Notification"
 		useGeneratedKeys="true" keyProperty="id">
 		insert	into	notifications(user_id, receive_category_id, receiver_id, content_name, intent_flag, intent_id, behavior_id)
 			values(#{user_id}, #{receive_category_id}, #{receiver_id}, #{content_name}, #{intent_flag}, #{intent_id}, #{behavior_id});
 	</insert>
 
 	<select id="selectNotificationForCreatingFamilyAndJoinAndWantToJoin"
-		resultType="com.demand.server.well_family_house.common.dto.NotificationInfo">
+		resultType="NotificationInfo">
 		SELECT	us.id as id, us.avatar as avatar, us.name as name, nt.content_name as content, fm.avatar as photo 
 	
 			from	notifications nt, 
@@ -29,7 +29,7 @@
 	</select>
 
 	<select id="selectNotificationForWritingCommentAndLike"
-		resultType="com.demand.server.well_family_house.common.dto.NotificationInfo">
+		resultType="NotificationInfo">
 		SELECT	us.id as id, us.avatar as avatar, us.name as name, nt.content_name as content
 
 			from	notifications nt,
@@ -43,13 +43,13 @@
 
 
 	<select id="selectNotificationForWritingStory" statementType="CALLABLE"
-		resultType="com.demand.server.well_family_house.common.dto.NotificationInfo">
+		resultType="NotificationInfo">
 		{CALL notification_story(#{param1})}
 	</select>
 
 	<select id="selectNotificationForWritingSongStory"
 		statementType="CALLABLE"
-		resultType="com.demand.server.well_family_house.common.dto.NotificationInfo">
+		resultType="NotificationInfo">
 		{CALL notification_song_story(#{param1})}
 	</select>
 
@@ -61,14 +61,14 @@
 
 	<!-- get token -->
 	<select id="selectTokenForUser"
-		resultType="com.demand.server.well_family_house.common.dto.Token">
+		resultType="Token">
 		select	id, token 
 			from	users
 			where	id = #{param1};
 	</select>
 
 	<select id="selectTokenForFamily"
-		resultType="com.demand.server.well_family_house.common.dto.Token">
+		resultType="Token">
 		SELECT	us.id as id, us.token as token
 		
 			FROM	family_joiners fj,
@@ -81,7 +81,7 @@
 	</select>
 
 	<select id="selectTokenForFamiles"
-		resultType="com.demand.server.well_family_house.common.dto.Token">
+		resultType="Token">
 		SELECT	distinct us.id as id, us.token as token
 			from	users us,
 					(SELECT	user_id
@@ -116,7 +116,7 @@
 
 	<!-- get notification -->
 	<select id="selectNotification"
-		resultType="com.demand.server.well_family_house.common.dto.Notification">
+		resultType="Notification">
 		SELECT	nt.id as id, nt.user_id as user_id, nt.receive_category_id as receive_category_id, nt.receiver_id as receiver_id,
 				nt.content_name as content_name, nt.intent_flag as intent_flag, nt.intent_id as intent_id, nt.receiver_id as receiver_id,nt.behavior_id as behavior_id,
 				nt.checked as checked, nt.created_at as created_at,nt.updated_at as updated_at

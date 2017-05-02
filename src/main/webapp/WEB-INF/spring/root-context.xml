@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/mvc"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:security="http://www.springframework.org/schema/security"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:util="http://www.springframework.org/schema/util"
-	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
@@ -16,14 +14,15 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
-		
-		
+
+
+	<resources mapping="/resources/**" location="/resources/" />
+
 	<context:component-scan
 		base-package="com.demand.server.well_family_house.common.util.JwtUtil" />
 	<context:annotation-config />
 
-	
+
 	<!-- ppg -->
 	<beans:bean name="ppg_dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -62,29 +61,7 @@
 
 	<beans:bean id="well_family_house_sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<beans:property name="dataSource" ref="well_family_house_dataSource"></beans:property>
-
-		<beans:property name="mapperLocations">
-			<beans:array>
-				<beans:value>classpath:com/demand/server/well_family_house/family/mapper/*.xml
-				</beans:value>
-				<beans:value>classpath:com/demand/server/well_family_house/comment/mapper/*.xml
-				</beans:value>
-				<beans:value>classpath:com/demand/server/well_family_house/main/mapper/*.xml
-				</beans:value>
-				<beans:value>classpath:com/demand/server/well_family_house/story/mapper/*.xml
-				</beans:value>
-				<beans:value>classpath:com/demand/server/well_family_house/songstory/mapper/*.xml
-				</beans:value>
-				<beans:value>classpath:com/demand/server/well_family_house/notification/mapper/*.xml
-				</beans:value>
-				<beans:value>classpath:com/demand/server/well_family_house/song/mapper/*.xml
-				</beans:value>
-				<beans:value>classpath:com/demand/server/well_family_house/user/mapper/*.xml
-				</beans:value>
-				<beans:value>classpath:com/demand/server/well_family_house/test/mapper/*.xml
-				</beans:value>
-			</beans:array>
-		</beans:property>
+		<beans:property name="configLocation" value="classpath:mybatis-config.xml"></beans:property>
 	</beans:bean>
 
 	<beans:bean id="well_family_house_sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
@@ -179,5 +156,5 @@
 
 	<beans:bean id="jwtAuthenticationProvider"
 		class="com.demand.server.well_family_house.common.security.JwtAuthenticationProvider" />
-		
+
 </beans:beans>

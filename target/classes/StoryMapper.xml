@@ -19,7 +19,7 @@
 	</select>
 
 	<select id="selectContentPhotoList"
-		resultType="com.demand.server.well_family_house.common.dto.Photo">
+		resultType="Photo">
 		SELECT	id, story_id, type, name, ext 
 			FROM	photos
 			where	story_id = #{param1};
@@ -45,7 +45,7 @@
 	</select>
 
 	<select id="selectCommentList"
-		resultType="com.demand.server.well_family_house.common.dto.CommentInfo">
+		resultType="CommentInfo">
 		select	c.id as comment_id, c.user_id as user_id, u.name as user_name ,u.avatar as avatar,c.content as content, c.created_at as created_at, c.deleted as deleted 
 			FROM	comments c,
 					users u 
@@ -61,7 +61,7 @@
 	</update>
 
 	<insert id="insertComment"
-		parameterType="com.demand.server.well_family_house.common.dto.Comment"
+		parameterType="Comment"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into
 		comments(user_id,story_id,content)
@@ -70,13 +70,13 @@
 
 
 	<select id="selectComment"
-		resultType="com.demand.server.well_family_house.common.dto.Comment">
+		resultType="Comment">
 		select * from comments where
 		id = #{param1};
 	</select>
 
 	<insert id="insertStory"
-		parameterType="com.demand.server.well_family_house.common.dto.Story"
+		parameterType="Story"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into
 		stories(user_id,family_id,content)
@@ -84,7 +84,7 @@
 	</insert>
 
 	<select id="selectStory"
-		resultType="com.demand.server.well_family_house.common.dto.Story">
+		resultType="Story">
 		select id,
 		user_id,family_id,content,created_at from stories
 		where id =
@@ -92,7 +92,7 @@
 	</select>
 
 	<insert id="insertPhoto"
-		parameterType="com.demand.server.well_family_house.common.dto.Photo">
+		parameterType="Photo">
 		insert into
 		photos(story_id,type,name,ext)
 		values(#{story_id},#{type},#{name},#{ext});
@@ -104,7 +104,7 @@
 	</select>
 
 	<select id="selectStoryInfo"
-		resultType="com.demand.server.well_family_house.common.dto.StoryInfoForNotification">
+		resultType="StoryInfoForNotification">
 		SELECT st.id AS id, st.content AS content, st.created_at AS
 		created_at, st.hits AS hits,
 		us.id AS user_id, us.level AS user_level,

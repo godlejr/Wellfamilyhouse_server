@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<setting name="cacheEnabled" value="true" />
+		<setting name="lazyLoadingEnabled" value="true" />
+		<setting name="multipleResultSetsEnabled" value="true" />
+		<setting name="useColumnLabel" value="true" />
+		<setting name="useGeneratedKeys" value="false" />
+		<setting name="autoMappingBehavior" value="PARTIAL" />
+		<setting name="defaultExecutorType" value="SIMPLE" />
+		<setting name="defaultStatementTimeout" value="25" />
+		<setting name="safeRowBoundsEnabled" value="false" />
+		<setting name="mapUnderscoreToCamelCase" value="false" />
+		<setting name="localCacheScope" value="SESSION" />
+		<setting name="jdbcTypeForNull" value="OTHER" />
+		<setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString" />
+	</settings>
+
+	<typeAliases>
+		<typeAlias type="com.demand.server.well_family_house.common.dto.User"
+			alias="User"></typeAlias>
+			
+		<typeAlias type="com.demand.server.well_family_house.common.dto.Family"
+			alias="Family"></typeAlias>
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.FamilyInfoForFamilyJoin"
+			alias="FamilyInfoForFamilyJoin"></typeAlias>
+
+		<typeAlias type="com.demand.server.well_family_house.common.dto.SongStory"
+			alias="SongStory"></typeAlias>
+
+		<typeAlias type="com.demand.server.well_family_house.common.dto.Category"
+			alias="Category"></typeAlias>
+
+		<typeAlias type="com.demand.server.well_family_house.common.dto.Photo"
+			alias="Photo"></typeAlias>
+
+		<typeAlias type="com.demand.server.well_family_house.common.dto.SongPhoto"
+			alias="SongPhoto"></typeAlias>
+
+		<typeAlias type="com.demand.server.well_family_house.common.dto.Comment"
+			alias="Comment"></typeAlias>
+
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.CommentInfo"
+			alias="CommentInfo"></typeAlias>
+
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.SongComment"
+			alias="SongComment"></typeAlias>
+
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.SongStoryComment"
+			alias="SongStoryComment"></typeAlias>
+
+		<typeAlias type="com.demand.server.well_family_house.common.dto.Story"
+			alias="Story"></typeAlias>
+
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.StoryInfoForNotification"
+			alias="StoryInfoForNotification"></typeAlias>
+
+		<typeAlias type="com.demand.server.well_family_house.common.dto.StoryInfo"
+			alias="StoryInfo"></typeAlias>
+
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.SongStoryEmotionData"
+			alias="SongStoryEmotionData"></typeAlias>
+
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.SongStoryInfoForNotification"
+			alias="SongStoryInfoForNotification"></typeAlias>
+
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.SongCategory"
+			alias="SongCategory"></typeAlias>
+
+		<typeAlias type="com.demand.server.well_family_house.common.dto.Song"
+			alias="Song"></typeAlias>
+
+		<typeAlias type="com.demand.server.well_family_house.common.dto.Range"
+			alias="Range"></typeAlias>
+
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.SongStoryEmotionInfo"
+			alias="SongStoryEmotionInfo"></typeAlias>
+
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.Notification"
+			alias="Notification"></typeAlias>
+
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.NotificationInfo"
+			alias="NotificationInfo"></typeAlias>
+
+		<typeAlias type="com.demand.server.well_family_house.common.dto.Token"
+			alias="Token"></typeAlias>
+
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.UserInfoForFamilyJoin"
+			alias="UserInfoForFamilyJoin"></typeAlias>
+
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="NotificationMapper.xml" />
+		<mapper resource="UserMapper.xml" />
+		<mapper resource="StoryMapper.xml" />
+		<mapper resource="MainMapper.xml" />
+		<mapper resource="SongStoryMapper.xml" />
+		<mapper resource="SongMapper.xml" />
+		<mapper resource="FamilyMapper.xml" />
+		<mapper resource="CommentMapper.xml" />
+
+
+	</mappers>
+
+</configuration>

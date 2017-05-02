@@ -7,7 +7,7 @@
 	namespace="com.demand.server.well_family_house.song.service.impl.SongMapper">
 
 	<select id="selectSongCategoryList"
-		resultType="com.demand.server.well_family_house.common.dto.SongCategory">
+		resultType="SongCategory">
 		SELECT	id, name, avatar, created_at 
 			FROM	song_categories;
 	</select>
@@ -30,20 +30,20 @@
 		    where	song_id = #{param1};
 	</select>
 
-	<select id="selectSongListByHits" resultType="com.demand.server.well_family_house.common.dto.Song">
+	<select id="selectSongListByHits" resultType="Song">
 		SELECT	id, name, ext, title, singer, avatar, category_id, created_at 
 			FROM	songs 
 		    order by	hits 	desc 
 		    limit 10;
 	</select>
 
-	<select id="selectRandomSong" resultType="com.demand.server.well_family_house.common.dto.Song">
+	<select id="selectRandomSong" resultType="Song">
 		SELECT	id, name, ext, title, singer, avatar, category_id, created_at 
 			FROM	songs 
 		    where	id = #{param1};
 	</select>
 
-	<select id="selectSongListByCategory" resultType="com.demand.server.well_family_house.common.dto.Song">
+	<select id="selectSongListByCategory" resultType="Song">
 		SELECT	id, name, ext, title, singer, avatar, category_id, created_at 
 			FROM	songs 
 		    where	category_id = #{param1};
@@ -56,7 +56,7 @@
 	</update>
 
 	<select id="selectSongCommentList"
-		resultType="com.demand.server.well_family_house.common.dto.CommentInfo">
+		resultType="CommentInfo">
 		select	c.id as comment_id, c.user_id as user_id, u.name as user_name ,u.avatar as avatar, c.content as content, c.created_at as created_at, c.deleted as deleted 
 			FROM	song_comments c,
 					users u 
@@ -87,42 +87,42 @@
 	</select>
 
 	<insert id="insertSongComment"
-		parameterType="com.demand.server.well_family_house.common.dto.SongComment"
+		parameterType="SongComment"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into	song_comments(user_id, song_id, content)
 			values(#{user_id}, #{song_id}, #{content})
 	</insert>
 
 	<select id="selectSongComment"
-		resultType="com.demand.server.well_family_house.common.dto.SongComment">
+		resultType="SongComment">
 		select	* 
 			from	song_comments 
 		    where	id = #{param1};
 	</select>
 
 	<select id="selectSongRangeList"
-		resultType="com.demand.server.well_family_house.common.dto.Range">
+		resultType="Range">
 		select	id, name 
 			from	ranges;
 	</select>
 
 	<!-- song story insert -->
 	<insert id="insertSongStory"
-		parameterType="com.demand.server.well_family_house.common.dto.SongStory"
+		parameterType="SongStory"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into song_stories(user_id, range_id, song_id, song_title, song_singer, content, location)
 			values(#{user_id}, #{range_id}, #{song_id}, #{song_title}, #{song_singer}, #{content}, #{location});
 	</insert>
 
 	<select id="selectSongStory"
-		resultType="com.demand.server.well_family_house.common.dto.SongStory">
+		resultType="SongStory">
 		select	id, user_id, range_id, song_id, song_title, song_singer, content, location, created_at
 			from	song_stories 
 		    where	id = #{param1};
 	</select>
 
 	<select id="selectEmotionList"
-		resultType="com.demand.server.well_family_house.common.dto.SongStoryEmotionInfo">
+		resultType="SongStoryEmotionInfo">
 		SELECT	se.id as id, se.name as name, se.emotion_category_id as emotion_category_id, ec.avatar as avatar
 			FROM	song_story_emotions se,
 					emotion_categories ec 
