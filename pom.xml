@@ -131,7 +131,7 @@
 		</dependency>
 
 
-
+		<!-- database -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -154,7 +154,7 @@
 		</dependency>
 
 
-
+		<!-- json response -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
@@ -178,7 +178,7 @@
 		</dependency>
 
 
-
+		<!-- aws -->
 		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk-s3</artifactId>
@@ -186,7 +186,7 @@
 		</dependency>
 
 
-
+		<!-- spring security -->
 		<dependency>
 			<groupId>org.springframework.security.oauth</groupId>
 			<artifactId>spring-security-oauth2</artifactId>
@@ -223,7 +223,8 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.7.0</version>
 		</dependency>
-
+		
+		<!-- mail -->
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
