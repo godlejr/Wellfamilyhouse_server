@@ -23,7 +23,7 @@
 	<typeAliases>
 		<typeAlias type="com.demand.server.well_family_house.common.dto.User"
 			alias="User"></typeAlias>
-			
+
 		<typeAlias type="com.demand.server.well_family_house.common.dto.Family"
 			alias="Family"></typeAlias>
 		<typeAlias
@@ -104,6 +104,10 @@
 			type="com.demand.server.well_family_house.common.dto.UserInfoForFamilyJoin"
 			alias="UserInfoForFamilyJoin"></typeAlias>
 
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.FallDiagnosisCategory"
+			alias="FallDiagnosisCategory"></typeAlias>
+
 	</typeAliases>
 
 	<mappers>
@@ -115,8 +119,7 @@
 		<mapper resource="SongMapper.xml" />
 		<mapper resource="FamilyMapper.xml" />
 		<mapper resource="CommentMapper.xml" />
-
-
+		<mapper resource="FallDiagnosisMapper.xml" />
 	</mappers>
 
 </configuration>
