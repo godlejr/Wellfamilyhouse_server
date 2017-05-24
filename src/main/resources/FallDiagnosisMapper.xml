@@ -10,5 +10,11 @@
 		SELECT	id, name, created_at, updated_at
 			FROM	fall_diagnosis_categories;
 	</select>
+	
+	<select id="selectSelfDiagnosisCategoryList" resultType="SelfDiagnosisCategory">
+		SELECT	id, fall_diagnosis_category_id, name, avatar, created_at, updated_at 
+			FROM	self_diagnosis_categories
+		    where	fall_diagnosis_category_id = #{param1};
+	</select>
 
 </mapper>
