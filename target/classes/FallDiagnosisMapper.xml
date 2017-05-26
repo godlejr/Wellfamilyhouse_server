@@ -12,8 +12,8 @@
 	</select>
 	
 	<select id="selectSelfDiagnosisCategoryList" resultType="SelfDiagnosisCategory">
-		SELECT	id, fall_diagnosis_category_id, name, avatar, created_at, updated_at 
-			FROM	self_diagnosis_categories
+		SELECT	id, fall_diagnosis_category_id, name,content, avatar, created_at, updated_at 
+			FROM	fall_diagnosis_content_categories
 		    where	fall_diagnosis_category_id = #{param1};
 	</select>
 

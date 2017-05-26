@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demand.server.well_family_house.common.dto.FallDiagnosisCategory;
-import com.demand.server.well_family_house.common.dto.SelfDiagnosisCategory;
+import com.demand.server.well_family_house.common.dto.FallDiagnosisContentCategory;
 import com.demand.server.well_family_house.falldiagnosis.service.FallDiagnosisService;
 
 @Secured("ROLE_USER")
@@ -28,7 +28,7 @@ public class FallDiagnosisController {
 	}
 	
 	@RequestMapping(value = "/categories/{fall_diagnosis_category_id}", method = RequestMethod.GET)
-	public ArrayList<SelfDiagnosisCategory> selfCategoryList(@PathVariable int fall_diagnosis_category_id) throws Exception {
+	public ArrayList<FallDiagnosisContentCategory> selfCategoryList(@PathVariable int fall_diagnosis_category_id) throws Exception {
 		return fallDiagnosisService.selectSelfDiagnosisCategoryList(fall_diagnosis_category_id);
 	}
 

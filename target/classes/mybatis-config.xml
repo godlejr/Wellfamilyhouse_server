@@ -109,8 +109,8 @@
 			alias="FallDiagnosisCategory"></typeAlias>
 
 		<typeAlias
-			type="com.demand.server.well_family_house.common.dto.SelfDiagnosisCategory"
-			alias="SelfDiagnosisCategory"></typeAlias>
+			type="com.demand.server.well_family_house.common.dto.FallDiagnosisContentCategory"
+			alias="FallDiagnosisContentCategory"></typeAlias>
 
 		<typeAlias
 			type="com.demand.server.well_family_house.common.dto.FallDiagnosisStory"

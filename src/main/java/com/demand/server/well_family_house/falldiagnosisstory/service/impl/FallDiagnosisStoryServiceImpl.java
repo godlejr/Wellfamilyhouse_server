@@ -49,9 +49,9 @@ public class FallDiagnosisStoryServiceImpl implements FallDiagnosisStoryService 
 	}
 
 	@Override
-	public void insertSelfDiagnosis(int fall_diagnosis_story_id, int user_id, int self_diagnosis_category_id)
+	public void insertSelfDiagnosis(int fall_diagnosis_story_id, int user_id, int fall_diagnosis_content_category_id)
 			throws Exception {
-		fallDiagnosisStoryMapper.insertSelfDiagnosis(fall_diagnosis_story_id, user_id, self_diagnosis_category_id);
+		fallDiagnosisStoryMapper.insertSelfDiagnosis(fall_diagnosis_story_id, user_id, fall_diagnosis_content_category_id);
 	}
 
 }

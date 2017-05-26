@@ -7,5 +7,5 @@ public interface FallDiagnosisStoryService {
 
 	int insertFallDiagnosisStory(FallDiagnosisStory fallDiagnosisStory, Notification notification) throws Exception;
 
-	void insertSelfDiagnosis(int fall_diagnosis_story_id, int user_id, int self_diagnosis_category_id) throws Exception;
+	void insertSelfDiagnosis(int fall_diagnosis_story_id, int user_id, int fall_diagnosis_content_category_id) throws Exception;
 }

@@ -16,7 +16,7 @@
 	
 	<insert id="insertSelfDiagnosis">
 		insert	into
-			self_diagnosis(fall_diagnosis_story_id, user_id, self_diagnosis_category_id)
+			self_diagnosis(fall_diagnosis_story_id, user_id, fall_diagnosis_content_category_id)
 			values(#{param1},#{param2},#{param3})
 	</insert>
 

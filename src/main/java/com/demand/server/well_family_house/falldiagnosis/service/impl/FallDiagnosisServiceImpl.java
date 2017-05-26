@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demand.server.well_family_house.common.dto.FallDiagnosisCategory;
-import com.demand.server.well_family_house.common.dto.SelfDiagnosisCategory;
+import com.demand.server.well_family_house.common.dto.FallDiagnosisContentCategory;
 import com.demand.server.well_family_house.falldiagnosis.service.FallDiagnosisService;
 
 @Service
@@ -21,7 +21,7 @@ public class FallDiagnosisServiceImpl implements FallDiagnosisService {
 	}
 
 	@Override
-	public ArrayList<SelfDiagnosisCategory> selectSelfDiagnosisCategoryList(int fall_diagnosis_category_id)
+	public ArrayList<FallDiagnosisContentCategory> selectSelfDiagnosisCategoryList(int fall_diagnosis_category_id)
 			throws Exception {
 		return fallDiagnosisMapper.selectSelfDiagnosisCategoryList(fall_diagnosis_category_id);
 	}

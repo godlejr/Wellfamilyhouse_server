@@ -43,8 +43,8 @@ public class FallDiagnosisStoryController {
 	@RequestMapping(value = "/{fall_diagnosis_story_id}", method = RequestMethod.POST)
 	public void insertSelfDiagnosis(@PathVariable int fall_diagnosis_story_id, HttpServletRequest request) throws Exception {
 		int user_id = Integer.parseInt(request.getParameter("user_id"));
-		int self_diagnosis_category_id = Integer.parseInt(request.getParameter("self_diagnosis_category_id"));
+		int fall_diagnosis_content_category_id = Integer.parseInt(request.getParameter("fall_diagnosis_content_category_id"));
 		
-		falldiagnosisStoryService.insertSelfDiagnosis(fall_diagnosis_story_id,user_id,self_diagnosis_category_id);
+		falldiagnosisStoryService.insertSelfDiagnosis(fall_diagnosis_story_id,user_id,fall_diagnosis_content_category_id);
 	}
 }
