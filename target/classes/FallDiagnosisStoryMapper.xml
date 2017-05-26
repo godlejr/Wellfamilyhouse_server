@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.demand.server.well_family_house.falldiagnosisstory.service.impl.FallDiagnosisStoryMapper">
+	
+	<insert id="insertFallDiagnosisStory"
+		parameterType="FallDiagnosisStory"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		fall_diagnosis_stories(user_id,fall_diagnosis_category_id)
+		values(#{user_id},#{fall_diagnosis_category_id})
+	</insert>
+	
+	<insert id="insertSelfDiagnosis">
+		insert	into
+			self_diagnosis(fall_diagnosis_story_id, user_id, self_diagnosis_category_id)
+			values(#{param1},#{param2},#{param3})
+	</insert>
+
+</mapper>

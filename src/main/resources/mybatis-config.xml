@@ -107,10 +107,18 @@
 		<typeAlias
 			type="com.demand.server.well_family_house.common.dto.FallDiagnosisCategory"
 			alias="FallDiagnosisCategory"></typeAlias>
-			
+
 		<typeAlias
 			type="com.demand.server.well_family_house.common.dto.SelfDiagnosisCategory"
 			alias="SelfDiagnosisCategory"></typeAlias>
+
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.FallDiagnosisStory"
+			alias="FallDiagnosisStory"></typeAlias>
+			
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.SelfDiagnosis"
+			alias="SelfDiagnosis"></typeAlias>
 
 
 	</typeAliases>
@@ -125,6 +133,7 @@
 		<mapper resource="FamilyMapper.xml" />
 		<mapper resource="CommentMapper.xml" />
 		<mapper resource="FallDiagnosisMapper.xml" />
+		<mapper resource="FallDiagnosisStoryMapper.xml" />
 	</mappers>
 
 </configuration>
