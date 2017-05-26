@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.demand.server.well_family_house.common.dto.FallDiagnosisCategory;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisContentCategory;
+import com.demand.server.well_family_house.common.dto.PhysicalEvaluationCategory;
 import com.demand.server.well_family_house.falldiagnosis.service.FallDiagnosisService;
 
 @Service
@@ -21,9 +22,15 @@ public class FallDiagnosisServiceImpl implements FallDiagnosisService {
 	}
 
 	@Override
-	public ArrayList<FallDiagnosisContentCategory> selectSelfDiagnosisCategoryList(int fall_diagnosis_category_id)
+	public ArrayList<FallDiagnosisContentCategory> selectFallDiagnosisContentCategoryList(int fall_diagnosis_category_id)
 			throws Exception {
-		return fallDiagnosisMapper.selectSelfDiagnosisCategoryList(fall_diagnosis_category_id);
+		return fallDiagnosisMapper.selectFallDiagnosisContentCategoryList(fall_diagnosis_category_id);
+	}
+
+	@Override
+	public ArrayList<PhysicalEvaluationCategory> selectPhysicalEvaluationCategoryList(int fall_diagnosis_category_id)
+			throws Exception {
+		return fallDiagnosisMapper.selectPhysicalEvaluationCategoryList(fall_diagnosis_category_id);
 	}
 
 }

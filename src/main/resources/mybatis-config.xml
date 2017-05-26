@@ -119,6 +119,10 @@
 		<typeAlias
 			type="com.demand.server.well_family_house.common.dto.SelfDiagnosis"
 			alias="SelfDiagnosis"></typeAlias>
+			
+			<typeAlias
+			type="com.demand.server.well_family_house.common.dto.PhysicalEvaluationCategory"
+			alias="PhysicalEvaluationCategory"></typeAlias>
 
 
 	</typeAliases>

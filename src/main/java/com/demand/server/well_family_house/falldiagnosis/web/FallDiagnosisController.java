@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.demand.server.well_family_house.common.dto.FallDiagnosisCategory;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisContentCategory;
+import com.demand.server.well_family_house.common.dto.PhysicalEvaluationCategory;
 import com.demand.server.well_family_house.falldiagnosis.service.FallDiagnosisService;
 
 @Secured("ROLE_USER")
@@ -28,8 +29,14 @@ public class FallDiagnosisController {
 	}
 	
 	@RequestMapping(value = "/categories/{fall_diagnosis_category_id}", method = RequestMethod.GET)
-	public ArrayList<FallDiagnosisContentCategory> selfCategoryList(@PathVariable int fall_diagnosis_category_id) throws Exception {
-		return fallDiagnosisService.selectSelfDiagnosisCategoryList(fall_diagnosis_category_id);
+	public ArrayList<FallDiagnosisContentCategory> fallDiagnosisContentCategoryList(@PathVariable int fall_diagnosis_category_id) throws Exception {
+		return fallDiagnosisService.selectFallDiagnosisContentCategoryList(fall_diagnosis_category_id);
 	}
+	
+	@RequestMapping(value = "/categories/{fall_diagnosis_category_id}/physicalEvaluationCategories", method = RequestMethod.GET)
+	public ArrayList<PhysicalEvaluationCategory> physicalEvaluationCategoryList(@PathVariable int fall_diagnosis_category_id) throws Exception {
+		return fallDiagnosisService.selectPhysicalEvaluationCategoryList(fall_diagnosis_category_id);
+	}
+	
 
 }

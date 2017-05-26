@@ -11,10 +11,21 @@
 			FROM	fall_diagnosis_categories;
 	</select>
 	
-	<select id="selectSelfDiagnosisCategoryList" resultType="FallDiagnosisContentCategory">
+	<select id="selectFallDiagnosisContentCategoryList" resultType="FallDiagnosisContentCategory">
 		SELECT	id, fall_diagnosis_category_id, name,content, avatar, created_at, updated_at 
 			FROM	fall_diagnosis_content_categories
 		    where	fall_diagnosis_category_id = #{param1};
 	</select>
 
+	<select id="selectPhysicalEvaluationCategoryList" resultType="PhysicalEvaluationCategory">
+		SELECT	pe.id as id, pe.fall_diagnosis_content_category_id as fall_diagnosis_content_category_id, pe.name as name, pe.content as content, pe.avatar as avatar, pe.created_at as created_at, pe.updated_at as updated_at
+			
+		    FROM	physical_evaluation_categories pe,
+					fall_diagnosis_content_categories dc
+			
+		    where	pe.fall_diagnosis_content_category_id = dc.id	and
+					dc.fall_diagnosis_category_id = #{param1};
+		            
+			order by pe.id
+	</select>
 </mapper>

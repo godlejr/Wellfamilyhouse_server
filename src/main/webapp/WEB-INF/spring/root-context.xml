@@ -86,7 +86,7 @@
 		<tx:attributes>
 			<tx:method name="insert*" rollback-for="Exception" />
 			<tx:method name="update*" rollback-for="Exception" />
-			<tx:method name="selete*" rollback-for="Exception" />
+			<tx:method name="select*" rollback-for="Exception" />
 			<tx:method name="delete*" rollback-for="Exception" />
 		</tx:attributes>
 	</tx:advice>
