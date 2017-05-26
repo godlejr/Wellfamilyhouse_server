@@ -24,7 +24,7 @@
 					fall_diagnosis_content_categories dc
 			
 		    where	pe.fall_diagnosis_content_category_id = dc.id	and
-					dc.fall_diagnosis_category_id = #{param1};
+					dc.fall_diagnosis_category_id = #{param1}
 		            
 			order by pe.id
 	</select>
