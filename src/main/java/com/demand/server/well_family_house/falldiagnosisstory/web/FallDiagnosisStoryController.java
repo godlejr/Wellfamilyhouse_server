@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.demand.server.well_family_house.common.dto.FallDiagnosisStory;
 import com.demand.server.well_family_house.common.dto.Notification;
+import com.demand.server.well_family_house.common.dto.PhysicalEvaluation;
+import com.demand.server.well_family_house.common.dto.PhysicalEvaluationScore;
 import com.demand.server.well_family_house.common.flag.NotificationBEHAVIORFlag;
 import com.demand.server.well_family_house.common.flag.NotificationINTENTFlag;
 import com.demand.server.well_family_house.common.flag.NotificationTOFlag;
@@ -19,7 +21,7 @@ import com.demand.server.well_family_house.falldiagnosisstory.service.FallDiagno
 
 @Secured("ROLE_USER")
 @RestController
-@RequestMapping("/fall_diagnosis_story")
+@RequestMapping("/fall_diagnosis_stories")
 public class FallDiagnosisStoryController {
 	
 	@Autowired
@@ -40,11 +42,24 @@ public class FallDiagnosisStoryController {
 	}
 	
 	
-	@RequestMapping(value = "/{fall_diagnosis_story_id}", method = RequestMethod.POST)
+	@RequestMapping(value = "/{fall_diagnosis_story_id}/self_diagnosis", method = RequestMethod.POST)
 	public void insertSelfDiagnosis(@PathVariable int fall_diagnosis_story_id, HttpServletRequest request) throws Exception {
 		int user_id = Integer.parseInt(request.getParameter("user_id"));
 		int fall_diagnosis_content_category_id = Integer.parseInt(request.getParameter("fall_diagnosis_content_category_id"));
 		
 		falldiagnosisStoryService.insertSelfDiagnosis(fall_diagnosis_story_id,user_id,fall_diagnosis_content_category_id);
 	}
+	
+	@RequestMapping(value = "/{fall_diagnosis_story_id}/physical_evaluation", method = RequestMethod.POST)
+	public void insertPhysicalEvaluation(@PathVariable int fall_diagnosis_story_id, @RequestBody PhysicalEvaluation physicalEvaluation) throws Exception {
+		falldiagnosisStoryService.insertPhysicalEvaluation(physicalEvaluation);
+	}
+	
+	@RequestMapping(value = "/{fall_diagnosis_story_id}/physical_evaluation_score", method = RequestMethod.POST)
+	public void insertPhysicalEvaluationScore(@PathVariable int fall_diagnosis_story_id, @RequestBody PhysicalEvaluationScore physicalEvaluationScore) throws Exception {
+		falldiagnosisStoryService.insertPhysicalEvaluationScore(physicalEvaluationScore);
+	}
+	
+	
+	
 }

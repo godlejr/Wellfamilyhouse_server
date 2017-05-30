@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.demand.server.well_family_house.common.dto.FallDiagnosisStory;
 import com.demand.server.well_family_house.common.dto.Notification;
+import com.demand.server.well_family_house.common.dto.PhysicalEvaluation;
+import com.demand.server.well_family_house.common.dto.PhysicalEvaluationScore;
 import com.demand.server.well_family_house.common.flag.FallDiagnosisFlag;
 import com.demand.server.well_family_house.common.util.AndroidPushConnection;
 import com.demand.server.well_family_house.falldiagnosisstory.service.FallDiagnosisStoryService;
@@ -52,6 +54,16 @@ public class FallDiagnosisStoryServiceImpl implements FallDiagnosisStoryService 
 	public void insertSelfDiagnosis(int fall_diagnosis_story_id, int user_id, int fall_diagnosis_content_category_id)
 			throws Exception {
 		fallDiagnosisStoryMapper.insertSelfDiagnosis(fall_diagnosis_story_id, user_id, fall_diagnosis_content_category_id);
+	}
+
+	@Override
+	public void insertPhysicalEvaluation(PhysicalEvaluation physicalEvaluation) throws Exception {
+		fallDiagnosisStoryMapper.insertPhysicalEvaluation(physicalEvaluation);
+	}
+
+	@Override
+	public void insertPhysicalEvaluationScore(PhysicalEvaluationScore physicalEvaluationScore) throws Exception {
+		fallDiagnosisStoryMapper.insertPhysicalEvaluationScore(physicalEvaluationScore);		
 	}
 
 }

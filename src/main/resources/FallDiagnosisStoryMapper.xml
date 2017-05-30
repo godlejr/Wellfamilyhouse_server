@@ -5,19 +5,31 @@
 
 <mapper
 	namespace="com.demand.server.well_family_house.falldiagnosisstory.service.impl.FallDiagnosisStoryMapper">
-	
-	<insert id="insertFallDiagnosisStory"
-		parameterType="FallDiagnosisStory"
+
+	<insert id="insertFallDiagnosisStory" parameterType="FallDiagnosisStory"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into
 		fall_diagnosis_stories(user_id,fall_diagnosis_category_id)
 		values(#{user_id},#{fall_diagnosis_category_id})
 	</insert>
-	
+
 	<insert id="insertSelfDiagnosis">
-		insert	into
-			self_diagnosis(fall_diagnosis_story_id, user_id, fall_diagnosis_content_category_id)
-			values(#{param1},#{param2},#{param3})
+		insert into
+		self_diagnosis(fall_diagnosis_story_id, user_id, fall_diagnosis_content_category_id)
+		values(#{param1},#{param2},#{param3})
 	</insert>
 
+	<insert id="insertPhysicalEvaluation" parameterType="PhysicalEvaluation">
+		insert into
+	    physical_evaluations(fall_diagnosis_story_id,  user_id, physical_evaluation_category_id, minute, second, millisecond)
+	    values(#{fall_diagnosis_story_id},#{user_id},#{physical_evaluation_category_id},#{minute},#{second},#{millisecond})
+	</insert>
+	
+	<insert id="insertPhysicalEvaluationScore" parameterType="PhysicalEvaluationScore">
+		insert into
+		    physical_evaluation_scores(fall_diagnosis_story_id, balance_score, movement_score, leg_strength_score)
+		    values(#{fall_diagnosis_story_id},#{balance_score},#{movement_score},#{leg_strength_score})
+	</insert>
+	
+	
 </mapper>

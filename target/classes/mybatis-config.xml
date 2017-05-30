@@ -115,14 +115,22 @@
 		<typeAlias
 			type="com.demand.server.well_family_house.common.dto.FallDiagnosisStory"
 			alias="FallDiagnosisStory"></typeAlias>
-			
+
 		<typeAlias
 			type="com.demand.server.well_family_house.common.dto.SelfDiagnosis"
 			alias="SelfDiagnosis"></typeAlias>
-			
-			<typeAlias
+
+		<typeAlias
 			type="com.demand.server.well_family_house.common.dto.PhysicalEvaluationCategory"
 			alias="PhysicalEvaluationCategory"></typeAlias>
+
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.PhysicalEvaluation"
+			alias="PhysicalEvaluation"></typeAlias>
+
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.PhysicalEvaluationScore"
+			alias="PhysicalEvaluationScore"></typeAlias>
 
 
 	</typeAliases>
