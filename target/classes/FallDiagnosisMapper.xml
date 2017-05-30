@@ -28,4 +28,18 @@
 		            
 			order by pe.id
 	</select>
+	
+	<select id="selectEnvironmentEvaluationCategoryList" resultType="EnvironmentEvaluationCategory">
+		SELECT	ec.id as id, ec.fall_diagnosis_content_category_id as fall_diagnosis_content_category_id, ec.name as name, ec.avatar as avatar, ec.created_at as created_at, ec.updated_at as updated_at
+			
+		    FROM	environment_evaluation_categories ec,
+					fall_diagnosis_content_categories dc
+			
+		    where	ec.fall_diagnosis_content_category_id = dc.id	and
+					dc.fall_diagnosis_category_id = #{param1}	and
+                    ec.fall_diagnosis_content_category_id = #{param2}
+		            
+			order by ec.id
+	
+	</select>
 </mapper>

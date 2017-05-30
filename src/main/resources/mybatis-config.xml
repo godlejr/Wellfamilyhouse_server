@@ -132,6 +132,10 @@
 			type="com.demand.server.well_family_house.common.dto.PhysicalEvaluationScore"
 			alias="PhysicalEvaluationScore"></typeAlias>
 
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.EnvironmentEvaluationCategory"
+			alias="EnvironmentEvaluationCategory"></typeAlias>
+
 
 	</typeAliases>
 
