@@ -31,5 +31,16 @@
 		    values(#{fall_diagnosis_story_id},#{balance_score},#{movement_score},#{leg_strength_score})
 	</insert>
 	
+	<insert id="insertEnvironmentEvaluation">
+		insert into
+		environment_evaluations(fall_diagnosis_story_id, user_id, environment_evaluation_category_id)
+		values(#{param1},#{param2},#{param3})
+	</insert>
+	
+	<insert id="insertEnvironmentPhoto"
+		parameterType="EnvironmentPhoto">
+		insert into	environment_photos(fall_diagnosis_story_id, type, name, ext)
+			values(#{fall_diagnosis_story_id}, #{type}, #{name}, #{ext});
+	</insert>
 	
 </mapper>

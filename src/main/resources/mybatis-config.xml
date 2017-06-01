@@ -136,6 +136,16 @@
 			type="com.demand.server.well_family_house.common.dto.EnvironmentEvaluationCategory"
 			alias="EnvironmentEvaluationCategory"></typeAlias>
 
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.EnvironmentEvaluation"
+			alias="EnvironmentEvaluation"></typeAlias>
+
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.EnvironmentPhoto"
+			alias="EnvironmentPhoto"></typeAlias>
+
+
+
 
 	</typeAliases>
 

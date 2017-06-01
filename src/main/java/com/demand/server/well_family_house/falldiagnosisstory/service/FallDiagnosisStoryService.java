@@ -1,5 +1,9 @@
 package com.demand.server.well_family_house.falldiagnosisstory.service;
 
+import java.io.InputStream;
+
+import javax.servlet.ServletInputStream;
+
 import com.demand.server.well_family_house.common.dto.FallDiagnosisStory;
 import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.PhysicalEvaluation;
@@ -14,4 +18,8 @@ public interface FallDiagnosisStoryService {
 	void insertPhysicalEvaluation(PhysicalEvaluation physicalEvaluation) throws Exception;
 
 	void insertPhysicalEvaluationScore(PhysicalEvaluationScore physicalEvaluationScore) throws Exception;
+
+	void insertEnvironmentEvaluation(int fall_diagnosis_story_id, int user_id, int environment_evaluation_category_id) throws Exception;
+
+	void insertEnvironmentPhoto(InputStream base64InputStream, int fall_diagnosis_story_id) throws Exception;
 }
