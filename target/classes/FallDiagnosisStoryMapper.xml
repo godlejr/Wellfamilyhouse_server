@@ -37,8 +37,7 @@
 		values(#{param1},#{param2},#{param3})
 	</insert>
 	
-	<insert id="insertEnvironmentPhoto"
-		parameterType="EnvironmentPhoto">
+	<insert id="insertEnvironmentPhoto" parameterType="EnvironmentPhoto">
 		insert into	environment_photos(fall_diagnosis_story_id, type, name, ext)
 			values(#{fall_diagnosis_story_id}, #{type}, #{name}, #{ext});
 	</insert>

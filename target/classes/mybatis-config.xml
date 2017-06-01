@@ -144,9 +144,6 @@
 			type="com.demand.server.well_family_house.common.dto.EnvironmentPhoto"
 			alias="EnvironmentPhoto"></typeAlias>
 
-
-
-
 	</typeAliases>
 
 	<mappers>
