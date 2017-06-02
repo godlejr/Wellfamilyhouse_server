@@ -5,6 +5,7 @@ import java.io.InputStream;
 import javax.servlet.ServletInputStream;
 
 import com.demand.server.well_family_house.common.dto.FallDiagnosisStory;
+import com.demand.server.well_family_house.common.dto.FallDiagnosisStoryInfo;
 import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.PhysicalEvaluation;
 import com.demand.server.well_family_house.common.dto.PhysicalEvaluationScore;
@@ -38,5 +39,5 @@ public interface FallDiagnosisStoryService {
 
 	void updateFallDiagnosisStoryHit(int fall_diagnosis_story_id) throws Exception;
 
-	String selectFallDiagnosisStoryTitle(int fall_diagnosis_story_id, int fall_diagnosis_category_id) throws Exception;
+	FallDiagnosisStoryInfo selectFallDiagnosisStoryInfo(FallDiagnosisStory fallDiagnosisStory) throws Exception;
 }

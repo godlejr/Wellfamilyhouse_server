@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demand.server.well_family_house.common.dto.EnvironmentPhoto;
+import com.demand.server.well_family_house.common.dto.FallDiagnosisRiskCategory;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisStory;
+import com.demand.server.well_family_house.common.dto.FallDiagnosisStoryInfo;
 import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.Photo;
 import com.demand.server.well_family_house.common.dto.PhysicalEvaluation;
@@ -191,18 +193,53 @@ public class FallDiagnosisStoryServiceImpl implements FallDiagnosisStoryService 
 	}
 
 	@Override
-	public String selectFallDiagnosisStoryTitle(int fall_diagnosis_story_id, int fall_diagnosis_category_id)
-			throws Exception {
+	public FallDiagnosisStoryInfo selectFallDiagnosisStoryInfo(FallDiagnosisStory fallDiagnosisStory) throws Exception {
+		int story_id = fallDiagnosisStory.getId();
+		int user_id = fallDiagnosisStory.getUser_id();
+		int fall_diagnosis_category_id = fallDiagnosisStory.getFall_diagnosis_category_id();
+		String title = null;
+		int score = 0;
+		int total_count = 0;
+
+		FallDiagnosisRiskCategory fallDiagnosisRiskCategory = fallDiagnosisStoryMapper
+				.selectFallDiagnosisRiskCategory(fall_diagnosis_category_id);
+		String avatar = fallDiagnosisRiskCategory.getAvatar();
+		String risk_comment = fallDiagnosisRiskCategory.getName();
+
 		if (fall_diagnosis_category_id == FallDiagnosisFlag.SELF_DIAGNOSIS) {
-			return FallDiagnosisFlag.SELF_DIAGNOSIS_NAME;
+			title = FallDiagnosisFlag.SELF_DIAGNOSIS_NAME;
+			score = fallDiagnosisStoryMapper.selectSelfDiagnosisList(story_id).size();
+			total_count = fallDiagnosisStoryMapper.selectFallDiagnosisContentCategoryList(fall_diagnosis_category_id)
+					.size();
+
 		} else if (fall_diagnosis_category_id == FallDiagnosisFlag.PHYSICAL_EVALUATION) {
-			return FallDiagnosisFlag.PHYSICAL_EVALUATION_NAME;
-		} else {
-			String place = fallDiagnosisStoryMapper.selectFallDiagnosisStoryTitleWithRisk(fall_diagnosis_story_id);
+			title = FallDiagnosisFlag.PHYSICAL_EVALUATION_NAME;
+			PhysicalEvaluationScore physicalEvaluationScore = fallDiagnosisStoryMapper
+					.selectPhysicalEvaluationScore(story_id);
 			
-			return FallDiagnosisFlag.RISK_EVALUATION_NAME +"_"+ place;
+			int balance_score = physicalEvaluationScore.getBalance_score();
+			int movement_score = physicalEvaluationScore.getMovement_score();
+			int leg_strength_score = physicalEvaluationScore.getLeg_strength_score();
+			score = balance_score + movement_score + leg_strength_score;
+		} else {
+			String place = fallDiagnosisStoryMapper.selectFallDiagnosisStoryTitleWithRisk(story_id);
+			title = FallDiagnosisFlag.RISK_EVALUATION_NAME + "_" + place;
+
+			score = fallDiagnosisStoryMapper.selectEnvironmentEvaluationList(story_id).size();
+			total_count = fallDiagnosisStoryMapper.selectEnvironmentEvaluationCategoryTotalCountWithStoryId(story_id);
 		}
 
+		FallDiagnosisStoryInfo fallDiagnosisStoryInfo = new FallDiagnosisStoryInfo();
+
+		fallDiagnosisStoryInfo.setStory_id(story_id);
+		fallDiagnosisStoryInfo.setUser_id(user_id);
+		fallDiagnosisStoryInfo.setTitle(title);
+		fallDiagnosisStoryInfo.setScore(score);
+		fallDiagnosisStoryInfo.setTotal_count(total_count);
+		fallDiagnosisStoryInfo.setAvatar(avatar);
+		fallDiagnosisStoryInfo.setRisk_comment(risk_comment);
+
+		return fallDiagnosisStoryInfo;
 	}
 
 }

@@ -96,4 +96,44 @@
 												limit 1))
 	</select>
 	
+	<select id="selectFallDiagnosisRiskCategory" resultType="FallDiagnosisRiskCategory">
+		SELECT	id, name, avatar, created_at, updated_at 
+			FROM	fall_diagnosis_risk_categories
+			where	id =  #{param1}
+	</select>
+	
+	<select id="selectEnvironmentEvaluationCategoryTotalCountWithStoryId" resultType="int">
+		SELECT count(id) as count
+			FROM	environment_evaluation_categories
+			where	fall_diagnosis_content_category_id = (SELECT id 
+															FROM	fall_diagnosis_content_categories
+															where id = (SELECT environment_evaluation_category_id 
+																			FROM	environment_evaluations
+																			where	fall_diagnosis_story_id = #{param1}
+																			limit 1))
+	</select>
+	
+	<select id="selectEnvironmentEvaluationList" resultType="EnvironmentEvaluation">
+		SELECT	id, fall_diagnosis_story_id, user_id, environment_evaluation_category_id, created_at, updated_at 
+			FROM	environment_evaluations
+			where	fall_diagnosis_story_id =  #{param1}
+	</select>
+	
+	<select id="selectFallDiagnosisContentCategoryList" resultType="FallDiagnosisContentCategory">
+		SELECT	id, fall_diagnosis_category_id, name, content, avatar, created_at, updated_at
+			FROM 	fall_diagnosis_content_categories
+			where 	fall_diagnosis_category_id =  #{param1}
+	</select>
+	
+	<select id="selectSelfDiagnosisList" resultType="SelfDiagnosis">
+		SELECT id, fall_diagnosis_story_id, user_id, fall_diagnosis_content_category_id, created_at, updated_at 
+			FROM	self_diagnosis
+			where	fall_diagnosis_story_id =  #{param1}
+	</select>
+	
+	<select id="selectPhysicalEvaluationScore" resultType="PhysicalEvaluationScore">
+		SELECT	id, fall_diagnosis_story_id, balance_score, movement_score, leg_strength_score, created_at, updated_at 
+			FROM	physical_evaluation_scores
+		    where	fall_diagnosis_story_id = #{param1}
+	</select>
 </mapper>

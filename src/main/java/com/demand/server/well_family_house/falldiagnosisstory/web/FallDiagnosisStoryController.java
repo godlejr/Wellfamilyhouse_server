@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demand.server.well_family_house.common.dto.FallDiagnosisStory;
+import com.demand.server.well_family_house.common.dto.FallDiagnosisStoryInfo;
 import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.PhysicalEvaluation;
 import com.demand.server.well_family_house.common.dto.PhysicalEvaluationScore;
@@ -125,9 +126,9 @@ public class FallDiagnosisStoryController {
 		falldiagnosisStoryService.updateFallDiagnosisStoryHit(fall_diagnosis_story_id);
 	}
 	
-	@RequestMapping(value = "/{fall_diagnosis_story_id}/titles/{fall_diagnosis_category_id}", method = RequestMethod.GET)
-	public String selectFallDiagnosisStoryTitle(@PathVariable int fall_diagnosis_story_id, @PathVariable int fall_diagnosis_category_id) throws Exception {
-		return falldiagnosisStoryService.selectFallDiagnosisStoryTitle(fall_diagnosis_story_id, fall_diagnosis_category_id);
+	@RequestMapping(value = "/{fall_diagnosis_story_id}/infos", method = RequestMethod.GET)
+	public FallDiagnosisStoryInfo selectFallDiagnosisStoryInfo(@PathVariable int fall_diagnosis_story_id, @RequestBody FallDiagnosisStory fallDiagnosisStory) throws Exception {
+		return falldiagnosisStoryService.selectFallDiagnosisStoryInfo(fallDiagnosisStory);
 	}
 
 }

@@ -144,6 +144,14 @@
 			type="com.demand.server.well_family_house.common.dto.EnvironmentPhoto"
 			alias="EnvironmentPhoto"></typeAlias>
 
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.FallDiagnosisStoryInfo"
+			alias="FallDiagnosisStoryInfo"></typeAlias>
+	
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.FallDiagnosisRiskCategory"
+			alias="FallDiagnosisRiskCategory"></typeAlias>
+
 	</typeAliases>
 
 	<mappers>
