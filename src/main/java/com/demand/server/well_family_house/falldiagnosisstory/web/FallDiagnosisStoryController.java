@@ -127,7 +127,19 @@ public class FallDiagnosisStoryController {
 	}
 	
 	@RequestMapping(value = "/{fall_diagnosis_story_id}/infos", method = RequestMethod.GET)
-	public FallDiagnosisStoryInfo selectFallDiagnosisStoryInfo(@PathVariable int fall_diagnosis_story_id, @RequestBody FallDiagnosisStory fallDiagnosisStory) throws Exception {
+	public FallDiagnosisStoryInfo selectFallDiagnosisStoryInfo(@PathVariable int fall_diagnosis_story_id, HttpServletRequest request) throws Exception {
+		int user_id = Integer.parseInt(request.getParameter("user_id"));
+		int fall_diagnosis_category_id = Integer
+				.parseInt(request.getParameter("fall_diagnosis_category_id"));
+		int fall_diagnosis_risk_category_id = Integer
+				.parseInt(request.getParameter("fall_diagnosis_risk_category_id"));
+
+		FallDiagnosisStory fallDiagnosisStory = new FallDiagnosisStory();
+		fallDiagnosisStory.setId(fall_diagnosis_story_id);
+		fallDiagnosisStory.setUser_id(user_id);
+		fallDiagnosisStory.setFall_diagnosis_category_id(fall_diagnosis_category_id);
+		fallDiagnosisStory.setFall_diagnosis_risk_category_id(fall_diagnosis_risk_category_id);
+		
 		return falldiagnosisStoryService.selectFallDiagnosisStoryInfo(fallDiagnosisStory);
 	}
 

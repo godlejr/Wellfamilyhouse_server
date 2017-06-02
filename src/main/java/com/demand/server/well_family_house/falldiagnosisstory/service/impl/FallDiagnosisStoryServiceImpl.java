@@ -197,12 +197,14 @@ public class FallDiagnosisStoryServiceImpl implements FallDiagnosisStoryService 
 		int story_id = fallDiagnosisStory.getId();
 		int user_id = fallDiagnosisStory.getUser_id();
 		int fall_diagnosis_category_id = fallDiagnosisStory.getFall_diagnosis_category_id();
+		int fall_diagnosis_risk_category_id = fallDiagnosisStory.getFall_diagnosis_risk_category_id();
+
 		String title = null;
 		int score = 0;
 		int total_count = 0;
 
 		FallDiagnosisRiskCategory fallDiagnosisRiskCategory = fallDiagnosisStoryMapper
-				.selectFallDiagnosisRiskCategory(fall_diagnosis_category_id);
+				.selectFallDiagnosisRiskCategory(fall_diagnosis_risk_category_id);
 		String avatar = fallDiagnosisRiskCategory.getAvatar();
 		String risk_comment = fallDiagnosisRiskCategory.getName();
 
