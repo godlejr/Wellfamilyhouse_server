@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Repository;
 
 import com.demand.server.well_family_house.common.dto.Category;
+import com.demand.server.well_family_house.common.dto.FallDiagnosisStory;
 import com.demand.server.well_family_house.common.dto.Family;
 import com.demand.server.well_family_house.common.dto.FamilyInfoForFamilyJoin;
 import com.demand.server.well_family_house.common.dto.Notification;
@@ -80,5 +81,7 @@ public interface UserMapper {
 	String selectDeviceId(int user_id) throws Exception;
 
 	void updatePassword(int user_id,String password) throws Exception;
+
+	ArrayList<FallDiagnosisStory> selectFallDiagnosisStoryList(int user_id) throws Exception;
 
 }

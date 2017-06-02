@@ -81,5 +81,53 @@ public class FallDiagnosisStoryController {
 	public void insertEnvironmentPhoto(HttpServletRequest request, @PathVariable int fall_diagnosis_story_id) throws IOException, Exception {
 		falldiagnosisStoryService.insertEnvironmentPhoto(request.getInputStream(), fall_diagnosis_story_id);
 	}
+	
+	@RequestMapping(value = "/{fall_diagnosis_story_id}/comment_count", method = RequestMethod.GET)
+	public int selectFallDiagnosisStoryCommentCount(@PathVariable int fall_diagnosis_story_id) throws Exception {
+		return falldiagnosisStoryService.selectFallDiagnosisStoryCommentCount(fall_diagnosis_story_id);
+	}
+
+	@RequestMapping(value = "/{fall_diagnosis_story_id}/like_count", method = RequestMethod.GET)
+	public int selectFallDiagnosisStoryLikeCount(@PathVariable int fall_diagnosis_story_id) throws Exception {
+		return falldiagnosisStoryService.selectFallDiagnosisStoryLikeCount(fall_diagnosis_story_id);
+	}
+	
+	@RequestMapping(value = "/{fall_diagnosis_story_id}/likes", method = RequestMethod.POST)
+	public void insertFallDiagnosisStoryLikeUp(HttpServletRequest request, @PathVariable int fall_diagnosis_story_id)
+			throws NumberFormatException, Exception {
+		int user_id = Integer.parseInt(request.getParameter("user_id"));
+
+		Notification notification = new Notification();
+		notification.setUser_id(user_id);
+		notification.setReceive_category_id(NotificationTOFlag.WRITER);
+		notification.setContent_name("낙상진단 스토리");
+		notification.setIntent_flag(NotificationINTENTFlag.FALL_DIAGNOSIS_STORY);
+		notification.setBehavior_id(NotificationBEHAVIORFlag.LIKE);
+		notification.setIntent_id(fall_diagnosis_story_id);
+
+		falldiagnosisStoryService.insertFallDiagnosisStoryLikeUp(user_id, fall_diagnosis_story_id, notification);
+	}
+	
+	@RequestMapping(value = "/{fall_diagnosis_story_id}/likes/{user_id}", method = RequestMethod.DELETE)
+	public void deleteFallDiagnosisStoryLikeDown(HttpServletRequest request, @PathVariable int user_id,
+			@PathVariable int fall_diagnosis_story_id) throws Exception {
+		falldiagnosisStoryService.deleteFallDiagnosisStoryLikeDown(user_id, fall_diagnosis_story_id);
+	}
+	
+	@RequestMapping(value = "/{fall_diagnosis_story_id}/like_check/{user_id}", method = RequestMethod.GET)
+	public int selectFallDiagnosisStoryLikeCheck(HttpServletRequest request, @PathVariable int user_id,
+			@PathVariable int fall_diagnosis_story_id) throws Exception {
+		return falldiagnosisStoryService.selectFallDiagnosisStoryLikeCheck(user_id, fall_diagnosis_story_id);
+	}
+	
+	@RequestMapping(value = "/{fall_diagnosis_story_id}/hits", method = RequestMethod.PUT)
+	public void updateFallDiagnosisStoryHit(@PathVariable int fall_diagnosis_story_id) throws Exception {
+		falldiagnosisStoryService.updateFallDiagnosisStoryHit(fall_diagnosis_story_id);
+	}
+	
+	@RequestMapping(value = "/{fall_diagnosis_story_id}/titles/{fall_diagnosis_category_id}", method = RequestMethod.GET)
+	public String selectFallDiagnosisStoryTitle(@PathVariable int fall_diagnosis_story_id, @PathVariable int fall_diagnosis_category_id) throws Exception {
+		return falldiagnosisStoryService.selectFallDiagnosisStoryTitle(fall_diagnosis_story_id, fall_diagnosis_category_id);
+	}
 
 }

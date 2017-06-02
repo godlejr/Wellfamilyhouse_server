@@ -46,17 +46,17 @@ public class SONGSTORYController {
 	}
 
 	@RequestMapping(value = "/{song_story_id}/comment_count", method = RequestMethod.GET)
-	public int song_story_comment_Count(@PathVariable int song_story_id) throws Exception {
+	public int selectSongStoryCommentCount(@PathVariable int song_story_id) throws Exception {
 		return songStoryService.selectSongStoryCommentCount(song_story_id);
 	}
 
 	@RequestMapping(value = "/{song_story_id}/like_count", method = RequestMethod.GET)
-	public int song_story_like_Count(@PathVariable int song_story_id) throws Exception {
+	public int selectSongStoryLikeCount(@PathVariable int song_story_id) throws Exception {
 		return songStoryService.selectSongStoryLikeCount(song_story_id);
 	}
 
 	@RequestMapping(value = "/{song_story_id}/likes", method = RequestMethod.POST)
-	public void song_story_like_up(HttpServletRequest request, @PathVariable int song_story_id)
+	public void insertSongStoryLikeUp(HttpServletRequest request, @PathVariable int song_story_id)
 			throws NumberFormatException, Exception {
 		int user_id = Integer.parseInt(request.getParameter("user_id"));
 

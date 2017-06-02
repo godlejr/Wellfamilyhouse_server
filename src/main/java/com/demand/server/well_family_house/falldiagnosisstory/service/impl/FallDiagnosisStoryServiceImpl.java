@@ -34,13 +34,13 @@ public class FallDiagnosisStoryServiceImpl implements FallDiagnosisStoryService 
 
 	@Autowired
 	private AndroidPushConnection androidPushConnection;
-	
+
 	@Autowired
 	private FallDiagnosisStoryMapper fallDiagnosisStoryMapper;
-	
+
 	@Autowired
 	private AwsS3Connection awsS3Connection;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(FallDiagnosisStoryServiceImpl.class);
 
 	public static void log(Exception e) {
@@ -78,7 +78,7 @@ public class FallDiagnosisStoryServiceImpl implements FallDiagnosisStoryService 
 		if (fall_diagnosis_category_id == FallDiagnosisFlag.RISK_EVALUATION) {
 			notification.setContent_name("낙상 위험환경평가");
 		}
-		
+
 		notificationMapper.insertNotification(notification);
 		androidPushConnection.insertFCM(notification);
 
@@ -88,7 +88,8 @@ public class FallDiagnosisStoryServiceImpl implements FallDiagnosisStoryService 
 	@Override
 	public void insertSelfDiagnosis(int fall_diagnosis_story_id, int user_id, int fall_diagnosis_content_category_id)
 			throws Exception {
-		fallDiagnosisStoryMapper.insertSelfDiagnosis(fall_diagnosis_story_id, user_id, fall_diagnosis_content_category_id);
+		fallDiagnosisStoryMapper.insertSelfDiagnosis(fall_diagnosis_story_id, user_id,
+				fall_diagnosis_content_category_id);
 	}
 
 	@Override
@@ -98,16 +99,18 @@ public class FallDiagnosisStoryServiceImpl implements FallDiagnosisStoryService 
 
 	@Override
 	public void insertPhysicalEvaluationScore(PhysicalEvaluationScore physicalEvaluationScore) throws Exception {
-		fallDiagnosisStoryMapper.insertPhysicalEvaluationScore(physicalEvaluationScore);		
+		fallDiagnosisStoryMapper.insertPhysicalEvaluationScore(physicalEvaluationScore);
 	}
 
 	@Override
-	public void insertEnvironmentEvaluation(int fall_diagnosis_story_id, int user_id, int environment_evaluation_category_id) throws Exception {
-		fallDiagnosisStoryMapper.insertEnvironmentEvaluation(fall_diagnosis_story_id, user_id, environment_evaluation_category_id);
+	public void insertEnvironmentEvaluation(int fall_diagnosis_story_id, int user_id,
+			int environment_evaluation_category_id) throws Exception {
+		fallDiagnosisStoryMapper.insertEnvironmentEvaluation(fall_diagnosis_story_id, user_id,
+				environment_evaluation_category_id);
 	}
 
 	@Override
-	public void insertEnvironmentPhoto(InputStream base64InputStream,  int fall_diagnosis_story_id) throws Exception {
+	public void insertEnvironmentPhoto(InputStream base64InputStream, int fall_diagnosis_story_id) throws Exception {
 		String file_name = null;
 		StringBuilder stringBuilder = null;
 		try {
@@ -130,8 +133,8 @@ public class FallDiagnosisStoryServiceImpl implements FallDiagnosisStoryService 
 		}
 
 		try {
-			file_name = awsS3Connection.uploadFileToAWSS3(stringBuilder.toString(), AwsS3Flag.FALL_DIAGNOSIS_STORY_ENVIRONMENT_IMAGE_ENDPOINT,
-					AwsS3Flag.IMAGE_EXT);
+			file_name = awsS3Connection.uploadFileToAWSS3(stringBuilder.toString(),
+					AwsS3Flag.FALL_DIAGNOSIS_STORY_ENVIRONMENT_IMAGE_ENDPOINT, AwsS3Flag.IMAGE_EXT);
 		} catch (IllegalStateException e) {
 			log(e);
 		} catch (IOException e) {
@@ -144,7 +147,62 @@ public class FallDiagnosisStoryServiceImpl implements FallDiagnosisStoryService 
 		environmentPhoto.setName(file_name);
 		environmentPhoto.setExt("jpg");
 		fallDiagnosisStoryMapper.insertEnvironmentPhoto(environmentPhoto);
-		
+
+	}
+
+	@Override
+	public int selectFallDiagnosisStoryCommentCount(int fall_diagnosis_story_id) throws Exception {
+		return fallDiagnosisStoryMapper.selectFallDiagnosisStoryCommentCount(fall_diagnosis_story_id);
+	}
+
+	@Override
+	public int selectFallDiagnosisStoryLikeCount(int fall_diagnosis_story_id) throws Exception {
+		return fallDiagnosisStoryMapper.selectFallDiagnosisStoryLikeCount(fall_diagnosis_story_id);
+	}
+
+	@Override
+	public void insertFallDiagnosisStoryLikeUp(int user_id, int fall_diagnosis_story_id, Notification notification)
+			throws Exception {
+		int fall_diagnosis_story_user_id = fallDiagnosisStoryMapper.selectUser(notification.getIntent_id());
+
+		if (user_id != fall_diagnosis_story_user_id) {
+			notification.setReceiver_id(fall_diagnosis_story_user_id);
+			notificationMapper.insertNotification(notification);
+			androidPushConnection.insertFCM(notification);
+		}
+
+		fallDiagnosisStoryMapper.insertFallDiagnosisStoryLikeUp(user_id, fall_diagnosis_story_user_id);
+
+	}
+
+	@Override
+	public void deleteFallDiagnosisStoryLikeDown(int user_id, int fall_diagnosis_story_id) throws Exception {
+		fallDiagnosisStoryMapper.deleteFallDiagnosisStoryLikeDown(user_id, fall_diagnosis_story_id);
+	}
+
+	@Override
+	public int selectFallDiagnosisStoryLikeCheck(int user_id, int fall_diagnosis_story_id) throws Exception {
+		return fallDiagnosisStoryMapper.selectFallDiagnosisStoryLikeCheck(user_id, fall_diagnosis_story_id);
+	}
+
+	@Override
+	public void updateFallDiagnosisStoryHit(int fall_diagnosis_story_id) throws Exception {
+		fallDiagnosisStoryMapper.updateFallDiagnosisStoryHit(fall_diagnosis_story_id);
+	}
+
+	@Override
+	public String selectFallDiagnosisStoryTitle(int fall_diagnosis_story_id, int fall_diagnosis_category_id)
+			throws Exception {
+		if (fall_diagnosis_category_id == FallDiagnosisFlag.SELF_DIAGNOSIS) {
+			return FallDiagnosisFlag.SELF_DIAGNOSIS_NAME;
+		} else if (fall_diagnosis_category_id == FallDiagnosisFlag.PHYSICAL_EVALUATION) {
+			return FallDiagnosisFlag.PHYSICAL_EVALUATION_NAME;
+		} else {
+			String place = fallDiagnosisStoryMapper.selectFallDiagnosisStoryTitleWithRisk(fall_diagnosis_story_id);
+			
+			return FallDiagnosisFlag.RISK_EVALUATION_NAME +"_"+ place;
+		}
+
 	}
 
 }

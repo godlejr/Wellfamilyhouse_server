@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demand.server.well_family_house.common.dto.Category;
+import com.demand.server.well_family_house.common.dto.FallDiagnosisStory;
 import com.demand.server.well_family_house.common.dto.Family;
 import com.demand.server.well_family_house.common.dto.FamilyInfoForFamilyJoin;
 import com.demand.server.well_family_house.common.dto.Notification;
@@ -259,6 +260,11 @@ public class UserServiceImpl implements UserService {
 	public void insertStoryReport(int user_id, int story_category_id, int report_category_id, int story_id)
 			throws Exception {
 		userMapper.insertStoryReport(user_id, story_category_id, report_category_id, story_id);	
+	}
+
+	@Override
+	public ArrayList<FallDiagnosisStory> selectFallDiagnosisStoryList(int user_id) throws Exception {
+		return userMapper.selectFallDiagnosisStoryList(user_id);
 	}
 
 }

@@ -9,8 +9,8 @@
 	<insert id="insertFallDiagnosisStory" parameterType="FallDiagnosisStory"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into
-		fall_diagnosis_stories(user_id,fall_diagnosis_category_id)
-		values(#{user_id},#{fall_diagnosis_category_id})
+		fall_diagnosis_stories(user_id,fall_diagnosis_category_id, fall_diagnosis_risk_category_id)
+		values(#{user_id},#{fall_diagnosis_category_id}, #{fall_diagnosis_risk_category_id})
 	</insert>
 
 	<insert id="insertSelfDiagnosis">
@@ -41,5 +41,59 @@
 		insert into	environment_photos(fall_diagnosis_story_id, type, name, ext)
 			values(#{fall_diagnosis_story_id}, #{type}, #{name}, #{ext});
 	</insert>
+	
+	<select id="selectFallDiagnosisStoryCommentCount" resultType="int">
+		SELECT	count(user_id) as comment_count
+			FROM	fall_diagnosis_story_comments
+			where	fall_diagnosis_story_id = #{param1};
+	</select>
+	
+	<select id="selectFallDiagnosisStoryLikeCount" resultType="int">
+		select	count(user_id) as like_count 
+			from	fall_diagnosis_story_likes 
+		    where	fall_diagnosis_story_id = #{param1};
+	</select>
+	
+	<select id="selectUser"  resultType="int">
+		SELECT	user_id 
+			FROM	fall_diagnosis_stories
+			where	id = #{param1};
+	</select>
+	
+	<insert id="insertFallDiagnosisStoryLikeUp">
+		insert into fall_diagnosis_stories(user_id, fall_diagnosis_story_id)
+				values(#{param1}, #{param2});
+	</insert>
+	
+	<delete id="deleteFallDiagnosisStoryLikeDown">
+		delete 
+			from	fall_diagnosis_story_likes 
+		    where	user_id = #{param1} and
+					fall_diagnosis_story_id = #{param2};
+	</delete>
+	
+	<select id="selectFallDiagnosisStoryLikeCheck" resultType="int">
+		SELECT	count(id) as checked
+			FROM	fall_diagnosis_story_likes 
+		    where	user_id = #{param1} and
+					fall_diagnosis_story_id = #{param2};
+	</select>
+	
+	<update id="updateFallDiagnosisStoryHit">
+		update	fall_diagnosis_stories 
+			set		hits = hits+1 
+		    where	id = #{param1};
+	</update>
+	
+	<select id="selectFallDiagnosisStoryTitleWithRisk" resultType="String">
+		SELECT	name 
+			FROM	fall_diagnosis_content_categories
+			where	id = (SELECT	fall_diagnosis_content_category_id 
+							FROM	environment_evaluation_categories
+							where	id	=	(SELECT	environment_evaluation_category_id 
+												FROM	environment_evaluations
+												where	fall_diagnosis_story_id = #{param1}
+												limit 1))
+	</select>
 	
 </mapper>

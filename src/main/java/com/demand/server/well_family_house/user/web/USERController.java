@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demand.server.well_family_house.common.dto.Category;
+import com.demand.server.well_family_house.common.dto.FallDiagnosisStory;
 import com.demand.server.well_family_house.common.dto.Family;
 import com.demand.server.well_family_house.common.dto.FamilyInfoForFamilyJoin;
 import com.demand.server.well_family_house.common.dto.Notification;
@@ -101,6 +102,11 @@ public class USERController {
 	@RequestMapping(value = "/{story_user_id}/me_songstories", method = RequestMethod.GET)
 	public ArrayList<SongStory> song_story_List_Me(@PathVariable int story_user_id) throws Exception {
 		return userService.selectSongStoryMeList(story_user_id);
+	}
+	
+	@RequestMapping(value = "/{user_id}/fall_diagnosis_stories", method = RequestMethod.GET)
+	public ArrayList<FallDiagnosisStory> selectFallDiagnosisStoryList(@PathVariable int user_id) throws Exception {
+		return userService.selectFallDiagnosisStoryList(user_id);
 	}
 
 	@RequestMapping(value = "/{user_id}/find_family", method = RequestMethod.GET)
