@@ -89,7 +89,7 @@
 		SELECT	name 
 			FROM	fall_diagnosis_content_categories
 			where	id = (SELECT	fall_diagnosis_content_category_id 
-							FROM	environment_evaluation_categories
+							FROM	environment_evaluation_categoriessef
 							where	id	=	(SELECT	environment_evaluation_category_id 
 												FROM	environment_evaluations
 												where	fall_diagnosis_story_id = #{param1}

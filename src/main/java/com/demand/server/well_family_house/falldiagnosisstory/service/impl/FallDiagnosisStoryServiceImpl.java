@@ -173,7 +173,7 @@ public class FallDiagnosisStoryServiceImpl implements FallDiagnosisStoryService 
 			androidPushConnection.insertFCM(notification);
 		}
 
-		fallDiagnosisStoryMapper.insertFallDiagnosisStoryLikeUp(user_id, fall_diagnosis_story_user_id);
+		fallDiagnosisStoryMapper.insertFallDiagnosisStoryLikeUp(user_id, fall_diagnosis_story_id);
 
 	}
 
