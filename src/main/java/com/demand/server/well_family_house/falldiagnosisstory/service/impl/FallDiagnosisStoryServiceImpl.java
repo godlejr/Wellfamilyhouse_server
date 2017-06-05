@@ -218,7 +218,7 @@ public class FallDiagnosisStoryServiceImpl implements FallDiagnosisStoryService 
 			title = FallDiagnosisFlag.PHYSICAL_EVALUATION_NAME;
 			PhysicalEvaluationScore physicalEvaluationScore = fallDiagnosisStoryMapper
 					.selectPhysicalEvaluationScore(story_id);
-			
+
 			int balance_score = physicalEvaluationScore.getBalance_score();
 			int movement_score = physicalEvaluationScore.getMovement_score();
 			int leg_strength_score = physicalEvaluationScore.getLeg_strength_score();

@@ -229,7 +229,7 @@
 	</select>
 
 	<select id="selectFallDiagnosisStoryList" resultType="FallDiagnosisStory">
-		SELECT	id, user_id, fall_diagnosis_category_id, created_at, updated_at 
+		SELECT	id, user_id, fall_diagnosis_category_id,fall_diagnosis_risk_category_id, created_at, updated_at 
 			FROM	fall_diagnosis_stories
 			where	user_id = #{param1}
 	</select>
