@@ -61,7 +61,7 @@
 	</select>
 	
 	<insert id="insertFallDiagnosisStoryLikeUp">
-		insert into fall_diagnosis_story_likes(user_id, fall_diagnosis_story_id)
+		insert into fall_diagnosis_stories(user_id, fall_diagnosis_story_id)
 				values(#{param1}, #{param2});
 	</insert>
 	
@@ -89,7 +89,7 @@
 		SELECT	name 
 			FROM	fall_diagnosis_content_categories
 			where	id = (SELECT	fall_diagnosis_content_category_id 
-							FROM	environment_evaluation_categoriessef
+							FROM	environment_evaluation_categories
 							where	id	=	(SELECT	environment_evaluation_category_id 
 												FROM	environment_evaluations
 												where	fall_diagnosis_story_id = #{param1}
