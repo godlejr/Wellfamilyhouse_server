@@ -61,7 +61,7 @@
 	</select>
 	
 	<insert id="insertFallDiagnosisStoryLikeUp">
-		insert into fall_diagnosis_stories(user_id, fall_diagnosis_story_id)
+		insert into fall_diagnosis_story_likes(user_id, fall_diagnosis_story_id)
 				values(#{param1}, #{param2});
 	</insert>
 	
