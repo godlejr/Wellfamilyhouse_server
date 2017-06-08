@@ -1,6 +1,7 @@
 package com.demand.server.well_family_house.falldiagnosisstory.web;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.demand.server.well_family_house.common.dto.Category;
+import com.demand.server.well_family_house.common.dto.EnvironmentEvaluationCategory;
+import com.demand.server.well_family_house.common.dto.EnvironmentPhoto;
+import com.demand.server.well_family_house.common.dto.FallDiagnosisContentCategory;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisStory;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisStoryInfo;
 import com.demand.server.well_family_house.common.dto.Notification;
@@ -25,7 +30,7 @@ import com.demand.server.well_family_house.falldiagnosisstory.service.FallDiagno
 @Secured("ROLE_USER")
 @RestController
 @RequestMapping("/fall_diagnosis_stories")
-public class FallDiagnosisStoryController {
+public class FALLDIAGNOSISSTORYController {
 
 	@Autowired
 	private FallDiagnosisStoryService falldiagnosisStoryService;
@@ -143,4 +148,28 @@ public class FallDiagnosisStoryController {
 		return falldiagnosisStoryService.selectFallDiagnosisStoryInfo(fallDiagnosisStory);
 	}
 
+	
+	@RequestMapping(value = "/{fall_diagnosis_story_id}/self_diagnosis", method = RequestMethod.GET)
+	public  ArrayList<FallDiagnosisContentCategory> selectSelfDiagnosisList(@PathVariable int fall_diagnosis_story_id)
+			throws Exception {
+		return falldiagnosisStoryService.selectSelfDiagnosisList(fall_diagnosis_story_id);
+	}
+	
+	@RequestMapping(value = "/{fall_diagnosis_story_id}/physical_evaluation_score", method = RequestMethod.GET)
+	public  PhysicalEvaluationScore selectPhysicalEvaluationScore(@PathVariable int fall_diagnosis_story_id)
+			throws Exception {
+		return falldiagnosisStoryService.selectPhysicalEvaluationScore(fall_diagnosis_story_id);
+	}
+	
+	@RequestMapping(value = "/{fall_diagnosis_story_id}/environment_photo", method = RequestMethod.GET)
+	public ArrayList<EnvironmentPhoto> selectEnvironmentPhoto( @PathVariable int fall_diagnosis_story_id) throws IOException, Exception {
+		return falldiagnosisStoryService.selectEnvironmentPhotoList(fall_diagnosis_story_id);
+	}
+	
+	@RequestMapping(value = "/{fall_diagnosis_story_id}/environment_evaluation", method = RequestMethod.GET)
+	public ArrayList<EnvironmentEvaluationCategory> selectEnvironmentEvaluationList(@PathVariable int fall_diagnosis_story_id)
+			throws Exception {
+		return  falldiagnosisStoryService.selectEnvironmentEvaluationList(fall_diagnosis_story_id);
+	}
+		
 }

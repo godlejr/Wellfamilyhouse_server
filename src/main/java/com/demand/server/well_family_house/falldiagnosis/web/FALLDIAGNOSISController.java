@@ -18,7 +18,7 @@ import com.demand.server.well_family_house.falldiagnosis.service.FallDiagnosisSe
 @Secured("ROLE_USER")
 @RestController
 @RequestMapping("/fall_diagnosis")
-public class FallDiagnosisController {
+public class FALLDIAGNOSISController {
 
 	@Autowired
 	private FallDiagnosisService fallDiagnosisService;

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 import javax.servlet.ServletInputStream;
 
@@ -12,7 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.demand.server.well_family_house.common.dto.EnvironmentEvaluationCategory;
 import com.demand.server.well_family_house.common.dto.EnvironmentPhoto;
+import com.demand.server.well_family_house.common.dto.FallDiagnosisContentCategory;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisRiskCategory;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisStory;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisStoryInfo;
@@ -242,6 +245,29 @@ public class FallDiagnosisStoryServiceImpl implements FallDiagnosisStoryService 
 		fallDiagnosisStoryInfo.setRisk_comment(risk_comment);
 
 		return fallDiagnosisStoryInfo;
+	}
+
+	@Override
+	public ArrayList<FallDiagnosisContentCategory> selectSelfDiagnosisList(int fall_diagnosis_story_id)
+			throws Exception {
+		return fallDiagnosisStoryMapper.selectSelfDiagnosisContentCategoryList(fall_diagnosis_story_id);
+	}
+
+	@Override
+	public PhysicalEvaluationScore selectPhysicalEvaluationScore(int fall_diagnosis_story_id)
+			throws Exception {
+		return fallDiagnosisStoryMapper.selectPhysicalEvaluationScore(fall_diagnosis_story_id);
+	}
+
+	@Override
+	public ArrayList<EnvironmentPhoto> selectEnvironmentPhotoList(int fall_diagnosis_story_id) throws Exception {
+		return fallDiagnosisStoryMapper.selectEnvironmentPhotoList(fall_diagnosis_story_id);
+	}
+
+	@Override
+	public ArrayList<EnvironmentEvaluationCategory> selectEnvironmentEvaluationList(int fall_diagnosis_story_id)
+			throws Exception {
+		return fallDiagnosisStoryMapper.selectEnvironmentEvaluationCategoryListWithJoin(fall_diagnosis_story_id);
 	}
 
 }

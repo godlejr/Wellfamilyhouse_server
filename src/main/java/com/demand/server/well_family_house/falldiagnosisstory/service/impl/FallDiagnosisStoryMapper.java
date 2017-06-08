@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Repository;
 
 import com.demand.server.well_family_house.common.dto.EnvironmentEvaluation;
+import com.demand.server.well_family_house.common.dto.EnvironmentEvaluationCategory;
 import com.demand.server.well_family_house.common.dto.EnvironmentPhoto;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisContentCategory;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisRiskCategory;
@@ -57,5 +58,13 @@ public interface FallDiagnosisStoryMapper {
 	ArrayList<SelfDiagnosis> selectSelfDiagnosisList(int story_id) throws Exception;
 
 	PhysicalEvaluationScore selectPhysicalEvaluationScore(int story_id) throws Exception;
+	
+	ArrayList<FallDiagnosisContentCategory> selectSelfDiagnosisContentCategoryList(int fall_diagnosis_story_id) throws Exception;
+
+	ArrayList<EnvironmentPhoto> selectEnvironmentPhotoList(int fall_diagnosis_story_id) throws Exception;
+
+	ArrayList<EnvironmentEvaluationCategory> selectEnvironmentEvaluationCategoryListWithJoin(
+			int fall_diagnosis_story_id)  throws Exception;
+
 
 }

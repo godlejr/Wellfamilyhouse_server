@@ -136,4 +136,29 @@
 			FROM	physical_evaluation_scores
 		    where	fall_diagnosis_story_id = #{param1}
 	</select>
+	
+	<select id="selectSelfDiagnosisContentCategoryList" resultType="FallDiagnosisContentCategory">
+		SELECT	fc.id as id, fc.fall_diagnosis_category_id as fall_diagnosis_category_id, fc.name as name, fc.content as content, fc.avatar as avatar, fc.created_at as created_at, fc.updated_at as updated_at
+				FROM 	fall_diagnosis_content_categories fc,
+						self_diagnosis sd
+					
+				where 	fc.id = sd.fall_diagnosis_content_category_id	and
+						sd.fall_diagnosis_story_id =  #{param1}
+	</select>
+	
+	<select id="selectEnvironmentPhotoList" resultType="EnvironmentPhoto">
+		SELECT	id, fall_diagnosis_story_id, type, name, ext, created_at, updated_at
+
+			FROM	environment_photos
+		    where	fall_diagnosis_story_id =  #{param1}
+	</select>
+	
+	<select id="selectEnvironmentEvaluationCategoryListWithJoin" resultType="EnvironmentEvaluationCategory">
+		SELECT  ec.id as id, ec.fall_diagnosis_content_category_id as fall_diagnosis_content_category_id , ec.name as name , ec.avatar as avatar, ec.created_at as created_at, ec.updated_at as updated_at 
+			FROM	environment_evaluation_categories ec, 
+					environment_evaluations ee
+		            
+			where	ec.id = ee.environment_evaluation_category_id	and
+					ee.fall_diagnosis_story_id = #{param1}
+	</select>
 </mapper>

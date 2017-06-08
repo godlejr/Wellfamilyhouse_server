@@ -1,9 +1,13 @@
 package com.demand.server.well_family_house.falldiagnosisstory.service;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import javax.servlet.ServletInputStream;
 
+import com.demand.server.well_family_house.common.dto.EnvironmentEvaluationCategory;
+import com.demand.server.well_family_house.common.dto.EnvironmentPhoto;
+import com.demand.server.well_family_house.common.dto.FallDiagnosisContentCategory;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisStory;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisStoryInfo;
 import com.demand.server.well_family_house.common.dto.Notification;
@@ -40,4 +44,12 @@ public interface FallDiagnosisStoryService {
 	void updateFallDiagnosisStoryHit(int fall_diagnosis_story_id) throws Exception;
 
 	FallDiagnosisStoryInfo selectFallDiagnosisStoryInfo(FallDiagnosisStory fallDiagnosisStory) throws Exception;
+
+	ArrayList<FallDiagnosisContentCategory> selectSelfDiagnosisList(int fall_diagnosis_story_id) throws Exception;
+
+	PhysicalEvaluationScore selectPhysicalEvaluationScore(int fall_diagnosis_story_id) throws Exception;
+
+	ArrayList<EnvironmentPhoto> selectEnvironmentPhotoList(int fall_diagnosis_story_id) throws Exception;
+
+	ArrayList<EnvironmentEvaluationCategory> selectEnvironmentEvaluationList(int fall_diagnosis_story_id) throws Exception;
 }
