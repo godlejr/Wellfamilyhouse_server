@@ -96,7 +96,7 @@
 			where	id = (SELECT	fall_diagnosis_content_category_id 
 								FROM	environment_evaluation_status
 								where	fall_diagnosis_story_id = #{param1}
-								limit 1))
+								limit 1)
 	</select>
 	
 	<select id="selectFallDiagnosisRiskCategory" resultType="FallDiagnosisRiskCategory">
