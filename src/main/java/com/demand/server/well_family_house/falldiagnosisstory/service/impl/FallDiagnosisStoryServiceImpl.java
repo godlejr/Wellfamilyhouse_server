@@ -13,12 +13,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.demand.server.well_family_house.common.dto.CommentInfo;
 import com.demand.server.well_family_house.common.dto.EnvironmentEvaluationCategory;
 import com.demand.server.well_family_house.common.dto.EnvironmentEvaluationStatus;
 import com.demand.server.well_family_house.common.dto.EnvironmentPhoto;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisContentCategory;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisRiskCategory;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisStory;
+import com.demand.server.well_family_house.common.dto.FallDiagnosisStoryComment;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisStoryInfo;
 import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.Photo;
@@ -275,6 +277,28 @@ public class FallDiagnosisStoryServiceImpl implements FallDiagnosisStoryService 
 	public void insertEnvironmentEvaluationStatus(EnvironmentEvaluationStatus environmentEvaluationStatus)
 			throws Exception {
 		fallDiagnosisStoryMapper.insertEnvironmentEvaluationStatus(environmentEvaluationStatus);
+	}
+
+	@Override
+	public ArrayList<CommentInfo> selectFalldiagnosisStoryCommentList(int fall_diagnosis_story_id) throws Exception {
+		return fallDiagnosisStoryMapper.selectFalldiagnosisStoryCommentList(fall_diagnosis_story_id);
+	}
+
+	@Override
+	public FallDiagnosisStoryComment insertFalldiagnosisStoryComment(
+			FallDiagnosisStoryComment fallDiagnosisStoryComment, Notification notification) throws Exception {
+
+		 
+		int fall_diagnosis_story_user_id = fallDiagnosisStoryMapper.selectUser(notification.getIntent_id());
+
+		if (fall_diagnosis_story_user_id != fallDiagnosisStoryComment.getUser_id()) {
+			notification.setReceiver_id(fall_diagnosis_story_user_id);
+			notificationMapper.insertNotification(notification);
+			androidPushConnection.insertFCM(notification);
+		}
+		
+		fallDiagnosisStoryMapper.insertFalldiagnosisStoryComment(fallDiagnosisStoryComment);
+		return fallDiagnosisStoryMapper.selectFalldiagnosisStoryComment(fallDiagnosisStoryComment.getId());
 	}
 
 }

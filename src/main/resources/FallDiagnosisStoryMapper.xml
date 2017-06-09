@@ -162,4 +162,26 @@
 			where	ec.id = ee.environment_evaluation_category_id	and
 					ee.fall_diagnosis_story_id = #{param1}
 	</select>
+	
+	<select id="selectFalldiagnosisStoryCommentList" resultType="CommentInfo">
+		select	c.id as comment_id, c.user_id as user_id, u.name as user_name ,u.avatar as avatar,c.content as content, c.created_at as created_at, c.deleted as deleted 
+			FROM	fall_diagnosis_story_comments c,
+					users u
+			where	c.user_id = u.id	and
+					c.fall_diagnosis_story_id = #{param1} 
+			order by	c.updated_at;
+	</select>
+	
+	<insert id="insertFalldiagnosisStoryComment" parameterType="FalldiagnosisStoryComment"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into fall_diagnosis_story_comments(user_id, fall_diagnosis_story_id, content)
+			values(#{user_id}, #{fall_diagnosis_story_id}, #{content});
+	</insert>
+
+	<select id="selectFalldiagnosisStoryComment"
+		resultType="FalldiagnosisStoryComment">
+		select	* 
+			from	fall_diagnosis_story_comments 
+		    where	id = #{param1};
+	</select>
 </mapper>

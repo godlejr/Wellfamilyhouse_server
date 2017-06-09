@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 
+import com.demand.server.well_family_house.common.dto.CommentInfo;
 import com.demand.server.well_family_house.common.dto.EnvironmentEvaluation;
 import com.demand.server.well_family_house.common.dto.EnvironmentEvaluationCategory;
 import com.demand.server.well_family_house.common.dto.EnvironmentEvaluationStatus;
@@ -11,6 +12,7 @@ import com.demand.server.well_family_house.common.dto.EnvironmentPhoto;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisContentCategory;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisRiskCategory;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisStory;
+import com.demand.server.well_family_house.common.dto.FallDiagnosisStoryComment;
 import com.demand.server.well_family_house.common.dto.PhysicalEvaluation;
 import com.demand.server.well_family_house.common.dto.PhysicalEvaluationScore;
 import com.demand.server.well_family_house.common.dto.SelfDiagnosis;
@@ -70,5 +72,11 @@ public interface FallDiagnosisStoryMapper {
 			int fall_diagnosis_story_id) throws Exception;
 
 	void insertEnvironmentEvaluationStatus(EnvironmentEvaluationStatus environmentEvaluationStatus) throws Exception;
+	
+	ArrayList<CommentInfo> selectFalldiagnosisStoryCommentList(int fall_diagnosis_story_id) throws Exception;
+
+	void insertFalldiagnosisStoryComment(FallDiagnosisStoryComment fallDiagnosisStoryComment) throws Exception;
+
+	FallDiagnosisStoryComment selectFalldiagnosisStoryComment(int id)  throws Exception;
 
 }

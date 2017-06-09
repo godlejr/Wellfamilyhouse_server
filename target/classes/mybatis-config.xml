@@ -155,6 +155,11 @@
 		<typeAlias
 			type="com.demand.server.well_family_house.common.dto.EnvironmentEvaluationStatus"
 			alias="EnvironmentEvaluationStatus"></typeAlias>
+		
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.FallDiagnosisStoryComment"
+			alias="FallDiagnosisStoryComment"></typeAlias>
+
 
 	</typeAliases>
 

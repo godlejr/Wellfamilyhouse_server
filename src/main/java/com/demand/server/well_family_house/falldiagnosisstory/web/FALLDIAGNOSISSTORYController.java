@@ -13,15 +13,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.demand.server.well_family_house.common.dto.CommentInfo;
 import com.demand.server.well_family_house.common.dto.EnvironmentEvaluationCategory;
 import com.demand.server.well_family_house.common.dto.EnvironmentEvaluationStatus;
 import com.demand.server.well_family_house.common.dto.EnvironmentPhoto;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisContentCategory;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisStory;
+import com.demand.server.well_family_house.common.dto.FallDiagnosisStoryComment;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisStoryInfo;
 import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.PhysicalEvaluation;
 import com.demand.server.well_family_house.common.dto.PhysicalEvaluationScore;
+import com.demand.server.well_family_house.common.dto.SongStoryComment;
 import com.demand.server.well_family_house.common.flag.NotificationBEHAVIORFlag;
 import com.demand.server.well_family_house.common.flag.NotificationINTENTFlag;
 import com.demand.server.well_family_house.common.flag.NotificationTOFlag;
@@ -177,6 +180,34 @@ public class FALLDIAGNOSISSTORYController {
 	public ArrayList<EnvironmentEvaluationCategory> selectEnvironmentEvaluationList(@PathVariable int fall_diagnosis_story_id)
 			throws Exception {
 		return  falldiagnosisStoryService.selectEnvironmentEvaluationList(fall_diagnosis_story_id);
+	}
+	
+	@RequestMapping(value = "/{fall_diagnosis_story_id}/comments", method = RequestMethod.GET)
+	public ArrayList<CommentInfo> selectFalldiagnosisStoryCommentList(@PathVariable int fall_diagnosis_story_id) throws Exception {
+		return falldiagnosisStoryService.selectFalldiagnosisStoryCommentList(fall_diagnosis_story_id);
+	}
+
+	@RequestMapping(value = "/{fall_diagnosis_story_id}/comments", method = RequestMethod.POST)
+	public FallDiagnosisStoryComment insertFalldiagnosisStoryComment(HttpServletRequest request, @PathVariable int fall_diagnosis_story_id)
+			throws Exception {
+		int user_id = Integer.parseInt(request.getParameter("user_id"));
+		String content =  request.getParameter("content");
+		
+		FallDiagnosisStoryComment fallDiagnosisStoryComment = new FallDiagnosisStoryComment();
+		fallDiagnosisStoryComment.setUser_id(user_id);
+		fallDiagnosisStoryComment.setContent(content);
+		fallDiagnosisStoryComment.setFall_diagnosis_story_id(fall_diagnosis_story_id);
+	
+		
+		Notification notification = new Notification();
+		notification.setUser_id(user_id);
+		notification.setReceive_category_id(NotificationTOFlag.WRITER);
+		notification.setContent_name("회원님의 낙상진단");
+		notification.setIntent_flag(NotificationINTENTFlag.FALL_DIAGNOSIS_STORY);
+		notification.setBehavior_id(NotificationBEHAVIORFlag.WRITING_THE_COMMENT);
+		notification.setIntent_id(fall_diagnosis_story_id);
+
+		return falldiagnosisStoryService.insertFalldiagnosisStoryComment(fallDiagnosisStoryComment, notification);
 	}
 		
 }

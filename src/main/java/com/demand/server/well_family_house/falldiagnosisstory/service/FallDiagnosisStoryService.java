@@ -5,11 +5,13 @@ import java.util.ArrayList;
 
 import javax.servlet.ServletInputStream;
 
+import com.demand.server.well_family_house.common.dto.CommentInfo;
 import com.demand.server.well_family_house.common.dto.EnvironmentEvaluationCategory;
 import com.demand.server.well_family_house.common.dto.EnvironmentEvaluationStatus;
 import com.demand.server.well_family_house.common.dto.EnvironmentPhoto;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisContentCategory;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisStory;
+import com.demand.server.well_family_house.common.dto.FallDiagnosisStoryComment;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisStoryInfo;
 import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.dto.PhysicalEvaluation;
@@ -52,7 +54,13 @@ public interface FallDiagnosisStoryService {
 
 	ArrayList<EnvironmentPhoto> selectEnvironmentPhotoList(int fall_diagnosis_story_id) throws Exception;
 
-	ArrayList<EnvironmentEvaluationCategory> selectEnvironmentEvaluationList(int fall_diagnosis_story_id) throws Exception;
+	ArrayList<EnvironmentEvaluationCategory> selectEnvironmentEvaluationList(int fall_diagnosis_story_id)
+			throws Exception;
 
-	void insertEnvironmentEvaluationStatus(EnvironmentEvaluationStatus environmentEvaluationStatus)  throws Exception;
+	void insertEnvironmentEvaluationStatus(EnvironmentEvaluationStatus environmentEvaluationStatus) throws Exception;
+
+	ArrayList<CommentInfo> selectFalldiagnosisStoryCommentList(int fall_diagnosis_story_id) throws Exception;
+
+	FallDiagnosisStoryComment insertFalldiagnosisStoryComment(FallDiagnosisStoryComment fallDiagnosisStoryComment,
+			Notification notification) throws Exception;
 }
