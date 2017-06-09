@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.demand.server.well_family_house.common.dto.Category;
 import com.demand.server.well_family_house.common.dto.EnvironmentEvaluationCategory;
+import com.demand.server.well_family_house.common.dto.EnvironmentEvaluationStatus;
 import com.demand.server.well_family_house.common.dto.EnvironmentPhoto;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisContentCategory;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisStory;
@@ -82,6 +82,13 @@ public class FALLDIAGNOSISSTORYController {
 		falldiagnosisStoryService.insertEnvironmentEvaluation(fall_diagnosis_story_id, user_id,
 				environment_evaluation_category_id);
 	}
+	
+	@RequestMapping(value = "/{fall_diagnosis_story_id}/environment_evaluation_status", method = RequestMethod.POST)
+	public void insertEnvironmentEvaluationStatus(@PathVariable int fall_diagnosis_story_id,
+			@RequestBody EnvironmentEvaluationStatus environmentEvaluationStatus ) throws Exception {
+		falldiagnosisStoryService.insertEnvironmentEvaluationStatus(environmentEvaluationStatus);
+	}
+
 	
 	@RequestMapping(value = "/{fall_diagnosis_story_id}/environment_photo", method = RequestMethod.POST)
 	public void insertEnvironmentPhoto(HttpServletRequest request, @PathVariable int fall_diagnosis_story_id) throws IOException, Exception {

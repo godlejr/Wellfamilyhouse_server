@@ -65,6 +65,11 @@
 				values(#{param1}, #{param2});
 	</insert>
 	
+	<insert id="insertEnvironmentEvaluationStatus" parameterType="EnvironmentEvaluationStatus">
+		insert into	environment_evaluation_status(fall_diagnosis_story_id, fall_diagnosis_content_category_id)
+				values(#{fall_diagnosis_story_id}, #{fall_diagnosis_content_category_id});
+	</insert>
+	
 	<delete id="deleteFallDiagnosisStoryLikeDown">
 		delete 
 			from	fall_diagnosis_story_likes 
@@ -89,11 +94,9 @@
 		SELECT	name 
 			FROM	fall_diagnosis_content_categories
 			where	id = (SELECT	fall_diagnosis_content_category_id 
-							FROM	environment_evaluation_categories
-							where	id	=	(SELECT	environment_evaluation_category_id 
-												FROM	environment_evaluations
-												where	fall_diagnosis_story_id = #{param1}
-												limit 1))
+								FROM	environment_evaluation_status
+								where	fall_diagnosis_story_id = #{param1}
+								limit 1))
 	</select>
 	
 	<select id="selectFallDiagnosisRiskCategory" resultType="FallDiagnosisRiskCategory">
@@ -105,12 +108,10 @@
 	<select id="selectEnvironmentEvaluationCategoryTotalCountWithStoryId" resultType="int">
 		SELECT count(id) as count
 			FROM	environment_evaluation_categories
-			where	fall_diagnosis_content_category_id = (SELECT fall_diagnosis_content_category_id 
-															FROM	environment_evaluation_categories
-															where id = (SELECT environment_evaluation_category_id 
-																			FROM	environment_evaluations
-																			where	fall_diagnosis_story_id = #{param1}
-																			limit 1))
+			where	fall_diagnosis_content_category_id = (SELECT	fall_diagnosis_content_category_id 
+																FROM	environment_evaluation_status
+																where	fall_diagnosis_story_id = #{param1}
+																limit 1))
 	</select>
 	
 	<select id="selectEnvironmentEvaluationList" resultType="EnvironmentEvaluation">

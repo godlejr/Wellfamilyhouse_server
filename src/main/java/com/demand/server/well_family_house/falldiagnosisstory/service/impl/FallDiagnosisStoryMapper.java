@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.demand.server.well_family_house.common.dto.EnvironmentEvaluation;
 import com.demand.server.well_family_house.common.dto.EnvironmentEvaluationCategory;
+import com.demand.server.well_family_house.common.dto.EnvironmentEvaluationStatus;
 import com.demand.server.well_family_house.common.dto.EnvironmentPhoto;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisContentCategory;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisRiskCategory;
@@ -38,33 +39,36 @@ public interface FallDiagnosisStoryMapper {
 	int selectUser(int fall_diagnosis_story_id) throws Exception;
 
 	void insertFallDiagnosisStoryLikeUp(int user_id, int fall_diagnosis_story_user_id) throws Exception;
-	
+
 	void deleteFallDiagnosisStoryLikeDown(int user_id, int fall_diagnosis_story_id) throws Exception;
-	
+
 	int selectFallDiagnosisStoryLikeCheck(int user_id, int fall_diagnosis_story_id) throws Exception;
 
 	void updateFallDiagnosisStoryHit(int fall_diagnosis_story_id) throws Exception;
 
 	String selectFallDiagnosisStoryTitleWithRisk(int fall_diagnosis_story_id) throws Exception;
 
-	FallDiagnosisRiskCategory selectFallDiagnosisRiskCategory(int fall_diagnosis_category_id)  throws Exception;
+	FallDiagnosisRiskCategory selectFallDiagnosisRiskCategory(int fall_diagnosis_category_id) throws Exception;
 
 	int selectEnvironmentEvaluationCategoryTotalCountWithStoryId(int fall_diagnosis_category_id) throws Exception;
 
 	ArrayList<EnvironmentEvaluation> selectEnvironmentEvaluationList(int fall_diagnosis_category_id) throws Exception;
 
-	ArrayList<FallDiagnosisContentCategory> selectFallDiagnosisContentCategoryList(int fall_diagnosis_category_id) throws Exception;
+	ArrayList<FallDiagnosisContentCategory> selectFallDiagnosisContentCategoryList(int fall_diagnosis_category_id)
+			throws Exception;
 
 	ArrayList<SelfDiagnosis> selectSelfDiagnosisList(int story_id) throws Exception;
 
 	PhysicalEvaluationScore selectPhysicalEvaluationScore(int story_id) throws Exception;
-	
-	ArrayList<FallDiagnosisContentCategory> selectSelfDiagnosisContentCategoryList(int fall_diagnosis_story_id) throws Exception;
+
+	ArrayList<FallDiagnosisContentCategory> selectSelfDiagnosisContentCategoryList(int fall_diagnosis_story_id)
+			throws Exception;
 
 	ArrayList<EnvironmentPhoto> selectEnvironmentPhotoList(int fall_diagnosis_story_id) throws Exception;
 
 	ArrayList<EnvironmentEvaluationCategory> selectEnvironmentEvaluationCategoryListWithJoin(
-			int fall_diagnosis_story_id)  throws Exception;
+			int fall_diagnosis_story_id) throws Exception;
 
+	void insertEnvironmentEvaluationStatus(EnvironmentEvaluationStatus environmentEvaluationStatus) throws Exception;
 
 }

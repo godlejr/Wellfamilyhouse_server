@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.demand.server.well_family_house.common.dto.EnvironmentEvaluationCategory;
+import com.demand.server.well_family_house.common.dto.EnvironmentEvaluationStatus;
 import com.demand.server.well_family_house.common.dto.EnvironmentPhoto;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisContentCategory;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisRiskCategory;
@@ -268,6 +269,12 @@ public class FallDiagnosisStoryServiceImpl implements FallDiagnosisStoryService 
 	public ArrayList<EnvironmentEvaluationCategory> selectEnvironmentEvaluationList(int fall_diagnosis_story_id)
 			throws Exception {
 		return fallDiagnosisStoryMapper.selectEnvironmentEvaluationCategoryListWithJoin(fall_diagnosis_story_id);
+	}
+
+	@Override
+	public void insertEnvironmentEvaluationStatus(EnvironmentEvaluationStatus environmentEvaluationStatus)
+			throws Exception {
+		fallDiagnosisStoryMapper.insertEnvironmentEvaluationStatus(environmentEvaluationStatus);
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.servlet.ServletInputStream;
 
 import com.demand.server.well_family_house.common.dto.EnvironmentEvaluationCategory;
+import com.demand.server.well_family_house.common.dto.EnvironmentEvaluationStatus;
 import com.demand.server.well_family_house.common.dto.EnvironmentPhoto;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisContentCategory;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisStory;
@@ -52,4 +53,6 @@ public interface FallDiagnosisStoryService {
 	ArrayList<EnvironmentPhoto> selectEnvironmentPhotoList(int fall_diagnosis_story_id) throws Exception;
 
 	ArrayList<EnvironmentEvaluationCategory> selectEnvironmentEvaluationList(int fall_diagnosis_story_id) throws Exception;
+
+	void insertEnvironmentEvaluationStatus(EnvironmentEvaluationStatus environmentEvaluationStatus)  throws Exception;
 }
