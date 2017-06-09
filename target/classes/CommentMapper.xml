@@ -24,6 +24,12 @@
 			set	content = #{param2}
 			where	id = #{param1};
 	</update>
+	
+	<update id="updateFallDiagnosisStoryComment">
+		update	fall_diagnosis_story_comments 
+			set	content = #{param2}
+			where	id = #{param1};
+	</update>
 
 
 	<delete id="deleteComment">
@@ -41,6 +47,12 @@
 	<delete id="deleteSongStoryComment">
 		delete 
 				FROM	song_story_comments
+				where id=#{param1}
+	</delete>
+	
+	<delete id="deleteFallDiagnosisStoryComment">
+		delete 
+				FROM	fall_diagnosis_story_comments
 				where id=#{param1}
 	</delete>
 

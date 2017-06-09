@@ -24,6 +24,10 @@ public class CommentServiceImpl implements CommentService {
 		if (flag == CommentINTENTFlag.SONG_STORY) {
 			commentMapper.updateSongStoryComment(comment_id, content);
 		}
+
+		if (flag == CommentINTENTFlag.FALL_DIAGNOSIS_STORY) {
+			commentMapper.updateFallDiagnosisStoryComment(comment_id, content);
+		}
 	}
 
 	@Override
@@ -36,6 +40,10 @@ public class CommentServiceImpl implements CommentService {
 		}
 		if (flag == CommentINTENTFlag.SONG_STORY) {
 			commentMapper.deleteSongStoryComment(comment_id);
+		}
+
+		if (flag == CommentINTENTFlag.FALL_DIAGNOSIS_STORY) {
+			commentMapper.deleteFallDiagnosisStoryComment(comment_id);
 		}
 	}
 }
