@@ -57,7 +57,7 @@
 	<select id="selectNotificationForFallDiagnosisStroy" 
 		resultType="NotificationInfo">
 		SELECT	us.id as id, us.avatar as avatar, us.name as name,
-				nt.content_name as content, st.content as title
+				nt.content_name as content
 				
                 FROM	notifications nt,
 						behaviors bh, 
