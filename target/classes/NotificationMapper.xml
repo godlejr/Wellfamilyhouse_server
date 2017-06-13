@@ -67,7 +67,7 @@
                 WHERE	nt.behavior_id = bh.id 	AND
 						nt.intent_id =st.id 	AND
 						nt.user_id = us.id		AND
-						nt.id =	NOTIFICATION_ID;
+						nt.id =	#{param1};
 		
 	</select>
 
