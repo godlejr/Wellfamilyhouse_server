@@ -52,6 +52,24 @@
 		resultType="NotificationInfo">
 		{CALL notification_song_story(#{param1})}
 	</select>
+	
+	
+	<select id="selectNotificationForFallDiagnosisStroy" 
+		resultType="NotificationInfo">
+		SELECT	us.id as id, us.avatar as avatar, us.name as name,
+				nt.content_name as content, st.content as title
+				
+                FROM	notifications nt,
+						behaviors bh, 
+						users us, 
+						fall_diagnosis_stories st
+				
+                WHERE	nt.behavior_id = bh.id 	AND
+						nt.intent_id =st.id 	AND
+						nt.user_id = us.id		AND
+						nt.id =	NOTIFICATION_ID;
+		
+	</select>
 
 	<update id="updateNotificationCheck">
 		update notifications 

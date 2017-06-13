@@ -36,4 +36,9 @@ public class NotificationServiceImpl implements NotificationService {
 		return notificationMapper.selectNotificationForWritingSongStory(notification_id);
 	}
 
+	@Override
+	public NotificationInfo selectNotificationForFallDiagnosisStroy(int notification_id) throws Exception {
+		return notificationMapper.selectNotificationForFallDiagnosisStroy(notification_id);
+	}
+
 }

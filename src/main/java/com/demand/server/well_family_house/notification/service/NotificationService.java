@@ -13,4 +13,6 @@ public interface NotificationService {
 	NotificationInfo selectNotificationForWritingSongStory(int notification_id) throws Exception;
 
 	void updateNotificationCheck(int notification_id) throws Exception;
+
+	NotificationInfo selectNotificationForFallDiagnosisStroy(int notification_id) throws Exception;
 }

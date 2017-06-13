@@ -27,6 +27,9 @@ public interface NotificationMapper {
 	NotificationInfo selectNotificationForWritingCommentAndLike(int notification_id) throws Exception;
 	
 	NotificationInfo selectNotificationForWritingSongStory(int notification_id) throws Exception;
+	
+	NotificationInfo selectNotificationForFallDiagnosisStroy(int notification_id) throws Exception;
+
 
 	
 	// get tokens

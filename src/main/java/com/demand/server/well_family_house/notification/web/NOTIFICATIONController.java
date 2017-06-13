@@ -43,6 +43,12 @@ public class NOTIFICATIONController {
 		return notificationService.selectNotificationForWritingSongStory(notification_id);
 	}
 
+	@RequestMapping(value = "/{notification_id}/falldiagnosisstories", method = RequestMethod.GET)
+	public NotificationInfo NotificationForWritingFallDiagnosisStroy(@PathVariable int notification_id) throws Exception {
+		return notificationService.selectNotificationForFallDiagnosisStroy(notification_id);
+	}
+	
+	
 	@RequestMapping(value = "/{notification_id}", method = RequestMethod.PUT)
 	public void notificationInfo(@PathVariable int notification_id) throws Exception {
 		notificationService.updateNotificationCheck(notification_id);
