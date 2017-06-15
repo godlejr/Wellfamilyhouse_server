@@ -51,6 +51,12 @@ public class FALLDIAGNOSISSTORYController {
 
 		return falldiagnosisStoryService.insertFallDiagnosisStory(fallDiagnosisStory, notification);
 	}
+	
+	@RequestMapping(value = "/{fall_diagnosis_story_id}", method = RequestMethod.GET)
+	public FallDiagnosisStory selectFallDiagnosisStory(@PathVariable int fall_diagnosis_story_id) throws Exception {
+		return falldiagnosisStoryService.selectFallDiagnosisStory(fall_diagnosis_story_id);
+	}
+
 
 	@RequestMapping(value = "/{fall_diagnosis_story_id}/self_diagnosis", method = RequestMethod.POST)
 	public void insertSelfDiagnosis(@PathVariable int fall_diagnosis_story_id, HttpServletRequest request)

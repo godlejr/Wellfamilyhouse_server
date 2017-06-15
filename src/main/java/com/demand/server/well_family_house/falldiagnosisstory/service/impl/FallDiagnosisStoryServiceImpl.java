@@ -327,4 +327,9 @@ public class FallDiagnosisStoryServiceImpl implements FallDiagnosisStoryService 
 		
 	}
 
+	@Override
+	public FallDiagnosisStory selectFallDiagnosisStory(int fall_diagnosis_story_id) throws Exception {
+		return fallDiagnosisStoryMapper.selectFallDiagnosisStory(fall_diagnosis_story_id);
+	}
+
 }

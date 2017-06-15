@@ -65,4 +65,6 @@ public interface FallDiagnosisStoryService {
 			Notification notification) throws Exception;
 
 	void deleteFalldiagnosisStory(int fall_diagnosis_story_id) throws Exception;
+
+	FallDiagnosisStory selectFallDiagnosisStory(int fall_diagnosis_story_id) throws Exception;
 }

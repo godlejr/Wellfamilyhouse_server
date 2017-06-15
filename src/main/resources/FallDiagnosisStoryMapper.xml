@@ -5,6 +5,12 @@
 
 <mapper
 	namespace="com.demand.server.well_family_house.falldiagnosisstory.service.impl.FallDiagnosisStoryMapper">
+	
+	<select id="selectFallDiagnosisStory" resultType="FallDiagnosisStory">
+		SELECT	id, fall_diagnosis_category_id, fall_diagnosis_risk_category_id, hits, created_at,updated_at
+			FROM	fall_diagnosis_stories
+			where	id = #{param1};
+	</select>
 
 	<insert id="insertFallDiagnosisStory" parameterType="FallDiagnosisStory"
 		useGeneratedKeys="true" keyProperty="id">
