@@ -29,6 +29,7 @@ import com.demand.server.well_family_house.common.dto.PhysicalEvaluationScore;
 import com.demand.server.well_family_house.common.flag.AwsS3Flag;
 import com.demand.server.well_family_house.common.flag.FallDiagnosisFlag;
 import com.demand.server.well_family_house.common.flag.LogFlag;
+import com.demand.server.well_family_house.common.flag.NotificationINTENTFlag;
 import com.demand.server.well_family_house.common.util.AndroidPushConnection;
 import com.demand.server.well_family_house.common.util.AwsS3Connection;
 import com.demand.server.well_family_house.falldiagnosisstory.service.FallDiagnosisStoryService;
@@ -257,8 +258,7 @@ public class FallDiagnosisStoryServiceImpl implements FallDiagnosisStoryService 
 	}
 
 	@Override
-	public PhysicalEvaluationScore selectPhysicalEvaluationScore(int fall_diagnosis_story_id)
-			throws Exception {
+	public PhysicalEvaluationScore selectPhysicalEvaluationScore(int fall_diagnosis_story_id) throws Exception {
 		return fallDiagnosisStoryMapper.selectPhysicalEvaluationScore(fall_diagnosis_story_id);
 	}
 
@@ -288,7 +288,6 @@ public class FallDiagnosisStoryServiceImpl implements FallDiagnosisStoryService 
 	public FallDiagnosisStoryComment insertFalldiagnosisStoryComment(
 			FallDiagnosisStoryComment fallDiagnosisStoryComment, Notification notification) throws Exception {
 
-		 
 		int fall_diagnosis_story_user_id = fallDiagnosisStoryMapper.selectUser(notification.getIntent_id());
 
 		if (fall_diagnosis_story_user_id != fallDiagnosisStoryComment.getUser_id()) {
@@ -296,9 +295,36 @@ public class FallDiagnosisStoryServiceImpl implements FallDiagnosisStoryService 
 			notificationMapper.insertNotification(notification);
 			androidPushConnection.insertFCM(notification);
 		}
-		
+
 		fallDiagnosisStoryMapper.insertFalldiagnosisStoryComment(fallDiagnosisStoryComment);
 		return fallDiagnosisStoryMapper.selectFalldiagnosisStoryComment(fallDiagnosisStoryComment.getId());
+	}
+
+	@Override
+	public void deleteFalldiagnosisStory(int fall_diagnosis_story_id) throws Exception {
+		boolean transaction_flag = true;
+		ArrayList<EnvironmentPhoto> photoList = null;
+		int photoSize = 0;
+
+		try {
+			photoList = fallDiagnosisStoryMapper.selectEnvironmentPhotoList(fall_diagnosis_story_id);
+			photoSize = photoList.size();
+			notificationMapper.deleteNotificationForDeleteCascade(NotificationINTENTFlag.FALL_DIAGNOSIS_STORY, fall_diagnosis_story_id);	
+
+		} catch (Exception e) {
+			transaction_flag = false;
+		}
+
+		
+		if (transaction_flag) {
+			if (photoSize > 0) {
+				for (int i = 0; i < photoSize; i++) {
+					awsS3Connection.deleteFileFromAWSS3(AwsS3Flag.FALL_DIAGNOSIS_STORY_ENVIRONMENT_IMAGE_ENDPOINT, photoList.get(i).getName(),
+							AwsS3Flag.IMAGE_EXT);
+				}
+			}
+		}
+		
 	}
 
 }

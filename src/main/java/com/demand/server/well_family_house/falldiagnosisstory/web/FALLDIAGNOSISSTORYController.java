@@ -209,5 +209,13 @@ public class FALLDIAGNOSISSTORYController {
 
 		return falldiagnosisStoryService.insertFalldiagnosisStoryComment(fallDiagnosisStoryComment, notification);
 	}
+	
+	
+	@RequestMapping(value = "/{fall_diagnosis_story_id}", method = RequestMethod.DELETE)
+	public void deleteFalldiagnosisStory(@PathVariable int fall_diagnosis_story_id) throws Exception {
+		falldiagnosisStoryService.deleteFalldiagnosisStory(fall_diagnosis_story_id);
+	}
+	
+	
 		
 }
