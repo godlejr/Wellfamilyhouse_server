@@ -309,8 +309,9 @@ public class FallDiagnosisStoryServiceImpl implements FallDiagnosisStoryService 
 		try {
 			photoList = fallDiagnosisStoryMapper.selectEnvironmentPhotoList(fall_diagnosis_story_id);
 			photoSize = photoList.size();
+			fallDiagnosisStoryMapper.deleteFallDiagnosisStory(fall_diagnosis_story_id);
 			notificationMapper.deleteNotificationForDeleteCascade(NotificationINTENTFlag.FALL_DIAGNOSIS_STORY, fall_diagnosis_story_id);	
-
+			
 		} catch (Exception e) {
 			transaction_flag = false;
 		}

@@ -11,6 +11,12 @@
 			FROM	fall_diagnosis_stories
 			where	id = #{param1};
 	</select>
+	
+	<delete id="deleteFallDiagnosisStory">
+		delete 
+			from	fall_diagnosis_stories 
+		    where	id = #{param1} 
+	</delete>
 
 	<insert id="insertFallDiagnosisStory" parameterType="FallDiagnosisStory"
 		useGeneratedKeys="true" keyProperty="id">

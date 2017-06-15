@@ -81,5 +81,7 @@ public interface FallDiagnosisStoryMapper {
 	
 	FallDiagnosisStory selectFallDiagnosisStory(int fall_diagnosis_story_id) throws Exception;
 
+	void deleteFallDiagnosisStory(int fall_diagnosis_story_id) throws Exception;
+
 
 }
