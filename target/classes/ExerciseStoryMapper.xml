@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.demand.server.well_family_house.exercisestory.service.impl.ExerciseStoryMapper">
+	
+	<insert id="insertExerciseStory" parameterType="ExerciseStory"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+			exercise_stories(user_id,exercise_category_id, score)
+			values(#{user_id},#{exercise_category_id}, #{score})
+	</insert>
+</mapper>

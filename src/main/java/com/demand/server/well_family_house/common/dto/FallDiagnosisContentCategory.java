@@ -22,6 +22,7 @@ public class FallDiagnosisContentCategory {
 		this.name = name;
 		this.content = content;
 		this.avatar = avatar;
+		
 		this.created_at = created_at;
 		this.updated_at = updated_at;
 	}

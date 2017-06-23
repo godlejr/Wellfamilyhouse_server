@@ -155,10 +155,18 @@
 		<typeAlias
 			type="com.demand.server.well_family_house.common.dto.EnvironmentEvaluationStatus"
 			alias="EnvironmentEvaluationStatus"></typeAlias>
-		
+
 		<typeAlias
 			type="com.demand.server.well_family_house.common.dto.FallDiagnosisStoryComment"
 			alias="FallDiagnosisStoryComment"></typeAlias>
+
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.ExerciseCategory"
+			alias="ExerciseCategory" />
+
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.ExerciseStory"
+			alias="ExerciseStory" />
 
 
 	</typeAliases>
@@ -174,6 +182,9 @@
 		<mapper resource="CommentMapper.xml" />
 		<mapper resource="FallDiagnosisMapper.xml" />
 		<mapper resource="FallDiagnosisStoryMapper.xml" />
+		<mapper resource="ExerciseMapper.xml" />
+		<mapper resource="ExerciseStoryMapper.xml" />
+
 	</mappers>
 
 </configuration>
