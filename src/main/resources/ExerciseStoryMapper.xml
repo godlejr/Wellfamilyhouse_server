@@ -26,6 +26,7 @@
 			FROM	exercise_stories	es,
 					exercise_categories ec
 			
-		    where es.exercise_category_id = ec.id
+		    where	es.exercise_category_id = ec.id	and
+		    		es.id = #{param1}
 	</select>
 </mapper>

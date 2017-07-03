@@ -235,4 +235,21 @@
 			order by created_at desc;
 			
 	</select>
+	
+	<select id="selectExerciseStoryList"  resultType="ExerciseStory">
+		SELECT	distinct
+				es.id as id,
+				es.user_id as user_id,
+		        es.exercise_category_id as exercise_category_id,
+		        es.score	as score,
+		        ec.name		as title, 
+		        es.created_at 	as created_at,
+		        es.updated_at	as 	updated_at
+		        
+			FROM	exercise_stories	es,
+					exercise_categories ec
+			
+		    where	es.exercise_category_id = ec.id	and
+					es.user_id = #{param1}
+	</select>
 </mapper>

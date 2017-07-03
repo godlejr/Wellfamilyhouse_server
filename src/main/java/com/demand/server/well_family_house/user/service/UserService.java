@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import com.demand.server.well_family_house.common.dto.Category;
+import com.demand.server.well_family_house.common.dto.ExerciseStory;
 import com.demand.server.well_family_house.common.dto.FallDiagnosisStory;
 import com.demand.server.well_family_house.common.dto.Family;
 import com.demand.server.well_family_house.common.dto.FamilyInfoForFamilyJoin;
@@ -77,5 +78,7 @@ public interface UserService {
 	void updatePassword(int user_id,String password) throws Exception;
 
 	ArrayList<FallDiagnosisStory> selectFallDiagnosisStoryList(int user_id) throws Exception;
+
+	ArrayList<ExerciseStory> selectExerciseStoryList(int user_id)throws Exception;
 
 }
