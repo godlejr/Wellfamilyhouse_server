@@ -7,4 +7,6 @@ public interface ExerciseStoryService {
 
 	int insertExerciseStory(ExerciseStory exerciseStory, Notification notification) throws Exception;
 
+	ExerciseStory selectExerciseStory(int exercise_story_id) throws Exception;
+
 }

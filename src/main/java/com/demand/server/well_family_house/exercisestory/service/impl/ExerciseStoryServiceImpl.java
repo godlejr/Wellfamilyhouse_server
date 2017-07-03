@@ -35,4 +35,9 @@ public class ExerciseStoryServiceImpl implements ExerciseStoryService {
 		return story_id;
 	}
 
+	@Override
+	public ExerciseStory selectExerciseStory(int exercise_story_id) throws Exception {
+		return exerciseStoryMapper.selectExerciseStory(exercise_story_id);
+	}
+
 }

@@ -2,12 +2,14 @@ package com.demand.server.well_family_house.exercisestory.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demand.server.well_family_house.common.dto.ExerciseStory;
+import com.demand.server.well_family_house.common.dto.FallDiagnosisStory;
 import com.demand.server.well_family_house.common.dto.Notification;
 import com.demand.server.well_family_house.common.flag.NotificationBEHAVIORFlag;
 import com.demand.server.well_family_house.common.flag.NotificationINTENTFlag;
@@ -34,6 +36,11 @@ public class EXERCISESTORYController {
 		notification.setBehavior_id(NotificationBEHAVIORFlag.WRITING_THE_STORY);
 
 		return exerciseStoryService.insertExerciseStory(exerciseStory, notification);
+	}
+	
+	@RequestMapping(value = "/{exercise_story_id}", method = RequestMethod.GET)
+	public ExerciseStory selectExerciseStory(@PathVariable int exercise_story_id) throws Exception {
+		return exerciseStoryService.selectExerciseStory(exercise_story_id);
 	}
 	
 }

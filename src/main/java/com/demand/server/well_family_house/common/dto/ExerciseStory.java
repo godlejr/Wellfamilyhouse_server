@@ -7,7 +7,9 @@ public class ExerciseStory {
 	private int score;
 	private String created_at;
 	private String updated_at;
-
+	
+	private String title;
+	
 	public ExerciseStory() {
 		super();
 	}
@@ -69,6 +71,14 @@ public class ExerciseStory {
 
 	public void setUpdated_at(String updated_at) {
 		this.updated_at = updated_at;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 }

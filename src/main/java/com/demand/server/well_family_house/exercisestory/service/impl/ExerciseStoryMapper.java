@@ -9,4 +9,6 @@ public interface ExerciseStoryMapper {
 
 	void insertExerciseStory(ExerciseStory exerciseStory) throws Exception;
 
+	ExerciseStory selectExerciseStory(int exercise_story_id) throws Exception;
+
 }
