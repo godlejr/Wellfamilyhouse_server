@@ -54,6 +54,8 @@
 	</select>
 	
 	
+	
+	
 	<select id="selectNotificationForFallDiagnosisStroy" 
 		resultType="NotificationInfo">
 		SELECT	us.id as id, us.avatar as avatar, us.name as name,
@@ -63,6 +65,25 @@
 						behaviors bh, 
 						users us, 
 						fall_diagnosis_stories st
+				
+                WHERE	nt.behavior_id = bh.id 	AND
+						nt.intent_id =st.id 	AND
+						nt.user_id = us.id		AND
+						nt.id =	#{param1};
+		
+	</select>
+	
+	
+		
+	<select id="selectNotificationForExerciseStroy" 
+		resultType="NotificationInfo">
+		SELECT	us.id as id, us.avatar as avatar, us.name as name,
+				nt.content_name as content
+				
+                FROM	notifications nt,
+						behaviors bh, 
+						users us, 
+						exercise_stories st
 				
                 WHERE	nt.behavior_id = bh.id 	AND
 						nt.intent_id =st.id 	AND

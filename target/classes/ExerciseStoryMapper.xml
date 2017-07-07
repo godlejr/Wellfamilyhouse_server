@@ -29,4 +29,77 @@
 		    where	es.exercise_category_id = ec.id	and
 		    		es.id = #{param1}
 	</select>
+	
+	<select id="selectExerciseStoryCommentCount" resultType="int">
+		SELECT	count(user_id) as comment_count
+			FROM	exercise_story_comments
+			where	exercise_story_id = #{param1};
+	</select>
+	
+	<select id="selectExerciseStoryStoryLikeCount" resultType="int">
+		select	count(user_id) as like_count 
+			from	exercise_story_likes 
+		    where	exercise_story_id = #{param1};
+	</select>
+	
+	<select id="selectUser"  resultType="int">
+		SELECT	user_id 
+			FROM	exercise_stories
+			where	id = #{param1};
+	</select>
+	
+	<insert id="insertExerciseStoryLikeUp">
+		insert into exercise_story_likes(user_id, exercise_story_id)
+				values(#{param1}, #{param2});
+	</insert>
+	
+	<delete id="deleteExerciseStoryLikeDown">
+		delete 
+			from	exercise_story_likes 
+		    where	user_id = #{param1} and
+					exercise_story_id = #{param2};
+	</delete>
+	
+	<select id="selectExerciseStoryLikeCheck" resultType="int">
+		SELECT	count(id) as checked
+			FROM	exercise_story_likes 
+		    where	user_id = #{param1} and
+					exercise_story_id = #{param2};
+	</select>
+	
+	<update id="updateExerciseStoryHit">
+		update	exercise_stories 
+			set		hits = hits+1 
+		    where	id = #{param1};
+	</update>
+	
+	<select id="selectExerciseStoryCommentList" resultType="CommentInfo">
+		select	c.id as comment_id, c.user_id as user_id, u.name as user_name ,u.avatar as avatar,c.content as content, c.created_at as created_at, c.deleted as deleted 
+			FROM	exercise_story_comments c,
+					users u
+			where	c.user_id = u.id	and
+					c.exercise_story_id = #{param1} 
+			order by	c.updated_at;
+	</select>
+	
+	<insert id="insertExerciseStoryComment" parameterType="FalldiagnosisStoryComment"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into exercise_story_comments(user_id, exercise_story_id, content)
+			values(#{user_id}, #{exercise_story_id}, #{content});
+	</insert>
+
+	<select id="selectExerciseStoryComment"
+		resultType="ExerciseStoryComment">
+		select	* 
+			from	exercise_story_comments 
+		    where	id = #{param1};
+	</select>
+	
+	
+	<delete id="deleteExerciseStory">
+		delete 
+			from	exercise_stories 
+		    where	id = #{param1} 
+	</delete>
+	
 </mapper>

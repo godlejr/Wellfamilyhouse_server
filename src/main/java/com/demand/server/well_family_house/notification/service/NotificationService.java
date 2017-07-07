@@ -15,4 +15,6 @@ public interface NotificationService {
 	void updateNotificationCheck(int notification_id) throws Exception;
 
 	NotificationInfo selectNotificationForFallDiagnosisStroy(int notification_id) throws Exception;
+
+	NotificationInfo selectNotificationForExerciseStroy(int notification_id) throws Exception;
 }

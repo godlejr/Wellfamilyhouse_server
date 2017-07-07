@@ -168,6 +168,9 @@
 			type="com.demand.server.well_family_house.common.dto.ExerciseStory"
 			alias="ExerciseStory" />
 
+		<typeAlias
+			type="com.demand.server.well_family_house.common.dto.ExerciseStoryComment"
+			alias="ExerciseStoryComment" />
 
 	</typeAliases>
 

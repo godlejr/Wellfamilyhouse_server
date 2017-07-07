@@ -28,6 +28,10 @@ public class CommentServiceImpl implements CommentService {
 		if (flag == CommentINTENTFlag.FALL_DIAGNOSIS_STORY) {
 			commentMapper.updateFallDiagnosisStoryComment(comment_id, content);
 		}
+		
+		if (flag == CommentINTENTFlag.EXERCISE_STORY) {
+			commentMapper.updateExerciseStoryComment(comment_id, content);
+		}
 	}
 
 	@Override
@@ -44,6 +48,10 @@ public class CommentServiceImpl implements CommentService {
 
 		if (flag == CommentINTENTFlag.FALL_DIAGNOSIS_STORY) {
 			commentMapper.deleteFallDiagnosisStoryComment(comment_id);
+		}
+		
+		if (flag == CommentINTENTFlag.EXERCISE_STORY) {
+			commentMapper.deleteExerciseStoryComment(comment_id);
 		}
 	}
 }

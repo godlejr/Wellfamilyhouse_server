@@ -19,4 +19,8 @@ public interface CommentMapper {
 	void updateFallDiagnosisStoryComment(int comment_id, String content) throws Exception;
 
 	void deleteFallDiagnosisStoryComment(int comment_id) throws Exception;
+
+	void updateExerciseStoryComment(int comment_id, String content) throws Exception;
+
+	void deleteExerciseStoryComment(int comment_id) throws Exception;
 }

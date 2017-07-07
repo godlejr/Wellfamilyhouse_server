@@ -41,4 +41,9 @@ public class NotificationServiceImpl implements NotificationService {
 		return notificationMapper.selectNotificationForFallDiagnosisStroy(notification_id);
 	}
 
+	@Override
+	public NotificationInfo selectNotificationForExerciseStroy(int notification_id) throws Exception {
+		return notificationMapper.selectNotificationForExerciseStroy(notification_id);
+	}
+
 }

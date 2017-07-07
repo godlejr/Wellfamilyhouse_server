@@ -30,6 +30,7 @@ public interface NotificationMapper {
 	
 	NotificationInfo selectNotificationForFallDiagnosisStroy(int notification_id) throws Exception;
 
+	NotificationInfo selectNotificationForExerciseStroy(int notification_id) throws Exception;
 
 	
 	// get tokens
@@ -43,5 +44,6 @@ public interface NotificationMapper {
 	
 	//delete notification
 	void deleteNotificationForDeleteCascade(int intent_flag,int intent_id) throws Exception;
+
 
 }
