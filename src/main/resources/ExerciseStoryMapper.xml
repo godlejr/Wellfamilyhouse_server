@@ -36,7 +36,7 @@
 			where	exercise_story_id = #{param1};
 	</select>
 	
-	<select id="selectExerciseStoryStoryLikeCount" resultType="int">
+	<select id="selectExerciseStoryLikeCount" resultType="int">
 		select	count(user_id) as like_count 
 			from	exercise_story_likes 
 		    where	exercise_story_id = #{param1};
