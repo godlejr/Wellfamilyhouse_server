@@ -7,6 +7,6 @@ public class NotificationINTENTFlag {
     public static final int MANAGE_FAMILY = 4;
     public static final int MANAGE_FAMILY_DETAIL = 5;
     public static final int FALL_DIAGNOSIS_STORY = 6;
-    public static final int EXERCISE_STORY = 6;
+    public static final int EXERCISE_STORY = 7;
 
 }
