@@ -251,5 +251,7 @@
 			
 		    where	es.exercise_category_id = ec.id	and
 					es.user_id = #{param1}
+			
+			order by es.created_at desc;
 	</select>
 </mapper>
