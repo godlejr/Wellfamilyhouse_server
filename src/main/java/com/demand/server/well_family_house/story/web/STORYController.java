@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -145,7 +146,7 @@ public class STORYController {
 	}
 
 	@RequestMapping(value = "/{story_id}/photos", method = RequestMethod.POST)
-	public void insert_photos(HttpServletRequest request, @PathVariable int story_id) throws IOException, Exception {
-		storyService.insertPhoto(request.getInputStream(), story_id);
+	public void insert_photos(HttpServletRequest request,@RequestBody String  body, @PathVariable int story_id) throws IOException, Exception {
+		storyService.insertPhoto(body, story_id);
 	}
 }

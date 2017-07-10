@@ -126,30 +126,30 @@ public class StoryServiceImpl implements StoryService {
 	}
 
 	@Override
-	public void insertPhoto(InputStream base64InputStream, int story_id) throws IOException, Exception {
+	public void insertPhoto(String body, int story_id) throws IOException, Exception {
 		String file_name = null;
-		StringBuilder stringBuilder = null;
-		try {
-			if (base64InputStream != null) {
-				stringBuilder = new StringBuilder();
-				String line;
-				try {
-					BufferedReader reader = new BufferedReader(new InputStreamReader(base64InputStream, "UTF-8"));
-					while ((line = reader.readLine()) != null) {
-						stringBuilder.append(line).append("\n");
-					}
-				} catch (Exception e) {
-					log(e);
-				} finally {
-					base64InputStream.close();
-				}
-			}
-		} catch (IOException e) {
-			log(e);
-		}
+//		StringBuilder stringBuilder = null;
+//		try {
+//			if (base64InputStream != null) {
+//				stringBuilder = new StringBuilder();
+//				String line;
+//				try {
+//					BufferedReader reader = new BufferedReader(new InputStreamReader(base64InputStream, "UTF-8"));
+//					while ((line = reader.readLine()) != null) {
+//						stringBuilder.append(line).append("\n");
+//					}
+//				} catch (Exception e) {
+//					log(e);
+//				} finally {
+//					base64InputStream.close();
+//				}
+//			}
+//		} catch (IOException e) {
+//			log(e);
+//		}
 
 		try {
-			file_name = awsS3Connection.uploadFileToAWSS3(stringBuilder.toString(), AwsS3Flag.STORY_IMAGE_ENDPOINT,
+			file_name = awsS3Connection.uploadFileToAWSS3(body, AwsS3Flag.STORY_IMAGE_ENDPOINT,
 					AwsS3Flag.IMAGE_EXT);
 		} catch (IllegalStateException e) {
 			log(e);

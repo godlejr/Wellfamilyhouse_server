@@ -30,7 +30,7 @@ public interface StoryService {
 
 	Story insertStory(Story story, Notification notification) throws Exception;
 
-	void insertPhoto(InputStream base64InputStream, int story_id) throws IOException, Exception;
+	void insertPhoto(String body, int story_id) throws IOException, Exception;
 
 	StoryInfoForNotification selectStoryInfo(int story_id) throws Exception;
 
